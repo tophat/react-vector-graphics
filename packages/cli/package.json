@@ -13,6 +13,9 @@
   "files": [
     "lib"
   ],
+  "bin": {
+    "iconic": "./bin/iconic"
+  },
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
   },
