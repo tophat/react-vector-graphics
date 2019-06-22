@@ -5,11 +5,20 @@
   ],
   "scripts": {
     "build": "lerna exec tsc",
-    "watch": "lerna exec tsc -- --watch"
+    "watch": "lerna exec tsc -- --watch",
+    "lint": "eslint packages/*/src/*.ts",
+    "lint:fix": "eslint packages/*/src/*.ts --fix"
   },
   "devDependencies": {
+    "@tophat/eslint-config": "^0.1.4",
     "@types/node": "^12.0.10",
+    "@typescript-eslint/eslint-plugin": "^1.10.2",
+    "@typescript-eslint/parser": "^1.10.2",
+    "eslint": "^5.0.0",
+    "eslint-config-prettier": "^5.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "lerna": "^3.15.0",
+    "prettier": "^1.18.2",
     "typescript": "^3.5.2"
   }
 }
