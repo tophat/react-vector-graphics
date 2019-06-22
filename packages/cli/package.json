@@ -28,5 +28,8 @@
   },
   "dependencies": {
     "yargs": "^13.2.4"
+  },
+  "devDependencies": {
+    "@types/yargs": "^13.0.0"
   }
 }
