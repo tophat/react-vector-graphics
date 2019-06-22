@@ -2,8 +2,8 @@ const ICON_FILENAME_REGEX = /^([a-z0-9-]+)(\.(\d+)x\d+)?\.icon\.svg$/;
 
 export interface IconDefinition {
   name: string;
-  size: number;
-  pascalCaseName: any;
+  size?: number;
+  pascalCaseName: string;
   filename: string;
   contents: string;
 }
@@ -29,7 +29,7 @@ export function createIconDefinition(
   return {
     filename: filename,
     name: name,
-    size: size ? Number(size) : null,
+    size: size ? Number(size) : undefined,
     pascalCaseName: `${spinalToPascalCase(name)}Icon${size || ""}`,
     contents: contents
   };
