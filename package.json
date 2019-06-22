@@ -5,7 +5,7 @@
   ],
   "scripts": {
     "build": "lerna exec tsc",
-    "watch": "lerna exec tsc -- --watch",
+    "watch": "lerna exec tsc --parallel -- --watch",
     "lint": "eslint packages/*/src/*.ts",
     "lint:fix": "eslint packages/*/src/*.ts --fix"
   },
