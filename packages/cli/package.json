@@ -30,9 +30,12 @@
     "url": "https://github.com/tophat/iconic/issues"
   },
   "dependencies": {
+    "@iconic/core": "^0.0.0",
+    "fs-extra": "^8.0.1",
     "yargs": "^13.2.4"
   },
   "devDependencies": {
+    "@types/fs-extra": "^7.0.0",
     "@types/yargs": "^13.0.0"
   }
 }
