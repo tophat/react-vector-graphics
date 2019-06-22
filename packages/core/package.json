@@ -4,7 +4,7 @@
   "description": "Core library of Iconic",
   "author": "Umar Ahmed <umar.ahmed@tophat.com>",
   "homepage": "https://github.com/tophat/iconic#readme",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "main": "lib/index.js",
   "directories": {
     "lib": "lib",
