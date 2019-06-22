@@ -4,6 +4,10 @@
   "repository": "git@github.com:tophat/iconic.git",
   "author": "Umar Ahmed <umar.ahmed@tophat.com>",
   "license": "Apache-2.0",
+  "scripts": {
+    "build": "lerna exec tsc",
+    "watch": "lerna exec tsc -- --watch"
+  },
   "devDependencies": {
     "@types/node": "^12.0.10",
     "lerna": "^3.15.0",
