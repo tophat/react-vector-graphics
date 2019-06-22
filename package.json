@@ -4,6 +4,7 @@
     "packages/*"
   ],
   "scripts": {
+    "postinstall": "lerna bootstrap",
     "build": "lerna exec tsc",
     "watch": "lerna exec tsc -- --watch"
   },
