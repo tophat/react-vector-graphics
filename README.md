@@ -1,4 +1,4 @@
-# New Project Kit
+# Iconic
 
 ## How to use this repository
 
@@ -9,7 +9,7 @@ To get started, take out this __How to__ section, replace __New Project Kit__ wi
 __Nice-to-haves__
 - A lot of projects have __a nice logo__ that catches the eye and builds branding, feel free to add one to your project!
 - __Badges__ are a great way to visually represent the current state of your project, from CI to latest released versions.
-- Don't forget to add in a badge for your project's [Maturity Score](https://github.com/tophat/getting-started/blob/master/scorecard.mdi)!
+- Don't forget to add in a badge for your project's [Maturity Score](https://github.com/tophat/getting-started/blob/master/scorecard.md)!
 - __Screenshots or GIFs of your project in action__ can also be pretty cool to have in here!
 
 ## Overview
