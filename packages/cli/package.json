@@ -1,0 +1,32 @@
+{
+  "name": "@iconic/cli",
+  "version": "0.0.0",
+  "description": "Command Line Interface for Iconic",
+  "author": "Umar Ahmed <umar.ahmed@tophat.com>",
+  "homepage": "https://github.com/tophat/iconic#readme",
+  "license": "Apache-2.0",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tophat/iconic.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/tophat/iconic/issues"
+  },
+  "dependencies": {
+    "yargs": "^13.2.4"
+  }
+}
