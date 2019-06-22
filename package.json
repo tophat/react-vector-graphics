@@ -1,9 +1,4 @@
 {
-  "name": "iconic",
-  "version": "0.0.0",
-  "repository": "git@github.com:tophat/iconic.git",
-  "author": "Umar Ahmed <umar.ahmed@tophat.com>",
-  "license": "Apache-2.0",
   "private": true,
   "workspaces": [
     "packages/*"
@@ -16,6 +11,5 @@
     "@types/node": "^12.0.10",
     "lerna": "^3.15.0",
     "typescript": "^3.5.2"
-  },
-  "dependencies": {}
+  }
 }
