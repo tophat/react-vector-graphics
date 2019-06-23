@@ -1,0 +1,1 @@
+# `@iconic/plugin-svgo`
