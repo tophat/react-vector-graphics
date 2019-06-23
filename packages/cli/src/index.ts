@@ -21,11 +21,20 @@ function run(src: string, dest: string): void {
     }
 }
 
-if (!yargs.argv.src || !yargs.argv.dest) {
-    console.error('Missing src and dest') /* eslint-disable-line no-console */
-} else {
-    const args = yargs.argv
-    const src = args.src as string
-    const dest = args.dest as string
-    run(src, dest)
-}
+const argv = yargs
+    .usage('Usage: $0 -s [src] -d [dest]')
+    .option('src',{
+        alias: 's',
+        describe: 'source folder',
+        type: 'string'
+    })
+    .option('dest', {
+        alias: 'd',
+        describe: 'destination folder',
+        type: 'string'
+    })
+    .demandOption(['s', 'd']).argv
+
+const src = argv.s as string
+const dest = argv.d as string
+run(src, dest)
