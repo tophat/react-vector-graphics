@@ -1,1 +1,1 @@
-declare module "@iconic/core";
+declare module "@rvg/core";

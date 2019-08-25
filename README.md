@@ -1,4 +1,4 @@
-# Iconic
+# react-vector-graphics
 
 ## How to use this repository
 

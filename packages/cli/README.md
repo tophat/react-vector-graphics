@@ -1,1 +1,1 @@
-# `@iconic/cli`
+# `@rvg/cli`

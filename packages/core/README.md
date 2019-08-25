@@ -1,1 +1,1 @@
-# `@iconic/core`
+# `@rvg/core`

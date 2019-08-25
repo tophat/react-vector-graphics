@@ -1,9 +1,9 @@
 {
-  "name": "@iconic/cli",
+  "name": "@rvg/cli",
   "version": "0.0.0",
-  "description": "Command Line Interface for Iconic",
+  "description": "Command Line Interface for react-vector-graphics",
   "author": "Umar Ahmed <umar.ahmed@tophat.com>",
-  "homepage": "https://github.com/tophat/iconic#readme",
+  "homepage": "https://github.com/tophat/react-vector-graphics#readme",
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "directories": {
@@ -14,23 +14,23 @@
     "lib"
   ],
   "bin": {
-    "iconic": "./bin/iconic"
+    "rvg": "./bin/react-vector-graphics"
   },
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tophat/iconic.git"
+    "url": "git+https://github.com/tophat/react-vector-graphics.git"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
-    "url": "https://github.com/tophat/iconic/issues"
+    "url": "https://github.com/tophat/react-vector-graphics/issues"
   },
   "dependencies": {
-    "@iconic/core": "^0.0.0",
+    "@rvg/core": "^0.0.0",
     "fs-extra": "^8.0.1",
     "yargs": "^13.2.4"
   },

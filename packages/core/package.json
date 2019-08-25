@@ -1,9 +1,9 @@
 {
-  "name": "@iconic/core",
+  "name": "@rvg/core",
   "version": "0.0.0",
-  "description": "Core library of Iconic",
+  "description": "Core library of react-vector-graphics",
   "author": "Umar Ahmed <umar.ahmed@tophat.com>",
-  "homepage": "https://github.com/tophat/iconic#readme",
+  "homepage": "https://github.com/tophat/react-vector-graphics#readme",
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "directories": {
@@ -18,12 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tophat/iconic.git"
+    "url": "git+https://github.com/tophat/react-vector-graphics.git"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
-    "url": "https://github.com/tophat/iconic/issues"
+    "url": "https://github.com/tophat/react-vector-graphics/issues"
   }
 }

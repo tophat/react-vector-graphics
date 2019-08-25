@@ -2,7 +2,7 @@ import yargs from 'yargs'
 import * as path from 'path'
 import * as fs from 'fs-extra'
 
-import convert from '@iconic/core'
+import convert from '@rvg/core'
 
 function run(src: string, dest: string): void {
     const files = fs.readdirSync(src)

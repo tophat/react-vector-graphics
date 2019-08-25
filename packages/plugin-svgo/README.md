@@ -1,1 +1,1 @@
-# `@iconic/plugin-svgo`
+# `@rvg/plugin-svgo`
