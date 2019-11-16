@@ -31,11 +31,11 @@
   },
   "dependencies": {
     "@rvg/core": "^0.0.0",
-    "fs-extra": "^8.0.1",
-    "yargs": "^13.2.4"
+    "fs-extra": "^8.1.0",
+    "yargs": "^14.2.0"
   },
   "devDependencies": {
-    "@types/fs-extra": "^7.0.0",
-    "@types/yargs": "^13.0.0"
+    "@types/fs-extra": "^8.0.1",
+    "@types/yargs": "^13.0.3"
   }
 }
