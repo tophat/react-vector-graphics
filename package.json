@@ -5,21 +5,75 @@
   ],
   "scripts": {
     "build": "lerna exec tsc",
-    "watch": "lerna exec tsc --parallel -- --watch",
+    "build:watch": "lerna exec tsc --parallel -- --watch",
+    "commit": "git-cz",
     "lint": "eslint packages/*/src/*.ts",
-    "lint:fix": "eslint packages/*/src/*.ts --fix"
+    "lint:fix": "eslint packages/*/src/*.ts --fix",
+    "lock:check": "yarn-deduplicate --list",
+    "lock:fix": "yarn-deduplicate",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:modified": "jest --bail --findRelatedTests",
+    "test:watch": "jest --watch --notify"
   },
   "devDependencies": {
+    "@tophat/commitizen-adapter": "^0.0.11",
+    "@tophat/commitlint-config": "^0.1.2",
     "@tophat/eslint-config": "^0.3.1",
-    "@types/node": "^12.12.8",
+    "@types/node": "^12.12.9",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
-    "@typescript-eslint/parser": "^2.7.0",
+    "@typescript-eslint/parser": "^2.8.0",
+    "commitizen": "^4.0.3",
+    "commitlint": "^8.2.0",
     "eslint": "^6.6.0",
-    "eslint-config-prettier": "^6.5.0",
+    "eslint-config-prettier": "^6.6.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.0.9",
+    "jest": "^24.9.0",
     "lerna": "^3.18.4",
+    "lint-staged": "^9.4.3",
     "prettier": "^1.19.1",
-    "typescript": "^3.7.2"
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.7.2",
+    "yarn-deduplicate": "1.1.1"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "moduleDirectories": [
+      "./packages/*/src/",
+      "./packages/*/tests/",
+      "./node_modules"
+    ],
+    "testPathIgnorePatterns": [
+      "./artifacts/",
+      "./node_modules/"
+    ],
+    "coverageDirectory": "./artifacts/coverage"
+  },
+  "commitlint": {
+    "extends": [
+      "@tophat/commitlint-config"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "@tophat/commitizen-adapter"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "yarn lint",
+      "yarn test:modified"
+    ],
+    "yarn.lock": [
+      "yarn lock:check"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
   }
 }
