@@ -6,7 +6,8 @@ This repository covers some must-haves when starting a project so you don't have
 
 To get started, take out this __How to__ section, replace __New Project Kit__ with your project's name and fill up the README template below!
 
-__Nice-to-haves__
+## Nice-to-haves
+
 - A lot of projects have __a nice logo__ that catches the eye and builds branding, feel free to add one to your project!
 - __Badges__ are a great way to visually represent the current state of your project, from CI to latest released versions.
 - Don't forget to add in a badge for your project's [Maturity Score](https://github.com/tophat/getting-started/blob/master/scorecard.md)!
@@ -42,10 +43,8 @@ _In your contribution guide, you can outline best practices, how to set up a dev
 
 _You don't really have to add this section yourself! Simply use [all-contributors](https://allcontributors.org/) by adding comments in your PRs like so:_
 
-```
+```txt
 @all-contributors please add <username> for <contribution type>
 ```
 
 _Find out more about All-Contributors on their website!_
-
-

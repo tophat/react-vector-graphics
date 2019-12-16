@@ -1,7 +1,7 @@
-import yargs from 'yargs'
 import * as path from 'path'
-import * as fs from 'fs-extra'
 
+import yargs from 'yargs'
+import * as fs from 'fs-extra'
 import convert from '@rvg/core'
 
 function run(src: string, dest: string): void {
@@ -23,15 +23,15 @@ function run(src: string, dest: string): void {
 
 const argv = yargs
     .usage('Usage: $0 -s [src] -d [dest]')
-    .option('src',{
+    .option('src', {
         alias: 's',
         describe: 'source folder',
-        type: 'string'
+        type: 'string',
     })
     .option('dest', {
         alias: 'd',
         describe: 'destination folder',
-        type: 'string'
+        type: 'string',
     })
     .demandOption(['s', 'd']).argv
 
