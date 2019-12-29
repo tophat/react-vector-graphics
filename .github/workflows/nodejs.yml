@@ -35,6 +35,8 @@ jobs:
       run: |
         yarn install
         yarn lock:check
+    - name: Build
+      run: yarn build
     - name: Lint
       run: yarn lint
     - name: Test
@@ -43,8 +45,6 @@ jobs:
       run: |
         yarn test:coverage
         yarn report:coverage
-    - name: Build
-      run: yarn build
     - name: Release
       run: |
         git tag -l
