@@ -1,1 +1,1 @@
-# `@rvg/plugin-svgo`
+# `@react-vector-graphics/plugin-svgo`
