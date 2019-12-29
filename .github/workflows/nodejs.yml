@@ -38,9 +38,11 @@ jobs:
         yarn report:coverage
     - name: Prepare
       run: |
+        echo "fetch tags"
+        git fetch --prune --unshallow
+        echo "show tags"
         git tag -l
-        git pull --prune --all
-        git tag -l
+        echo "lerna"
         yarn lerna changed
     - name: Release
       env:
