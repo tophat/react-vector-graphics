@@ -11,7 +11,7 @@
     "lint:fix": "eslint packages/*/src/*.ts --fix",
     "lock:check": "yarn-deduplicate --list",
     "lock:fix": "yarn-deduplicate",
-    "release": "lerna publish -y",
+    "release": "lerna publish -y && git push origin --tags",
     "report:coverage": "codecov",
     "test": "jest",
     "test:coverage": "jest --coverage",

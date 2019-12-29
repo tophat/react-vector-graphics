@@ -15,10 +15,19 @@ jobs:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
       with:
         token: ${{ secrets.RELEASE_GH_TOKEN }}
-    - name: Setup ${{ matrix.node-version }}
+    - name: Configure Git
+      env:
+        GH_USER_EMAIL: ${{ secrets.RELEASE_GH_EMAIL }}
+        GH_USER_NAME: ${{ secrets.RELEASE_GH_USERNAME }}
+      run: |
+        git config user.email "$GH_USER_EMAIL"
+        git config user.name "$GH_USER_NAME"
+        git fetch --prune --unshallow --tags --force
+    - name: Setup Node ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
@@ -37,13 +46,7 @@ jobs:
         yarn test:coverage
         yarn report:coverage
     - name: Release
-      env:
-        GH_USER_EMAIL: ${{ secrets.RELEASE_GH_EMAIL }}
-        GH_USER_NAME: ${{ secrets.RELEASE_GH_USERNAME }}
       run: |
-        git config user.email "$GH_USER_EMAIL"
-        git config user.name "$GH_USER_NAME"
-        git fetch --prune --unshallow
+        git tag -l
         yarn release
-        git push origin --tags
       if: matrix.node-version == '12.x' && github.ref == 'refs/heads/master'
