@@ -46,4 +46,4 @@ jobs:
         git fetch --prune --unshallow
         yarn release
         git push origin --tags
-      if: matrix.node-version == '12.x'
+      if: matrix.node-version == '12.x' && github.ref == 'refs/heads/master'
