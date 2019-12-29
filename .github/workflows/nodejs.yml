@@ -11,6 +11,9 @@ jobs:
       matrix:
         node-version: [10.x, 12.x]
 
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
     steps:
     - uses: actions/checkout@v2
       with:
@@ -37,9 +40,8 @@ jobs:
       env:
         GH_USER_EMAIL: ${{ secrets.RELEASE_GH_EMAIL }}
         GH_USER_NAME: ${{ secrets.RELEASE_GH_USERNAME }}
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
-        git config user.email $GH_USER_EMAIL
-        git config user.name $GH_USER_NAME
+        git config user.email "$GH_USER_EMAIL"
+        git config user.name "$GH_USER_NAME"
         yarn release
       if: matrix.node-version == '12.x' && github.ref == 'refs/heads/master'
