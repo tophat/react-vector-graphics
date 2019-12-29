@@ -1,1 +1,1 @@
-# `@rvg/core`
+# `@react-vector-graphics/core`

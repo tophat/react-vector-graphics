@@ -36,6 +36,5 @@ jobs:
         GH_TOKEN: ${{ secrets.RELEASE_GH_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
-        yarn release --branch=${GITHUB_REF##*/} --dry-run
         yarn release
-      if: matrix.node-version == '12.x'
+      if: matrix.node-version == '12.x' && github.ref == 'refs/heads/master'

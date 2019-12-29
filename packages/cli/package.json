@@ -1,5 +1,5 @@
 {
-  "name": "@rvg/cli",
+  "name": "@react-vector-graphics/cli",
   "version": "0.0.0",
   "description": "Command Line Interface for react-vector-graphics",
   "author": "Umar Ahmed <umar.ahmed@tophat.com>",
@@ -30,7 +30,7 @@
     "url": "https://github.com/tophat/react-vector-graphics/issues"
   },
   "dependencies": {
-    "@rvg/core": "^0.0.0",
+    "@react-vector-graphics/core": "^0.0.0",
     "fs-extra": "^8.1.0",
     "yargs": "^14.2.0"
   },

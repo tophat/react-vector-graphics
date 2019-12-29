@@ -2,7 +2,7 @@ import * as path from 'path'
 
 import yargs from 'yargs'
 import * as fs from 'fs-extra'
-import convert from '@rvg/core'
+import convert from '@react-vector-graphics/core'
 
 function run(src: string, dest: string): void {
     const files = fs.readdirSync(src)

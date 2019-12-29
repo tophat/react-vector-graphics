@@ -1,5 +1,5 @@
 {
-  "name": "@rvg/core",
+  "name": "@react-vector-graphics/core",
   "version": "0.0.0",
   "description": "Core library of react-vector-graphics",
   "author": "Umar Ahmed <umar.ahmed@tophat.com>",

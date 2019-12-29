@@ -1,1 +1,1 @@
-# `@rvg/cli`
+# `@react-vector-graphics/cli`
