@@ -34,7 +34,6 @@ jobs:
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       run: |
-        npm whoami
         yarn test:coverage
         yarn report:coverage
     - name: Deploy
@@ -42,6 +41,7 @@ jobs:
         GH_USER_EMAIL: ${{ secrets.RELEASE_GH_EMAIL }}
         GH_USER_NAME: ${{ secrets.RELEASE_GH_USERNAME }}
       run: |
+        npm whoami
         git config user.email "$GH_USER_EMAIL"
         git config user.name "$GH_USER_NAME"
         yarn release
