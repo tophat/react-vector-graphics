@@ -11,7 +11,7 @@
     "lint:fix": "eslint packages/*/src/*.ts --fix",
     "lock:check": "yarn-deduplicate --list",
     "lock:fix": "yarn-deduplicate",
-    "release": "lerna-semantic-release pre && lerna-semantic-release post && lerna-semantic-release perform",
+    "release": "semantic-release",
     "report:coverage": "codecov",
     "test": "jest",
     "test:coverage": "jest --coverage",
@@ -21,9 +21,9 @@
   "devDependencies": {
     "@tophat/commitizen-adapter": "^0.0.11",
     "@tophat/commitlint-config": "^0.1.2",
-    "@tophat/eslint-config": "^0.3.1",
-    "@types/jest": "^24.0.23",
-    "@types/node": "^12.12.9",
+    "@tophat/eslint-config": "^0.4.0",
+    "@types/jest": "^24.0.25",
+    "@types/node": "^13.1.1",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
     "@typescript-eslint/parser": "^2.8.0",
     "codecov": "^3.6.1",
@@ -31,19 +31,19 @@
     "commitlint": "^8.2.0",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.6.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^23.1.1",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-jest": "^23.2.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.17.0",
     "husky": "^3.0.9",
     "jest": "^24.9.0",
     "lerna": "^3.18.4",
-    "lerna-semantic-release": "^9.1.0",
-    "lint-staged": "^9.4.3",
+    "lint-staged": "^9.5.0",
     "prettier": "^1.19.1",
-    "ts-jest": "^24.1.0",
-    "typescript": "^3.7.2",
+    "semantic-release": "^15.14.0",
+    "ts-jest": "^24.2.0",
+    "typescript": "^3.7.4",
     "yarn-deduplicate": "1.1.1"
   },
   "jest": {
@@ -68,6 +68,14 @@
     "commitizen": {
       "path": "@tophat/commitizen-adapter"
     }
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/github",
+      "./lib/semantic-release-lerna"
+    ]
   },
   "lint-staged": {
     "*.{js,ts}": [

@@ -17,4 +17,5 @@ module.exports = {
         'sort-imports': 2,
         'sort-keys': 2,
     },
+    ignorePatterns: ["lib/"],
 };
