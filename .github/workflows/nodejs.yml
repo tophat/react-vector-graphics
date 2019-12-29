@@ -31,3 +31,4 @@ jobs:
         yarn report:coverage
     - name: Deploy
       run: yarn release
+      if: matrix.node-version == '12.x'
