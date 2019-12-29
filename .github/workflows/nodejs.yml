@@ -26,9 +26,14 @@ jobs:
     - name: Lint
       run: yarn lint
     - name: Test
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       run: |
         yarn test:coverage
         yarn report:coverage
     - name: Deploy
+      env:
+        GH_TOKEN: ${{ secrets.RELEASE_GH_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: yarn release
       if: matrix.node-version == '12.x'
