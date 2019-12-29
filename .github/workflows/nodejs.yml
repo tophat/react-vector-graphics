@@ -34,6 +34,7 @@ jobs:
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       run: |
+        npm whoami
         yarn test:coverage
         yarn report:coverage
     - name: Deploy
