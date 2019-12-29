@@ -36,7 +36,9 @@ jobs:
       run: |
         yarn test:coverage
         yarn report:coverage
-    - name: Deploy
+    - name: Prepare
+      run: npm whoami
+    - name: Release
       env:
         GH_USER_EMAIL: ${{ secrets.RELEASE_GH_EMAIL }}
         GH_USER_NAME: ${{ secrets.RELEASE_GH_USERNAME }}
