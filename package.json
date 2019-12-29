@@ -70,8 +70,6 @@
     }
   },
   "release": {
-    "branch": "setup-ci",
-    "dryRun": true,
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
