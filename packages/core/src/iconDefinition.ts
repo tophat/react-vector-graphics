@@ -1,11 +1,11 @@
 const ICON_FILENAME_REGEX = /^([a-z0-9-]+)(\.(\d+)x\d+)?\.icon\.svg$/
 
 export interface IconDefinition {
-    name: string
-    size?: number
-    pascalCaseName: string
-    filename: string
     contents: string
+    filename: string
+    name: string
+    pascalCaseName: string
+    size?: number
 }
 
 function capitalize(word: string): string {
@@ -27,10 +27,10 @@ export function createIconDefinition(
     }
     const [, name, , size] = result
     return {
+        contents: contents,
         filename: filename,
         name: name,
-        size: size ? Number(size) : undefined,
         pascalCaseName: `${spinalToPascalCase(name)}Icon${size || ''}`,
-        contents: contents,
+        size: size ? Number(size) : undefined,
     }
 }
