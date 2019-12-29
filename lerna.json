@@ -4,6 +4,7 @@
   "version": "independent",
   "command" : {
     "publish" : {
+      "amend": true,
       "conventionalCommits" : true,
       "message": "chore(release): publish"
     }
