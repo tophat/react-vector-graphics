@@ -36,8 +36,6 @@ jobs:
       run: |
         yarn test:coverage
         yarn report:coverage
-    - name: Prepare
-      run: npm whoami
     - name: Release
       env:
         GH_USER_EMAIL: ${{ secrets.RELEASE_GH_EMAIL }}
@@ -45,5 +43,7 @@ jobs:
       run: |
         git config user.email "$GH_USER_EMAIL"
         git config user.name "$GH_USER_NAME"
+        git fetch --prune --unshallow
         yarn release
+        git push origin --tags
       if: matrix.node-version == '12.x' && github.ref == 'refs/heads/master'
