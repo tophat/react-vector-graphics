@@ -2,7 +2,7 @@
   "name": "@react-vector-graphics/plugin-svgo",
   "version": "0.0.0",
   "description": "SVGO plugin for react-vector-graphics",
-  "author": "Umar Ahmed <umar.ahmed@tophat.com>",
+  "author": "Top Hat <opensource@tophat.com>",
   "homepage": "https://github.com/tophat/react-vector-graphics#readme",
   "license": "Apache-2.0",
   "main": "lib/index.js",
@@ -14,7 +14,7 @@
     "lib"
   ],
   "publishConfig": {
-    "registry": "https://registry.yarnpkg.com"
+    "access": "public"
   },
   "repository": {
     "type": "git",
