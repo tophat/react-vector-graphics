@@ -1,16 +1,17 @@
-import { createIconDefinition } from './iconDefinition'
-import generateDocsFile from './generateDocsFile'
-import generateIconFile from './generateIconFile'
+import { Plugins, loadPlugins } from './plugins'
 
-export default function convert(filename: string, contents: string): object {
-    const iconDefinition = createIconDefinition(filename, contents)
-    const iconFile = generateIconFile(iconDefinition)
-    const iconDocs = generateDocsFile(iconDefinition)
-    const folderize = (filename: string): string =>
-        `${iconDefinition.pascalCaseName}/${filename}`
-    return {
-        [folderize('index.js')]: iconFile,
-        [folderize('Readme.md')]: iconDocs,
-        [folderize(iconDefinition.filename)]: iconDefinition.contents,
-    }
+async function run({ plugins }: { plugins: Plugins }): Promise<void> {
+    const entries = await plugins.discover()
+    // const outputs = await plugins.generate({ entries })
+    // const actions = await plugins.transform({ outputs })
+    // await plugins.finalize({ actions })
+}
+
+export default async function({
+    config,
+}: {
+    config: Configuration
+}): Promise<void> {
+    const plugins = await loadPlugins({ config })
+    await run({ plugins })
 }
