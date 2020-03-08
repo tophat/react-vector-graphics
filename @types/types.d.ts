@@ -1,6 +1,7 @@
 type SVGRConfiguration = {}
 type State = {
     filePath?: string
+    outputPath?: string
     componentName?: string
 }
 type Entry = {

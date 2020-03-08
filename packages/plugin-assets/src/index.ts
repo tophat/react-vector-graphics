@@ -1,9 +1,18 @@
-import * as fs from 'fs-extra'
+import * as fs from 'fs'
 
-export default function({ path }: { path: string }) {
-    const files = fs.readdirSync(src)
-    const filesContents = files.map((file): [string, string] => [
-        file,
-        fs.readFileSync(path.join(src, file), { encoding: 'utf-8' }),
-    ])
+import * as glob from 'glob'
+
+type Config = { globPattern: string; outputPath: string }
+type Asset = { svg: string; state: State }
+
+export default async function({
+    globPattern = '*.svg',
+    outputPath = './components',
+}: Config): Promise<Asset[]> {
+    return glob.sync(globPattern).map(
+        (filePath: string): Asset => ({
+            state: { filePath, outputPath },
+            svg: fs.readFileSync(filePath, { encoding: 'utf-8' }),
+        }),
+    )
 }

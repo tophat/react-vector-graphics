@@ -1,40 +1,38 @@
-import * as path from 'path'
-
 import yargs from 'yargs'
-import * as fs from 'fs-extra'
-import convert from '@react-vector-graphics/core'
+import rvgCore from '@react-vector-graphics/core'
 
-function run(src: string, dest: string): void {
-    const files = fs.readdirSync(src)
-    const filesContents = files.map((file): [string, string] => [
-        file,
-        fs.readFileSync(path.join(src, file), { encoding: 'utf-8' }),
-    ])
-    const results = filesContents.map(([file, contents]): object =>
-        convert(file, contents),
-    )
-    for (const result of results) {
-        for (const [file, contents] of Object.entries(result)) {
-            const filePath = path.join(dest, file)
-            fs.outputFileSync(filePath, contents)
+import { loadConfig } from './config'
+
+const { argv } = yargs
+    .usage('Usage: $0 -p [pattern] -o [output]')
+    .option('pattern', {
+        alias: 'p',
+        default: '*.svg',
+        describe: 'SVG files glob pattern',
+        type: 'string',
+    })
+    .option('output', {
+        alias: 'o',
+        default: './',
+        describe: 'Destination folder',
+        type: 'string',
+    })
+    .demandOption(['p', 'o'])
+
+async function run(config: Configuration): Promise<void> {
+    if (!config.entries?.length) {
+        const defaultEntry = {
+            find: {
+                config: {
+                    globPattern: argv.pattern,
+                    outputPath: argv.output,
+                },
+                plugin: await import('@react-vector-graphics/plugin-assets'),
+            },
         }
+        config.entries = [defaultEntry]
     }
+    await rvgCore({ config })
 }
 
-const argv = yargs
-    .usage('Usage: $0 -s [src] -d [dest]')
-    .option('src', {
-        alias: 's',
-        describe: 'source folder',
-        type: 'string',
-    })
-    .option('dest', {
-        alias: 'd',
-        describe: 'destination folder',
-        type: 'string',
-    })
-    .demandOption(['s', 'd']).argv
-
-const src = argv.s as string
-const dest = argv.d as string
-run(src, dest)
+loadConfig().then(run)
