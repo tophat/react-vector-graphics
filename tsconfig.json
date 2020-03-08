@@ -3,6 +3,8 @@
     "target": "es6",
     "module": "commonjs",
     "strict": true,
+    "baseUrl": "./",
+    "paths": { "*": ["*", "@types/*"] },
     "esModuleInterop": true
   },
   "exclude": ["node_modules"]
