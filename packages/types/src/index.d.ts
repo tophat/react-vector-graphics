@@ -10,14 +10,17 @@ declare module '@react-vector-graphics/types' {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     type FindPlugin = (...args: any) => Asset[]
 
-    type FindPluginConfiguration = { globPattern: string; outputPath: string }
+    type FindPluginConfiguration = {
+        globPattern: string
+        outputPath: string
+    }
 
     type SVGRConfiguration = {}
 
     type Entry = {
         find: {
             plugin: FindPlugin | string
-            config: FindPluginConfiguration
+            config: Partial<FindPluginConfiguration>
         }
         svgr?: SVGRConfiguration
     }
@@ -25,6 +28,6 @@ declare module '@react-vector-graphics/types' {
     type Configuration = {
         dryRun: boolean
         entries: Entry[]
-        svgrConfig: SVGRConfiguration
+        svgr?: SVGRConfiguration
     }
 }

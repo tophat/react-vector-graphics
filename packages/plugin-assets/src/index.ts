@@ -7,7 +7,7 @@ import { Asset, FindPluginConfiguration } from '@react-vector-graphics/types'
 export default async function pluginAssets({
     globPattern = '*.svg',
     outputPath = './components',
-}: FindPluginConfiguration): Promise<Asset[]> {
+}: Partial<FindPluginConfiguration>): Promise<Asset[]> {
     return glob.sync(globPattern).map(
         (filePath: string): Asset => ({
             state: { filePath, outputPath },

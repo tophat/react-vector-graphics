@@ -10,21 +10,21 @@ import {
 import { resolvePlugin } from './plugins'
 
 export default async function({
-    config: { entries = [], svgrConfig = {} },
+    config: { entries = [], svgr = {} },
 }: {
     config: Configuration
 }): Promise<void> {
     await Promise.all(
         entries.map(async (entry: Entry) => {
-            const [assets, svgr] = await Promise.all([
+            const [assets, svgrConfig] = await Promise.all([
                 resolvePlugin(entry.find.plugin).then((find: FindPlugin) => {
                     return find(entry.find.config)
                 }),
-                loadConfig(Object.assign({}, svgrConfig, entry.svgr)),
+                loadConfig(Object.assign({}, svgr, entry.svgr)),
             ])
             await Promise.all(
                 assets.map(({ svg, state }: { svg: string; state: State }) => {
-                    return core(svg, svgr, state)
+                    return core(svg, svgrConfig, state)
                 }),
             )
         }),

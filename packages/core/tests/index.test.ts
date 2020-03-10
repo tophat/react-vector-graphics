@@ -1,22 +1,24 @@
-import pluginAssets from '@react-vector-graphics/plugin-assets'
+import { Configuration, Entry } from '@react-vector-graphics/types'
 
 import rvgCore from '../src'
 
 describe('core', () => {
-    console.log(pluginAssets)
-    const entry = (): Entry => ({
+    const mockEntry = (): Entry => ({
         find: {
-            config: { globPattern: '*.svg', outputPath: './' },
-            plugin: pluginAssets.default,
+            config: {
+                globPattern: 'example/**/*.svg',
+                outputPath: 'example/components',
+            },
+            plugin: '@react-vector-graphics/plugin-assets',
         },
     })
-    const config = (): Configuration => ({
+    const mockConfig = (): Configuration => ({
         dryRun: false,
-        entries: [entry()],
-        svgrConfig: {},
+        entries: [mockEntry()],
+        svgr: {},
     })
 
-    it('uses default configuration', async () => {
-        expect(await rvgCore({ config: config() })).toMatchInlineSnapshot()
+    it('runs successfully using minimal config', async () => {
+        await expect(rvgCore({ config: mockConfig() })).resolves.toBeUndefined()
     })
 })
