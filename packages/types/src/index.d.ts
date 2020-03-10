@@ -7,8 +7,7 @@ declare module '@react-vector-graphics/types' {
 
     type Asset = { svg: string; state: State }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    type FindPlugin = (...args: any) => Asset[]
+    type FindPlugin = (config: Partial<FindPluginConfiguration>) => Asset[]
 
     type FindPluginConfiguration = {
         globPattern: string

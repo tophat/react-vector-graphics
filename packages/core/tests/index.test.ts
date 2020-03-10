@@ -15,7 +15,9 @@ describe('core', () => {
     const mockConfig = (): Configuration => ({
         dryRun: false,
         entries: [mockEntry()],
-        svgr: {},
+        svgr: {
+            plugins: ['@svgr/plugin-jsx'],
+        },
     })
 
     it('runs successfully using minimal config', async () => {

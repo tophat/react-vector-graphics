@@ -1,4 +1,4 @@
-import { default as core, loadConfig } from '@svgr/core'
+import { loadConfig, default as svgrCore } from '@svgr/core'
 
 import {
     Configuration,
@@ -24,7 +24,7 @@ export default async function({
             ])
             await Promise.all(
                 assets.map(({ svg, state }: { svg: string; state: State }) => {
-                    return core(svg, svgrConfig, state)
+                    return svgrCore(svg, svgrConfig, state)
                 }),
             )
         }),
