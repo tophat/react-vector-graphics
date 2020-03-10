@@ -30,6 +30,7 @@
     "@react-vector-graphics/plugin-assets": "^0.0.7"
   },
   "peerDependencies": {
+    "@react-vector-graphics/types": "^0.0.7",
     "@svgr/core": "^5.2.0"
   }
 }

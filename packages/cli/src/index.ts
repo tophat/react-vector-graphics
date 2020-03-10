@@ -1,4 +1,6 @@
 import yargs from 'yargs'
+
+import { Configuration } from '@react-vector-graphics/types'
 import rvgCore from '@react-vector-graphics/core'
 
 import { loadConfig } from './config'
@@ -27,7 +29,7 @@ async function run(config: Configuration): Promise<void> {
                     globPattern: argv.pattern,
                     outputPath: argv.output,
                 },
-                plugin: await import('@react-vector-graphics/plugin-assets'),
+                plugin: '@react-vector-graphics/plugin-assets',
             },
         }
         config.entries = [defaultEntry]

@@ -4,7 +4,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "lerna exec tsc",
+    "build": "lerna exec tsc -- --declaration",
     "build:watch": "lerna exec tsc --parallel -- --watch",
     "commit": "git-cz",
     "lint": "eslint packages/*/src/*.ts",
@@ -23,6 +23,7 @@
     "@tophat/commitizen-adapter": "^0.0.11",
     "@tophat/commitlint-config": "^0.1.2",
     "@tophat/eslint-config": "^0.4.0",
+    "@types/glob": "^7.1.1",
     "@types/jest": "^24.0.25",
     "@types/node": "^13.1.1",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
@@ -30,6 +31,7 @@
     "codecov": "^3.6.1",
     "commitizen": "^4.0.3",
     "commitlint": "^8.2.0",
+    "cosmiconfig": "^6.0.0",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.6.0",
     "eslint-plugin-import": "^2.19.1",

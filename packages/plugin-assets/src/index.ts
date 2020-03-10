@@ -2,13 +2,12 @@ import * as fs from 'fs'
 
 import * as glob from 'glob'
 
-type Config = { globPattern: string; outputPath: string }
-type Asset = { svg: string; state: State }
+import { Asset, FindPluginConfiguration } from '@react-vector-graphics/types'
 
-export default async function({
+export default async function pluginAssets({
     globPattern = '*.svg',
     outputPath = './components',
-}: Config): Promise<Asset[]> {
+}: FindPluginConfiguration): Promise<Asset[]> {
     return glob.sync(globPattern).map(
         (filePath: string): Asset => ({
             state: { filePath, outputPath },
