@@ -2,6 +2,7 @@ import yargs from 'yargs'
 
 import { Configuration } from '@react-vector-graphics/types'
 import rvgCore from '@react-vector-graphics/core'
+import { OPTIONS } from '@react-vector-graphics/plugin-assets'
 
 import { loadConfig } from './config'
 
@@ -9,26 +10,30 @@ const { argv } = yargs
     .usage('Usage: $0 -p [pattern] -o [output]')
     .option('pattern', {
         alias: 'p',
-        default: '*.svg',
         describe: 'SVG files glob pattern',
         type: 'string',
     })
     .option('output', {
         alias: 'o',
-        default: './',
         describe: 'Destination folder',
         type: 'string',
     })
-    .demandOption(['p', 'o'])
+    .option('ext', {
+        alias: 'e',
+        default: 'js',
+        describe: 'Component file extension',
+        type: 'string',
+    })
+    .demandOption(['pattern', 'output'])
 
 const run = async (config: Configuration): Promise<void> => {
-    config.options.globPattern = argv.pattern
     const assetPlugin = '@react-vector-graphics/plugin-assets'
-    if (!config.plugins.includes(assetPlugin)) {
-        config.plugins.unshift(assetPlugin)
+    if (!config.plugins?.length) {
+        config.plugins = [assetPlugin, '@svgr/plugin-jsx', assetPlugin]
     }
-    config.options['assets/globPattern'] = argv.pattern
-    config.options['assets/outputPath'] = argv.output
+    config.options[OPTIONS.GLOB_PATTERN] = argv.pattern
+    config.options[OPTIONS.OUTPUT_PATH] = argv.output
+    config.options[OPTIONS.FILE_EXT] = argv.ext
     await rvgCore({ config })
 }
 

@@ -15,25 +15,25 @@ const normalizePluginParams = (
 }
 
 const run = async ({ config }: { config: Configuration }): Promise<void> => {
-    let pluginArgs: Partial<PluginParams>[] = [{}]
+    const pluginArgs: Partial<PluginParams>[] = [{}]
     for (const plugin of config.plugins || []) {
         const [pluginFn, pluginConfig] = await Promise.all([
             resolvePlugin(plugin),
             loadConfig(config),
         ])
         const results = await Promise.all(
-            pluginArgs.map(({ code, state }) =>
-                pluginFn(code, pluginConfig, state),
-            ),
-        )
-        pluginArgs = []
-        results.forEach((result, i) => {
-            pluginArgs.push(
-                ...(Array.isArray(result) ? result : [result])
+            pluginArgs.splice(0).map(async args => {
+                const result = await pluginFn(
+                    args.code,
+                    pluginConfig,
+                    args.state,
+                )
+                return (Array.isArray(result) ? result : [result])
                     .filter(Boolean)
-                    .map(r => normalizePluginParams(r, pluginArgs[i])),
-            )
-        })
+                    .map(r => normalizePluginParams(r, args))
+            }),
+        )
+        pluginArgs.push(...pluginArgs.concat(...results))
     }
 }
 

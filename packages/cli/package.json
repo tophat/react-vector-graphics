@@ -14,7 +14,7 @@
     "lib"
   ],
   "bin": {
-    "rvg": "./bin/react-vector-graphics"
+    "rvg": "./bin/rvg"
   },
   "publishConfig": {
     "access": "public"
@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@react-vector-graphics/core": "^0.0.7",
+    "@react-vector-graphics/plugin-assets": "^0.0.7",
     "fs-extra": "^8.1.0",
     "yargs": "^14.2.0"
   },
