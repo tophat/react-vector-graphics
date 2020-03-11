@@ -1,32 +1,30 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyObject = { [key: string]: any }
+
 declare module '@react-vector-graphics/types' {
     type State = {
         filePath?: string
-        outputPath?: string
         componentName?: string
-    }
+    } & AnyObject
 
-    type Asset = { svg: string; state: State }
+    type PluginParams = { code: string; state: State }
 
-    type FindPlugin = (config: Partial<FindPluginConfiguration>) => Asset[]
+    type PluginResult = string | PluginParams | string[] | PluginParams[]
 
-    type FindPluginConfiguration = {
-        globPattern: string
-        outputPath: string
-    }
-
-    type SVGRConfiguration = {}
-
-    type Entry = {
-        find: {
-            plugin: FindPlugin | string
-            config: Partial<FindPluginConfiguration>
-        }
-        svgr?: SVGRConfiguration
-    }
+    type Plugin = (
+        svg?: string,
+        config?: Configuration,
+        state?: State,
+    ) => PluginResult
 
     type Configuration = {
-        dryRun: boolean
-        entries: Entry[]
-        svgr?: SVGRConfiguration
-    }
+        plugins: (string | Plugin)[]
+    } & AnyObject
+
+    type NamingScheme =
+        | 'CONSTANT_CASE'
+        | 'camelCase'
+        | 'PascalCase'
+        | 'snake_case'
+        | 'spinal-case'
 }

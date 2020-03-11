@@ -21,19 +21,14 @@ const { argv } = yargs
     })
     .demandOption(['p', 'o'])
 
-async function run(config: Configuration): Promise<void> {
-    if (!config.entries?.length) {
-        const defaultEntry = {
-            find: {
-                config: {
-                    globPattern: argv.pattern,
-                    outputPath: argv.output,
-                },
-                plugin: '@react-vector-graphics/plugin-assets',
-            },
-        }
-        config.entries = [defaultEntry]
+const run = async (config: Configuration): Promise<void> => {
+    config.options.globPattern = argv.pattern
+    const assetPlugin = '@react-vector-graphics/plugin-assets'
+    if (!config.plugins.includes(assetPlugin)) {
+        config.plugins.unshift(assetPlugin)
     }
+    config.options['assets/globPattern'] = argv.pattern
+    config.options['assets/outputPath'] = argv.output
     await rvgCore({ config })
 }
 

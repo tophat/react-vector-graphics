@@ -1,8 +1,14 @@
-import { FindPlugin } from '@react-vector-graphics/types'
+import { Configuration, Plugin } from '@react-vector-graphics/types'
+
+const DEFAULT_PLUGINS: (string | Plugin)[] = []
+
+export const getPlugins = (config: Configuration): (string | Plugin)[] => {
+    return config.plugins ?? DEFAULT_PLUGINS
+}
 
 export const resolvePlugin = async (
-    plugin: FindPlugin | string,
-): Promise<FindPlugin> => {
+    plugin: Plugin | string,
+): Promise<Plugin> => {
     if (typeof plugin === 'function') {
         return plugin
     }
