@@ -4,12 +4,9 @@ import * as fs from 'fs-extra'
 import * as glob from 'glob'
 
 import {
-    Configuration,
     NamingScheme,
     Plugin,
     PluginParams,
-    PluginResult,
-    State,
 } from '@react-vector-graphics/types'
 
 import { pathToName } from './utils'
