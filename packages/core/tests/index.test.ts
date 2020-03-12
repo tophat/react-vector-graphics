@@ -1,13 +1,15 @@
 import { Configuration } from '@react-vector-graphics/types'
+import { OPTIONS } from '@react-vector-graphics/plugin-assets'
 
 import rvgCore from '../src'
 
 describe('core', () => {
     const mockConfig = (): Configuration => ({
         options: {
-            'assets/globPattern': 'example/**/*.svg',
-            'assets/nameScheme': 'PascalCase',
-            'assets/outputPath': 'example/components',
+            [OPTIONS.FILE_EXT]: 'jsx',
+            [OPTIONS.GLOB_PATTERN]: 'example/**/*.svg',
+            [OPTIONS.NAME_SCHEME]: 'PascalCase',
+            [OPTIONS.OUTPUT_PATH]: 'example/components',
         },
         plugins: [
             '@react-vector-graphics/plugin-assets',
