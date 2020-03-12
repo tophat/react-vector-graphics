@@ -45,4 +45,10 @@ describe('core', () => {
         await rvgCore({ config })
         expect(fs.readdirSync(outputDir)).toHaveLength(2)
     })
+
+    it('fails on invalid plugin', async () => {
+        const config = mockConfig()
+        config.plugins.push('some-invalid-plugin')
+        await expect(rvgCore({ config })).rejects.toThrowError()
+    })
 })
