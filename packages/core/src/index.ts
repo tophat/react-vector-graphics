@@ -27,6 +27,7 @@ const run = async ({ config }: { config: Configuration }): Promise<void> => {
                     args.code,
                     pluginConfig,
                     args.state,
+                    console,
                 )
                 return (Array.isArray(result) ? result : [result])
                     .filter(Boolean)
