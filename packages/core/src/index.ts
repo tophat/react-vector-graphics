@@ -2,11 +2,11 @@ import { loadConfig } from '@svgr/core'
 
 import { Configuration, PluginParams } from '@react-vector-graphics/types'
 
-import { resolvePlugin } from './plugins'
+import { getPlugins, resolvePlugin } from './plugins'
 
 const normalizePluginParams = (
     codeOrParams: string | PluginParams,
-    prevParams: Partial<PluginParams> = {},
+    prevParams: Partial<PluginParams>,
 ): PluginParams => {
     if (typeof codeOrParams === 'string') {
         return { state: {}, ...prevParams, code: codeOrParams }
@@ -15,8 +15,8 @@ const normalizePluginParams = (
 }
 
 const run = async ({ config }: { config: Configuration }): Promise<void> => {
-    const pluginArgs: Partial<PluginParams>[] = [{}]
-    for (const plugin of config.plugins || []) {
+    const pluginArgs: PluginParams[] = [{} as PluginParams]
+    for (const plugin of getPlugins(config)) {
         const [pluginFn, pluginConfig] = await Promise.all([
             resolvePlugin(plugin),
             loadConfig(config),

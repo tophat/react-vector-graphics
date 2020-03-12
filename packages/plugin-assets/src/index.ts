@@ -6,6 +6,7 @@ import * as glob from 'glob'
 import {
     Configuration,
     NamingScheme,
+    Plugin,
     PluginParams,
     PluginResult,
     State,
@@ -22,11 +23,7 @@ export const OPTIONS = {
     OUTPUT_PATH: ns`outputPath`,
 }
 
-const run = async (
-    code: string | null,
-    config: Configuration,
-    state: State,
-): Promise<PluginResult> => {
+const run: Plugin = async (code, config, state) => {
     if (code) {
         const outputPath = config.options[OPTIONS.OUTPUT_PATH]
         if (outputPath && state.componentName) {

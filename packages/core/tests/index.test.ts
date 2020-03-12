@@ -1,5 +1,10 @@
+import * as fs from 'fs-extra'
+
 import { Configuration } from '@react-vector-graphics/types'
-import { OPTIONS } from '@react-vector-graphics/plugin-assets'
+import {
+    OPTIONS,
+    default as assetsPlugin,
+} from '@react-vector-graphics/plugin-assets'
 
 import rvgCore from '../src'
 
@@ -14,12 +19,16 @@ describe('core', () => {
         plugins: [
             '@react-vector-graphics/plugin-assets',
             '@svgr/plugin-jsx',
-            '@react-vector-graphics/plugin-assets',
+            assetsPlugin,
         ],
     })
 
     it('runs successfully using minimal config', async () => {
-        const result = await rvgCore({ config: mockConfig() })
-        await expect(result).toBeUndefined()
+        const config = mockConfig()
+        const outputDir = config.options[OPTIONS.OUTPUT_PATH]
+        fs.removeSync(outputDir)
+        expect(fs.existsSync(outputDir)).toBe(false)
+        await rvgCore({ config })
+        expect(fs.readdirSync(outputDir)).toHaveLength(2)
     })
 })

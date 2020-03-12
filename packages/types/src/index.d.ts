@@ -12,10 +12,10 @@ declare module '@react-vector-graphics/types' {
     type PluginResult = string | PluginParams | string[] | PluginParams[]
 
     type Plugin = (
-        svg?: string,
-        config?: Configuration,
-        state?: State,
-    ) => PluginResult
+        code: string | undefined,
+        config: Configuration,
+        state: State,
+    ) => Promise<PluginResult>
 
     type Configuration = {
         options: AnyObject
