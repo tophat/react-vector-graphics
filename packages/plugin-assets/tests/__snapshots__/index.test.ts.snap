@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`plugin-assets finds all files matching pattern 1`] = `
+Array [
+  Object {
+    "code": "<svg></svg>",
+    "state": Object {
+      "componentName": "File124x24Icon",
+      "filePath": "example/assets/file-1.24x24.icon.svg",
+    },
+  },
+  Object {
+    "code": "<svg></svg>",
+    "state": Object {
+      "componentName": "File2Icon",
+      "filePath": "example/assets/file2.icon.svg",
+    },
+  },
+]
+`;
+
+exports[`plugin-assets uses supplied naming scheme 1`] = `
+Array [
+  Object {
+    "code": "<svg></svg>",
+    "state": Object {
+      "componentName": "file_1_24x24_icon",
+      "filePath": "example/assets/file-1.24x24.icon.svg",
+    },
+  },
+  Object {
+    "code": "<svg></svg>",
+    "state": Object {
+      "componentName": "file2_icon",
+      "filePath": "example/assets/file2.icon.svg",
+    },
+  },
+  Object {
+    "code": "<svg></svg>",
+    "state": Object {
+      "componentName": "file3",
+      "filePath": "example/assets/file3.svg",
+    },
+  },
+]
+`;
+
+exports[`plugin-assets warns and continues when fileExt is not provided 1`] = `"No 'assets/fileExt' provided."`;
+
+exports[`plugin-assets warns and exits when componentName is not provided 1`] = `"No 'componentName' provided for 'example/assets/file3.svg'."`;
+
+exports[`plugin-assets warns and exits when outputPath is not provided 1`] = `"No 'assets/outputPath' provided."`;

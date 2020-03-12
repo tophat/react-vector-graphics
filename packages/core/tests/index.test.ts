@@ -1,3 +1,4 @@
+import { vol } from 'memfs'
 import * as fs from 'fs-extra'
 
 import { Configuration } from '@react-vector-graphics/types'
@@ -22,6 +23,19 @@ describe('core', () => {
             assetsPlugin,
         ],
     })
+    const mockSVGContent = '<svg></svg>'
+
+    beforeEach(() => {
+        vol.fromJSON({
+            'example/assets/file1.icon.svg': mockSVGContent,
+            'example/assets/file2.icon.svg': mockSVGContent,
+        })
+    })
+
+    afterEach(() => {
+        jest.resetAllMocks()
+        vol.reset()
+    })
 
     it('runs successfully using minimal config', async () => {
         const config = mockConfig()
@@ -30,5 +44,11 @@ describe('core', () => {
         expect(fs.existsSync(outputDir)).toBe(false)
         await rvgCore({ config })
         expect(fs.readdirSync(outputDir)).toHaveLength(2)
+    })
+
+    it('fails on invalid plugin', async () => {
+        const config = mockConfig()
+        config.plugins.push('some-invalid-plugin')
+        await expect(rvgCore({ config })).rejects.toThrowError()
     })
 })

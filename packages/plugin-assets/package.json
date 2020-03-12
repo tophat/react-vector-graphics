@@ -28,6 +28,7 @@
   },
   "peerDependencies": {
     "@react-vector-graphics/types": "^0.0.7",
+    "fs-extra": "^8.0.0",
     "glob": "^7.0.0"
   }
 }
