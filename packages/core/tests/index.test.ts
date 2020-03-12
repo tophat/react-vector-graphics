@@ -1,3 +1,4 @@
+import { vol } from 'memfs'
 import * as fs from 'fs-extra'
 
 import { Configuration } from '@react-vector-graphics/types'
@@ -21,6 +22,19 @@ describe('core', () => {
             '@svgr/plugin-jsx',
             assetsPlugin,
         ],
+    })
+    const mockSVGContent = '<svg></svg>'
+
+    beforeEach(() => {
+        vol.fromJSON({
+            'example/assets/file1.icon.svg': mockSVGContent,
+            'example/assets/file2.icon.svg': mockSVGContent,
+        })
+    })
+
+    afterEach(() => {
+        jest.resetAllMocks()
+        vol.reset()
     })
 
     it('runs successfully using minimal config', async () => {
