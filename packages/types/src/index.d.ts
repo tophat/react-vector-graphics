@@ -18,6 +18,7 @@ declare module '@react-vector-graphics/types' {
     ) => PluginResult
 
     type Configuration = {
+        options: AnyObject
         plugins: (string | Plugin)[]
     } & AnyObject
 
