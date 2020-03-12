@@ -1,0 +1,7 @@
+options:
+  assets/fileExt: jsx
+  assets/outputPath: components
+plugins:
+  - '@react-vector-graphics/plugin-assets'
+  - '@svgr/plugin-jsx'
+  - '@react-vector-graphics/plugin-assets'
