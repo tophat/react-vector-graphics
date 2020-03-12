@@ -1,40 +1,40 @@
-import * as path from 'path'
-
 import yargs from 'yargs'
-import * as fs from 'fs-extra'
-import convert from '@react-vector-graphics/core'
 
-function run(src: string, dest: string): void {
-    const files = fs.readdirSync(src)
-    const filesContents = files.map((file): [string, string] => [
-        file,
-        fs.readFileSync(path.join(src, file), { encoding: 'utf-8' }),
-    ])
-    const results = filesContents.map(([file, contents]): object =>
-        convert(file, contents),
-    )
-    for (const result of results) {
-        for (const [file, contents] of Object.entries(result)) {
-            const filePath = path.join(dest, file)
-            fs.outputFileSync(filePath, contents)
-        }
+import { Configuration } from '@react-vector-graphics/types'
+import rvgCore from '@react-vector-graphics/core'
+import { OPTIONS } from '@react-vector-graphics/plugin-assets'
+
+import { loadConfig } from './config'
+
+const { argv } = yargs
+    .usage('Usage: $0 -p [pattern] -o [output]')
+    .option('pattern', {
+        alias: 'p',
+        describe: 'SVG files glob pattern',
+        type: 'string',
+    })
+    .option('output', {
+        alias: 'o',
+        describe: 'Destination folder',
+        type: 'string',
+    })
+    .option('ext', {
+        alias: 'e',
+        default: 'js',
+        describe: 'Component file extension',
+        type: 'string',
+    })
+    .demandOption(['pattern', 'output'])
+
+const run = async (config: Configuration): Promise<void> => {
+    const assetPlugin = '@react-vector-graphics/plugin-assets'
+    if (!config.plugins?.length) {
+        config.plugins = [assetPlugin, '@svgr/plugin-jsx', assetPlugin]
     }
+    config.options[OPTIONS.GLOB_PATTERN] = argv.pattern
+    config.options[OPTIONS.OUTPUT_PATH] = argv.output
+    config.options[OPTIONS.FILE_EXT] = argv.ext
+    await rvgCore({ config })
 }
 
-const argv = yargs
-    .usage('Usage: $0 -s [src] -d [dest]')
-    .option('src', {
-        alias: 's',
-        describe: 'source folder',
-        type: 'string',
-    })
-    .option('dest', {
-        alias: 'd',
-        describe: 'destination folder',
-        type: 'string',
-    })
-    .demandOption(['s', 'd']).argv
-
-const src = argv.s as string
-const dest = argv.d as string
-run(src, dest)
+loadConfig().then(run)

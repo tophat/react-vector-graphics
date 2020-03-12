@@ -10,6 +10,7 @@ module.exports = {
                 extensions: ['.js', '.jsx', '.ts', '.tsx'],
             },
         },
+        'import/internal-regex': '^@react-vector-graphics/',
     },
     parser: '@typescript-eslint/parser',
     plugins: ['@typescript-eslint'],
@@ -17,5 +18,5 @@ module.exports = {
         'sort-imports': 2,
         'sort-keys': 2,
     },
-    ignorePatterns: ["lib/"],
-};
+    ignorePatterns: ['lib/'],
+}

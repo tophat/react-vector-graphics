@@ -1,11 +1,12 @@
 {
-  "name": "@react-vector-graphics/plugin-svgo",
+  "name": "@react-vector-graphics/types",
   "version": "0.0.7",
-  "description": "SVGO plugin for react-vector-graphics",
+  "description": "Types for react-vector-graphics",
   "author": "Top Hat <opensource@tophat.com>",
   "homepage": "https://github.com/tophat/react-vector-graphics#readme",
   "license": "Apache-2.0",
   "main": "lib/index.js",
+  "types": "src/index.d.ts",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -25,11 +26,5 @@
   },
   "bugs": {
     "url": "https://github.com/tophat/react-vector-graphics/issues"
-  },
-  "dependencies": {
-    "svgo": "^1.2.2"
-  },
-  "devDependencies": {
-    "@types/svgo": "^1.0.2"
   }
 }

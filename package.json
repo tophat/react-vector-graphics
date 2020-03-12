@@ -4,8 +4,8 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "lerna exec tsc",
-    "build:watch": "lerna exec tsc --parallel -- --watch",
+    "build": "lerna exec tsc -- --declaration",
+    "build:watch": "lerna exec tsc --parallel -- --declaration --watch",
     "commit": "git-cz",
     "lint": "eslint packages/*/src/*.ts",
     "lint:fix": "eslint packages/*/src/*.ts --fix",
@@ -19,9 +19,11 @@
     "test:watch": "jest --watch --notify"
   },
   "devDependencies": {
+    "@svgr/core": "^5.2.0",
     "@tophat/commitizen-adapter": "^0.0.11",
     "@tophat/commitlint-config": "^0.1.2",
     "@tophat/eslint-config": "^0.4.0",
+    "@types/glob": "^7.1.1",
     "@types/jest": "^24.0.25",
     "@types/node": "^13.1.1",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
@@ -29,6 +31,7 @@
     "codecov": "^3.6.1",
     "commitizen": "^4.0.3",
     "commitlint": "^8.2.0",
+    "cosmiconfig": "^6.0.0",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.6.0",
     "eslint-plugin-import": "^2.19.1",
@@ -36,6 +39,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.17.0",
+    "glob": "^7.1.6",
     "husky": "^3.0.9",
     "jest": "^24.9.0",
     "lerna": "^3.18.4",
