@@ -27,7 +27,7 @@
     "url": "https://github.com/tophat/react-vector-graphics/issues"
   },
   "peerDependencies": {
-    "@react-vector-graphics/types": "^0.0.7",
+    "@react-vector-graphics/types": "*",
     "fs-extra": "^8.0.0",
     "glob": "^7.0.0"
   }

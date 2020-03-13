@@ -6,7 +6,7 @@ import { OPTIONS } from '@react-vector-graphics/plugin-assets'
 
 const mergeCliOptions = (config: Configuration): Configuration => {
     if (!config.options) config.options = {}
-    const { argv } = yargs
+    const { argv } = yargs(process.argv)
         .usage('Usage: $0 -p [pattern] -o [output]')
         .option('pattern', {
             alias: 'p',

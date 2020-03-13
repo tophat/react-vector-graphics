@@ -11,6 +11,7 @@
     "lint:fix": "eslint packages/*/src/*.ts --fix",
     "lock:check": "yarn-deduplicate --list",
     "lock:fix": "yarn-deduplicate",
+    "postinstall": "yarn-deduplicate",
     "release": "lerna publish -y && git push origin --tags",
     "report:coverage": "codecov",
     "test": "jest",
@@ -23,9 +24,11 @@
     "@tophat/commitizen-adapter": "^0.0.11",
     "@tophat/commitlint-config": "^0.1.2",
     "@tophat/eslint-config": "^0.4.0",
+    "@types/fs-extra": "^8.0.1",
     "@types/glob": "^7.1.1",
     "@types/jest": "^24.0.25",
     "@types/node": "^13.1.1",
+    "@types/yargs": "^13.0.3",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
     "@typescript-eslint/parser": "^2.8.0",
     "codecov": "^3.6.1",
@@ -42,6 +45,7 @@
     "glob": "^7.1.6",
     "husky": "^3.0.9",
     "jest": "^24.9.0",
+    "jest-mock-props": "^1.7.2",
     "lerna": "^3.18.4",
     "lint-staged": "^9.5.0",
     "memfs": "^3.1.1",
@@ -62,7 +66,7 @@
       "./node_modules/"
     ],
     "setupFilesAfterEnv": [
-        "./config/setupTests.ts"
+      "./config/setupTests.ts"
     ],
     "coverageDirectory": "./artifacts/coverage"
   },
