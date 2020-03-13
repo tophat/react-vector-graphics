@@ -7,7 +7,8 @@ export const DEFAULT_CONFIG: Configuration = {
     plugins: [],
 }
 
-const explorer = cosmiconfig('rvg', { cache: true })
+const cache = process.env.NODE_ENV !== 'test'
+const explorer = cosmiconfig('rvg', { cache })
 
 export const loadConfig = async (from?: string): Promise<Configuration> => {
     const result = await explorer.search(from)

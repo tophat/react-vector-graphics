@@ -1,9 +1,12 @@
+import { vol } from 'memfs'
+import * as fs from 'fs-extra'
 import * as mockProps from 'jest-mock-props'
 
+import { Configuration } from '@react-vector-graphics/types'
 import { OPTIONS } from '@react-vector-graphics/plugin-assets'
 import rvgCore from '@react-vector-graphics/core'
 
-import { run } from '../src/main'
+import { default as rvgCli } from '../src/index'
 
 jest.mock('@react-vector-graphics/core', () => jest.fn())
 mockProps.extend(jest)
@@ -14,6 +17,10 @@ describe('cli', () => {
     const spyProcessExit = jest.spyOn(process, 'exit')
     const spyLogError = jest.spyOn(console, 'error')
 
+    const createMockConfig = (config: Configuration): void => {
+        fs.outputJSONSync(`${process.cwd()}/.rvgrc.json`, config)
+    }
+
     beforeEach(() => {
         spyProcessExit.mockImplementation(code => {
             throw Error(`Process exited with code: ${code}`)
@@ -21,30 +28,31 @@ describe('cli', () => {
     })
 
     afterEach(() => {
+        vol.reset()
         jest.resetAllMocks()
     })
 
     it('requests for missing option: pattern', async () => {
-        const config = {
+        createMockConfig({
             options: {
                 [OPTIONS.OUTPUT_PATH]: 'tests/component',
             },
             plugins: [],
-        }
-        await expect(run(config)).rejects.toThrowErrorMatchingSnapshot()
+        })
+        await expect(rvgCli()).rejects.toThrowErrorMatchingSnapshot()
         expect(spyLogError).toHaveBeenCalledWith(
             'Missing required argument: pattern',
         )
     })
 
     it('requests for missing option: output', async () => {
-        const config = {
+        createMockConfig({
             options: {
                 [OPTIONS.GLOB_PATTERN]: '*.svg',
             },
             plugins: [],
-        }
-        await expect(run(config)).rejects.toThrowErrorMatchingSnapshot()
+        })
+        await expect(rvgCli()).rejects.toThrowErrorMatchingSnapshot()
         expect(spyLogError).toHaveBeenCalledWith(
             'Missing required argument: output',
         )
@@ -59,11 +67,11 @@ describe('cli', () => {
             '--output',
             'tests/components',
         ])
-        const config = {
+        createMockConfig({
             options: { [OPTIONS.GLOB_PATTERN]: '*.svg' },
             plugins: [],
-        }
-        await run(config)
+        })
+        await rvgCli()
         expect(spyLogError).not.toHaveBeenCalled()
         expect(spyRvgCore).toHaveBeenCalledWith({
             config: {
