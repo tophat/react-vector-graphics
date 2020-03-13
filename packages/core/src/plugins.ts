@@ -25,5 +25,5 @@ export const resolvePlugin = async (
         }
     }
 
-    throw new Error(`Invalid plugin "${plugin}"`)
+    throw new Error(`Invalid plugin '${plugin}'`)
 }

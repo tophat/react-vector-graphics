@@ -46,9 +46,14 @@ describe('core', () => {
         expect(fs.readdirSync(outputDir)).toHaveLength(2)
     })
 
-    it('fails on invalid plugin', async () => {
+    it.each`
+        invalidPlugin
+        ${'some-invalid-plugin'}
+        ${420}
+        ${{}}
+    `('fails on invalid plugin: $invalidPlugin', async ({ invalidPlugin }) => {
         const config = mockConfig()
-        config.plugins.push('some-invalid-plugin')
-        await expect(rvgCore({ config })).rejects.toThrowError()
+        config.plugins.push(invalidPlugin)
+        await expect(rvgCore({ config })).rejects.toThrowErrorMatchingSnapshot()
     })
 })
