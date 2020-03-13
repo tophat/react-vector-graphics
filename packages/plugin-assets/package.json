@@ -1,6 +1,6 @@
 {
   "name": "@react-vector-graphics/plugin-assets",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Default code asset loading plugin for react-vector-graphics",
   "author": "Top Hat <opensource@tophat.com>",
   "homepage": "https://github.com/tophat/react-vector-graphics#readme",
