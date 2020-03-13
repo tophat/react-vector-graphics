@@ -45,6 +45,7 @@
     "glob": "^7.1.6",
     "husky": "^3.0.9",
     "jest": "^24.9.0",
+    "jest-mock-props": "^1.7.2",
     "lerna": "^3.18.4",
     "lint-staged": "^9.5.0",
     "memfs": "^3.1.1",
@@ -65,7 +66,7 @@
       "./node_modules/"
     ],
     "setupFilesAfterEnv": [
-        "./config/setupTests.ts"
+      "./config/setupTests.ts"
     ],
     "coverageDirectory": "./artifacts/coverage"
   },
