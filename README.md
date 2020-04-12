@@ -51,7 +51,6 @@ yarn build:watch
 
 ## Contributors
 
-_You don't really have to add this section yourself! Simply use [all-contributors](https://allcontributors.org/) by adding comments in your PRs like so:_
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -69,5 +68,3 @@ _You don't really have to add this section yourself! Simply use [all-contributor
 ```txt
 @all-contributors please add <username> for <contribution type>
 ```
-
-_Find out more about All-Contributors on their website!_
