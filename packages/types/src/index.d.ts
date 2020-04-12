@@ -20,7 +20,7 @@ declare module '@react-vector-graphics/types' {
         code: string | undefined,
         config: Configuration,
         state: State,
-        logger: Logger,
+        logger?: Logger,
     ) => Promise<PluginResult>
 
     type Configuration = {

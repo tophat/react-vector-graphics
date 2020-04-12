@@ -45,18 +45,18 @@ const writeComponent = (args: {
     componentFiles: { [fileName: string]: string }
     outputPath?: string
     fileExt?: string
-    logger: Logger
+    logger?: Logger
 }): void => {
     if (!args.componentName) {
-        return args.logger.warn(
+        return args.logger?.warn(
             `No '${STATE.COMPONENT_NAME}' provided for '${args.assetFile}'.`,
         )
     }
     if (!args.outputPath) {
-        return args.logger.warn(`No '${OPTIONS.OUTPUT_PATH}' provided.`)
+        return args.logger?.warn(`No '${OPTIONS.OUTPUT_PATH}' provided.`)
     }
     if (!args.fileExt) {
-        args.logger.warn(`No '${OPTIONS.FILE_EXT}' provided.`)
+        args.logger?.warn(`No '${OPTIONS.FILE_EXT}' provided.`)
     }
 
     const componentFiles = Object.entries(args.componentFiles)
