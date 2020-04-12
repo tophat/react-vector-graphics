@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyObject = { [key: string]: any }
 
-type Log = (message: string) => void
+type Log = console.log
 
 declare module '@react-vector-graphics/types' {
     type State = {
