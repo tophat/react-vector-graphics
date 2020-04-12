@@ -32,7 +32,7 @@
   "dependencies": {
     "@react-vector-graphics/core": "*",
     "@react-vector-graphics/plugin-assets": "*",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^8||^9",
     "yargs": "^14.2.0"
   },
   "peerDependencies": {

@@ -28,7 +28,7 @@
   },
   "peerDependencies": {
     "@react-vector-graphics/types": "*",
-    "fs-extra": "^8.0.0",
-    "glob": "^7.0.0"
+    "fs-extra": "^8||^9",
+    "glob": "^7"
   }
 }
