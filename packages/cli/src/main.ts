@@ -8,7 +8,7 @@ import { getLogger, default as rvgCore } from '@react-vector-graphics/core'
 
 import * as conf from './config'
 
-const onLoadConfig = (config: Configuration, logger: Logger) => (
+const configResultHandler = (config: Configuration, logger: Logger) => (
     result: CosmiconfigResult,
 ): void => {
     if (result?.filepath && !result.isEmpty) {
@@ -31,11 +31,10 @@ const getConfig = async (
     logger: Logger,
 ): Promise<Configuration> => {
     const currentDir = process.cwd()
+    const handleConfig = configResultHandler(config, logger)
     logger.info(`Searching for config in ${currentDir}`)
     const result = await conf.find(currentDir)
-    if (!result) {
-        logger.info('No config found')
-    }
+    handleConfig(result)
 
     logger.info('Start getting cli options')
     const { argv } = yargs(process.argv)
@@ -47,7 +46,9 @@ const getConfig = async (
         })
         .demandOption(['config'])
 
-    await conf.load(argv.config).then(onLoadConfig(config, logger))
+    if (result?.filepath !== argv.config) {
+        await conf.load(argv.config).then(handleConfig)
+    }
     return config
 }
 

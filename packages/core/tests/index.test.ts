@@ -11,6 +11,7 @@ import rvgCore, { getLogger } from '../src'
 
 describe('core', () => {
     const logger = getLogger()
+    const spyLogInfo = jest.spyOn(logger, 'info')
     const mockConfig = (): Configuration => ({
         options: {
             [OPTIONS.FILE_EXT]: 'jsx',
@@ -43,7 +44,7 @@ describe('core', () => {
         const outputDir = config.options[OPTIONS.OUTPUT_PATH]
         fs.removeSync(outputDir)
         expect(fs.existsSync(outputDir)).toBe(false)
-        await rvgCore({ config, logger })
+        await rvgCore({ config })
         expect(fs.readdirSync(outputDir)).toHaveLength(2)
     })
 
@@ -58,5 +59,6 @@ describe('core', () => {
         await expect(
             rvgCore({ config, logger }),
         ).rejects.toThrowErrorMatchingSnapshot()
+        expect(spyLogInfo).toHaveBeenCalled()
     })
 })

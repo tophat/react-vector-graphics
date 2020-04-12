@@ -24,7 +24,7 @@ export const run = async ({
     logger = getLogger(),
 }: {
     config: Configuration
-    logger: Logger
+    logger?: Logger
 }): Promise<void> => {
     logger.info('options:', config.options)
     const pluginArgs: PluginParams[] = [{} as PluginParams]
