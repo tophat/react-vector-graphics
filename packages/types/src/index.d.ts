@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyObject = { [key: string]: any }
 
-type Log = (message: string) => void
+type Log = Console['log']
 
 declare module '@react-vector-graphics/types' {
     type State = {
@@ -20,7 +20,7 @@ declare module '@react-vector-graphics/types' {
         code: string | undefined,
         config: Configuration,
         state: State,
-        logger: Logger,
+        logger?: Logger,
     ) => Promise<PluginResult>
 
     type Configuration = {

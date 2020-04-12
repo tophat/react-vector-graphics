@@ -7,9 +7,11 @@ import {
     default as assetsPlugin,
 } from '@react-vector-graphics/plugin-assets'
 
-import rvgCore from '../src'
+import rvgCore, { getLogger } from '../src'
 
 describe('core', () => {
+    const logger = getLogger()
+    const spyLogInfo = jest.spyOn(logger, 'info')
     const mockConfig = (): Configuration => ({
         options: {
             [OPTIONS.FILE_EXT]: 'jsx',
@@ -54,6 +56,9 @@ describe('core', () => {
     `('fails on invalid plugin: $invalidPlugin', async ({ invalidPlugin }) => {
         const config = mockConfig()
         config.plugins.push(invalidPlugin)
-        await expect(rvgCore({ config })).rejects.toThrowErrorMatchingSnapshot()
+        await expect(
+            rvgCore({ config, logger }),
+        ).rejects.toThrowErrorMatchingSnapshot()
+        expect(spyLogInfo).toHaveBeenCalled()
     })
 })
