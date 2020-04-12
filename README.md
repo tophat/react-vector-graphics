@@ -58,6 +58,7 @@ _You don't really have to add this section yourself! Simply use [all-contributor
 <table>
   <tr>
     <td align="center"><a href="http://emmanuel.ogbizi.com"><img src="https://avatars0.githubusercontent.com/u/2528959?v=4" width="100px;" alt=""/><br /><sub><b>Emmanuel Ogbizi</b></sub></a><br /><a href="https://github.com/tophat/react-vector-graphics/commits?author=iamogbz" title="Code">💻</a> <a href="#ideas-iamogbz" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-iamogbz" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-iamogbz" title="Maintenance">🚧</a> <a href="https://github.com/tophat/react-vector-graphics/commits?author=iamogbz" title="Tests">⚠️</a> <a href="#design-iamogbz" title="Design">🎨</a> <a href="https://github.com/tophat/react-vector-graphics/commits?author=iamogbz" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/umar-ahmed"><img src="https://avatars1.githubusercontent.com/u/8302959?v=4" width="100px;" alt=""/><br /><sub><b>Umar Ahmed</b></sub></a><br /><a href="https://github.com/tophat/react-vector-graphics/commits?author=umar-ahmed" title="Code">💻</a> <a href="#ideas-umar-ahmed" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
