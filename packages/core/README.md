@@ -5,24 +5,24 @@ This config files for this package should be backwards compatible with `@svgr/sv
 ## Usage
 
 ```js
-const rgvCore = require('@react-vector-graphics/core').default
-const myPlugin = require('./myPlugin')
+const rgvCore = require("@react-vector-graphics/core").default;
+const myPlugin = require("./myPlugin");
 
 const config = {
-  plugins: [
-    '@react-vector-graphics/plugin-assets',
-    myPlugin,
-    '@svgr/plugin-svgo',
-  ],
-  options: {
-    "assets/globPattern": "./assets/*.svg",
-  },
-  svgoConfig: {
-    multipass: true,
-  }
-}
+    plugins: [
+        "@react-vector-graphics/plugin-assets",
+        myPlugin,
+        "@svgr/plugin-svgo"
+    ],
+    options: {
+        "assets/globPattern": "./assets/*.svg"
+    },
+    svgoConfig: {
+        multipass: true
+    }
+};
 
-rvgCore({ config, logger: console })
+rvgCore({ config, logger: console });
 ```
 
 ### Configuration
@@ -41,14 +41,11 @@ The options that the plugins will be initiated with. It is a good idea to namesp
 
 ```json
 {
-  "plugins": [
-    "myPlugin",
-    "other-plugin"
-  ],
-  "options": {
-    "myPlugin/shrink": false,
-    "otherPlugin/shrink": true
-  }
+    "plugins": ["myPlugin", "other-plugin"],
+    "options": {
+        "myPlugin/shrink": false,
+        "otherPlugin/shrink": true
+    }
 }
 ```
 
@@ -72,4 +69,4 @@ The current state of execution, can be modified by plugins to pass information t
 
 This is an optional argument that allows the plugin to log output with custom levels.
 
-*NOTE*: this is not guaranteed to exist and defaults to `console`.
+_NOTE_: this is not guaranteed to exist and defaults to `console`.

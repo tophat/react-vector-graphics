@@ -45,12 +45,15 @@ describe('cli', () => {
     })
 
     it('uses found config file', async () => {
-        createMockConfig({
-            options: {
-                [OPTIONS.GLOB_PATTERN]: '*.svg',
+        createMockConfig(
+            {
+                options: {
+                    [OPTIONS.GLOB_PATTERN]: '*.svg',
+                },
+                plugins: [],
             },
-            plugins: [],
-        })
+            `${process.cwd()}/../.rvgrc.json`,
+        )
         await rvgCli()
         expect(spyLogError).not.toHaveBeenCalled()
         expect(spyRvgCore).toHaveBeenCalledWith(
