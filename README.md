@@ -24,9 +24,22 @@ See individual package readmes for more detailed documentation.
 
 ## Contributing
 
+Install build dependencies
+
 ```sh
 yarn install
-yarn test
+```
+
+Run all tests in watch mode
+
+```sh
+yarn test:watch
+```
+
+Build all packages in watch mode
+
+```sh
+yarn build:watch
 ```
 
 ## Contributors

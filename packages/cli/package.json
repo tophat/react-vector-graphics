@@ -30,8 +30,8 @@
     "url": "https://github.com/tophat/react-vector-graphics/issues"
   },
   "dependencies": {
-    "@react-vector-graphics/core": "^0.2.1",
-    "@react-vector-graphics/plugin-assets": "^0.2.1",
+    "@react-vector-graphics/core": "*",
+    "@react-vector-graphics/plugin-assets": "*",
     "fs-extra": "^8.1.0",
     "yargs": "^14.2.0"
   },

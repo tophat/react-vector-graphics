@@ -1,8 +1,13 @@
 import { loadConfig } from '@svgr/core'
 
-import { Configuration, PluginParams } from '@react-vector-graphics/types'
+import {
+    Configuration,
+    Logger,
+    PluginParams,
+} from '@react-vector-graphics/types'
 
 import { getPlugins, resolvePlugin } from './plugins'
+import { getLogger } from './logging'
 
 const normalizePluginParams = (
     codeOrParams: string | PluginParams,
@@ -14,11 +19,12 @@ const normalizePluginParams = (
     return { ...prevParams, ...codeOrParams }
 }
 
-export const run = async ({
-    config,
-}: {
+export const run = async (options: {
     config: Configuration
+    logger: Logger
 }): Promise<void> => {
+    const { config } = options
+    const logger = options.logger ?? getLogger()
     const pluginArgs: PluginParams[] = [{} as PluginParams]
     for (const plugin of getPlugins(config)) {
         const [pluginFn, pluginConfig] = await Promise.all([
@@ -31,7 +37,7 @@ export const run = async ({
                     args.code,
                     pluginConfig,
                     args.state,
-                    console,
+                    logger,
                 )
                 return (Array.isArray(result) ? result : [result])
                     .filter(Boolean)

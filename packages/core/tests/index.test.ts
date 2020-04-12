@@ -7,9 +7,10 @@ import {
     default as assetsPlugin,
 } from '@react-vector-graphics/plugin-assets'
 
-import rvgCore from '../src'
+import rvgCore, { getLogger } from '../src'
 
 describe('core', () => {
+    const logger = getLogger()
     const mockConfig = (): Configuration => ({
         options: {
             [OPTIONS.FILE_EXT]: 'jsx',
@@ -42,7 +43,7 @@ describe('core', () => {
         const outputDir = config.options[OPTIONS.OUTPUT_PATH]
         fs.removeSync(outputDir)
         expect(fs.existsSync(outputDir)).toBe(false)
-        await rvgCore({ config })
+        await rvgCore({ config, logger })
         expect(fs.readdirSync(outputDir)).toHaveLength(2)
     })
 
@@ -54,6 +55,8 @@ describe('core', () => {
     `('fails on invalid plugin: $invalidPlugin', async ({ invalidPlugin }) => {
         const config = mockConfig()
         config.plugins.push(invalidPlugin)
-        await expect(rvgCore({ config })).rejects.toThrowErrorMatchingSnapshot()
+        await expect(
+            rvgCore({ config, logger }),
+        ).rejects.toThrowErrorMatchingSnapshot()
     })
 })
