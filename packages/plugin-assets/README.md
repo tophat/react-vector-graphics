@@ -20,8 +20,6 @@ The plugin works in two stages discovery and storage.
 }
 ```
 
-`npx rvg`
-
 ### Discovery
 
 This should be run before any other plugin that relies on having the svg code in the state.

@@ -23,11 +23,11 @@ Started off as a project to stop svg files from being scattered over multiple re
 
 See individual package readmes for more detailed documentation.
 
-### [`@react-vector-graphics/core`](./packages/core/README.md)
-
-### [`@react-vector-graphics/cli`](./packages/cli/README.md)
-
-### [`@react-vector-graphics/plugin-assets`](./packages/plugin-assets/README.md)
+| Documentation                                                                | Version                                                                                                                                                     |
+| ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`@react-vector-graphics/core`](./packages/core/README.md)                   | [![npm version](https://img.shields.io/npm/v/@react-vector-graphics/core.svg)](https://www.npmjs.com/package/@react-vector-graphics/core)                   |
+| [`@react-vector-graphics/cli`](./packages/cli/README.md)                     | [![npm version](https://img.shields.io/npm/v/@react-vector-graphics/cli.svg)](https://www.npmjs.com/package/@react-vector-graphics/cli)                     |
+| [`@react-vector-graphics/plugin-assets`](./packages/plugin-assets/README.md) | [![npm version](https://img.shields.io/npm/v/@react-vector-graphics/plugin-assets.svg)](https://www.npmjs.com/package/@react-vector-graphics/plugin-assets) |
 
 ## Contributing
 
@@ -63,6 +63,7 @@ yarn build:watch
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ```txt

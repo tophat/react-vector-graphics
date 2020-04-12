@@ -2,7 +2,7 @@
 
 ## Usage
 
-`npx rvg --config=my.rvgrc`
+`npx rvg --config=my.rvgrc.yml`
 
 Where config file can be any of the formats supported by `cosmiconfig` with the contents matching the specs of the [`@react-vector-graphics/core`](../core/README.md#configuration) package.
 
