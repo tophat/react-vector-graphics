@@ -1,45 +1,49 @@
 # react-vector-graphics
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+<span><img align="right" width="200" height="200" src="./assets/logo.svg" alt="Logo"></span>
 
 ![Node CI](https://github.com/tophat/react-vector-graphics/workflows/Node%20CI/badge.svg)
+[![codecov](https://codecov.io/gh/tophat/react-vector-graphics/branch/master/graph/badge.svg)](https://codecov.io/gh/tophat/react-vector-graphics)
+
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![Dependabot](https://flat.badgen.net/dependabot/tophat/yvm?icon=dependabot)](https://app.dependabot.com/accounts/tophat/repos/137530684)
+
+[![Slack workspace](https://slackinvite.dev.tophat.com/badge.svg)](https://opensource.tophat.com/slack)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 
 ## Overview
 
-_At a high-level, what is your project about? What problem does it solve? This is the first thing people will see when landing on your repository, make it snappy!_
+Automate the building of `React` components from svg files.
 
 ## Motivation
 
-_This can be an extension of the Overview describing your problem space. It's a cool way to give an origin story to your project._
+Started off as a project to stop svg files from being scattered over multiple repos. It turned into a way to auto generate the react components directly to reduce boilerplate. Then have the auto generation support multiple configuration per repository. Finally creating a bot to handle the generation and optimisation of the svgs.
 
 ## Usage
 
-_Once installed, how can your users make it work?_
-
 See individual package readmes for more detailed documentation.
 
-### [`@react-vector-graphics/core`](./pacakages/core/README.md)
+### [`@react-vector-graphics/core`](./packages/core/README.md)
 
-### [`@react-vector-graphics/cli`](./pacakages/cli/README.md)
+### [`@react-vector-graphics/cli`](./packages/cli/README.md)
 
-### [`@react-vector-graphics/plugin-assets`](./pacakages/plugin-assets/README.md)
+### [`@react-vector-graphics/plugin-assets`](./packages/plugin-assets/README.md)
 
 ## Contributing
 
-Install build dependencies
+Install dependencies
 
 ```sh
 yarn install
 ```
 
-Run all tests in watch mode
+Run all tests
 
 ```sh
 yarn test:watch
 ```
 
-Build all packages in watch mode
+Build all packages
 
 ```sh
 yarn build:watch
