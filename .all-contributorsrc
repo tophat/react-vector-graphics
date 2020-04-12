@@ -1,0 +1,30 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "iamogbz",
+      "name": "Emmanuel Ogbizi",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2528959?v=4",
+      "profile": "http://emmanuel.ogbizi.com",
+      "contributions": [
+        "code",
+        "ideas",
+        "infra",
+        "maintenance",
+        "test",
+        "design",
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "react-vector-graphics",
+  "projectOwner": "tophat",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
