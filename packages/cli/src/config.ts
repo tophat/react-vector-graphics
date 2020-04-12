@@ -2,7 +2,7 @@ import { cosmiconfig } from 'cosmiconfig'
 
 import { Configuration } from '@react-vector-graphics/types'
 
-export const DEFAULT_CONFIG: Configuration = {
+const DEFAULT_CONFIG: Configuration = {
     options: {},
     plugins: [],
 }
@@ -10,7 +10,11 @@ export const DEFAULT_CONFIG: Configuration = {
 const cache = process.env.NODE_ENV !== 'test'
 const explorer = cosmiconfig('rvg', { cache })
 
-export const loadConfig = async (from?: string): Promise<Configuration> => {
-    const result = await explorer.search(from)
-    return Object.assign({}, DEFAULT_CONFIG, result?.config)
-}
+const withDefault = (config: Partial<Configuration> | null): Configuration =>
+    Object.assign({}, DEFAULT_CONFIG, config)
+
+export const findConfig = async (from?: string): Promise<Configuration> =>
+    withDefault((await explorer.search(from))?.config)
+
+export const loadConfig = async (from: string): Promise<Configuration> =>
+    withDefault((await explorer.load(from))?.config)

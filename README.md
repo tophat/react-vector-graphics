@@ -1,17 +1,6 @@
 # react-vector-graphics
 
-## How to use this repository
-
-This repository covers some must-haves when starting a project so you don't have to. Things like setting up a basic CI configuration, a README, issue templates and whatnot. Simply clone it and fill it up with your project's files! Everything you find in here is a suggestion rather than a prescription; don't feel obligated to stick to the templated format! After all, every project is unique in its own right.
-
-To get started, take out this __How to__ section, replace __New Project Kit__ with your project's name and fill up the README template below!
-
-## Nice-to-haves
-
-- A lot of projects have __a nice logo__ that catches the eye and builds branding, feel free to add one to your project!
-- __Badges__ are a great way to visually represent the current state of your project, from CI to latest released versions.
-- Don't forget to add in a badge for your project's [Maturity Score](https://github.com/tophat/getting-started/blob/master/scorecard.md)!
-- __Screenshots or GIFs of your project in action__ can also be pretty cool to have in here!
+![Node CI](https://github.com/tophat/react-vector-graphics/workflows/Node%20CI/badge.svg)
 
 ## Overview
 
@@ -21,23 +10,24 @@ _At a high-level, what is your project about? What problem does it solve? This i
 
 _This can be an extension of the Overview describing your problem space. It's a cool way to give an origin story to your project._
 
-## Installation
-
-_How can users set up your project? Through npm/yarn? Through a manual installer and some cURL magic? Be as thorough as you can!_
-
 ## Usage
 
 _Once installed, how can your users make it work?_
 
-## Uninstalling
+See individual package readmes for more detailed documentation.
 
-_If there is a specific procedure to uninstall your project that isn't straightforward and/or well-defined, you should outline it here to avoid frustrations._
+### [`@react-vector-graphics/core`](./pacakages/core/README.md)
+
+### [`@react-vector-graphics/cli`](./pacakages/cli/README.md)
+
+### [`@react-vector-graphics/plugin-assets`](./pacakages/plugin-assets/README.md)
 
 ## Contributing
 
-_Instructions or guidelines on how to contribute are essential to any OSS project! You can easily split this off to a CONTRIBUTING document alongside the README, or keep it in here._
-
-_In your contribution guide, you can outline best practices, how to set up a development environment that meets the needs of your project, and what the process is to get contributions merged._
+```sh
+yarn install
+yarn test
+```
 
 ## Contributors
 

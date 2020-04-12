@@ -4,7 +4,11 @@ import { Configuration } from '@react-vector-graphics/types'
 import rvgCore from '@react-vector-graphics/core'
 import { OPTIONS } from '@react-vector-graphics/plugin-assets'
 
-const mergeCliOptions = (config: Configuration): Configuration => {
+import { loadConfig } from './config'
+
+const mergeCliOptions = async (
+    config: Configuration,
+): Promise<Configuration> => {
     if (!config.options) config.options = {}
     const { argv } = yargs(process.argv)
         .usage('Usage: $0 -p [pattern] -o [output]')
@@ -20,13 +24,16 @@ const mergeCliOptions = (config: Configuration): Configuration => {
             describe: 'Destination folder',
             type: 'string',
         })
-        .option('ext', {
-            alias: 'e',
-            default: config.options[OPTIONS.FILE_EXT],
-            describe: 'Component file extension',
+        .option('config', {
+            alias: 'c',
+            describe: 'Config file path',
             type: 'string',
         })
         .demandOption(['pattern', 'output'])
+
+    if (argv.config) {
+        Object.assign(config, await loadConfig(argv.config))
+    }
 
     config.options[OPTIONS.GLOB_PATTERN] = argv.pattern
     config.options[OPTIONS.OUTPUT_PATH] = argv.output
@@ -39,5 +46,5 @@ export const run = async (config: Configuration): Promise<void> => {
     if (!config.plugins?.length) {
         config.plugins = [assetPlugin, '@svgr/plugin-jsx', assetPlugin]
     }
-    await rvgCore({ config: mergeCliOptions(config) })
+    await rvgCore({ config: await mergeCliOptions(config) })
 }
