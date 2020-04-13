@@ -5,7 +5,7 @@
 ![Node CI](https://github.com/tophat/react-vector-graphics/workflows/Node%20CI/badge.svg)
 [![codecov](https://codecov.io/gh/tophat/react-vector-graphics/branch/master/graph/badge.svg)](https://codecov.io/gh/tophat/react-vector-graphics)
 
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 [![Dependabot](https://flat.badgen.net/dependabot/tophat/yvm?icon=dependabot)](https://app.dependabot.com/accounts/tophat/repos/137530684)
 
 [![Slack workspace](https://slackinvite.dev.tophat.com/badge.svg)](https://opensource.tophat.com/slack)<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
