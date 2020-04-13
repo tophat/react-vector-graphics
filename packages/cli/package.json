@@ -8,7 +8,8 @@
   "main": "lib/index.js",
   "directories": {
     "lib": "lib",
-    "bin": "bin"
+    "bin": "bin",
+    "test": "tests"
   },
   "files": [
     "bin",
