@@ -48,5 +48,7 @@ jobs:
     - name: Release
       run: |
         git tag -l
+        echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+        npm whoami
         yarn release
       if: matrix.node-version == '12.x' && github.ref == 'refs/heads/master'
