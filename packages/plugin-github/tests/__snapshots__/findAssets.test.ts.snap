@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`findAssets returns all assets matching pattern 1`] = `
+Array [
+  Object {
+    "code": "<svg>mock</svg>",
+    "state": Object {
+      "componentName": "mockIcon3",
+      "filePath": "assets/mock-icon-3.svg",
+      "github/componentNameOld": undefined,
+      "github/diffType": "added",
+    },
+  },
+  Object {
+    "code": "<svg>mock</svg>",
+    "state": Object {
+      "componentName": "mockIcon2",
+      "filePath": "assets/mock-icon-2.svg",
+      "github/componentNameOld": undefined,
+      "github/diffType": "modified",
+    },
+  },
+  Object {
+    "code": "<svg>mock</svg>",
+    "state": Object {
+      "componentName": "mockIcon",
+      "filePath": "assets/mock.icon.svg",
+      "github/componentNameOld": undefined,
+      "github/diffType": "removed",
+    },
+  },
+  Object {
+    "code": "<svg>mock</svg>",
+    "state": Object {
+      "componentName": "mockIcon1",
+      "filePath": "assets/mock-icon-1.svg",
+      "github/componentNameOld": "mockIcon",
+      "github/diffType": "renamed",
+    },
+  },
+]
+`;

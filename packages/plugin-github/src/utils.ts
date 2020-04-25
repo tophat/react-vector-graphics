@@ -1,5 +1,13 @@
 import { Logger } from '@react-vector-graphics/types'
 
+// https://github.com/isaacs/minimatch/issues/30
+export const normaliseGlob = (globPattern: string): string => {
+    if (globPattern.startsWith('./')) {
+        return globPattern.substring(2)
+    }
+    return globPattern
+}
+
 export const fromBase64 = (data: string): string =>
     Buffer.from(data, 'base64').toString()
 

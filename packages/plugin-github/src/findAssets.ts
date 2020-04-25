@@ -7,7 +7,7 @@ import { NamingScheme, PluginParams, State } from '@react-vector-graphics/types'
 import { pathToName } from '@react-vector-graphics/utils'
 
 import { STATE } from './constants'
-import { fromBase64 } from './utils'
+import { fromBase64, normaliseGlob } from './utils'
 
 const findAssets = async ({
     github: { api: githubApi, ...githubParams },
@@ -32,7 +32,7 @@ const findAssets = async ({
         const isInFolder = file.filename.startsWith(params.folderPath)
         if (!isInFolder) return false
         const relPath = path.relative(params.folderPath, file.filename)
-        return minimatch(relPath, params.globPattern)
+        return minimatch(relPath, normaliseGlob(params.globPattern))
     })
     const pluginParams = svgFiles.map(
         async (file): Promise<PluginParams> => {
