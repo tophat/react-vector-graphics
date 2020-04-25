@@ -1,6 +1,6 @@
 {
   "name": "@react-vector-graphics/utils",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Utils library of react-vector-graphics",
   "author": "Top Hat <opensource@tophat.com>",
   "homepage": "https://github.com/tophat/react-vector-graphics#readme",
@@ -26,7 +26,6 @@
   "bugs": {
     "url": "https://github.com/tophat/react-vector-graphics/issues"
   },
-  "dependencies": {},
   "peerDependencies": {
     "@react-vector-graphics/types": "*"
   }
