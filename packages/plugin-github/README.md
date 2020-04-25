@@ -14,9 +14,10 @@ The plugin works in two stages discovery and storage.
     "options": {
         "github/globPattern": "assets/*.svg",
         "github/fileExt": "js",
+        "github/folderPath": "src",
         "github/head": "current-branch-or-commit",
         "github/nameScheme": "PascalCase",
-        "github/outputPath": "./components"
+        "github/outputPath": "components"
     }
 }
 ```
@@ -163,7 +164,7 @@ Example having this in the state
 {
     "componentName": "FooIcon",
     "filePath": "assets/foo.icon.svg",
-    "assets/componentFiles": {
+    "github/componentFiles": {
         "README.md": "# FooIcon"
     }
 }
@@ -172,8 +173,8 @@ Example having this in the state
 Would result in
 
 ```sh
-./components/FooIcon/index.js # svg component code
-./components/FooIcon/README.md
+src/components/FooIcon/index.js # svg component code
+src/components/FooIcon/README.md
 ```
 
 ### `github/componentNameOld`
