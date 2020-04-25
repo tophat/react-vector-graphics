@@ -1,3 +1,1 @@
-import pathToName from './pathToName'
-
-export { pathToName }
+export { NAMING_SCHEME, pathToName } from './pathToName'
