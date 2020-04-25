@@ -27,7 +27,7 @@ export const run = async ({
     logger?: Logger
 }): Promise<void> => {
     logger.info('options:', config.options)
-    const pluginArgs: PluginParams[] = [{} as PluginParams]
+    const pluginParams: PluginParams[] = [{} as PluginParams]
     for (const plugin of getPlugins(config)) {
         logger.info('plugin:', plugin)
         const [pluginFn, pluginConfig] = await Promise.all([
@@ -35,18 +35,18 @@ export const run = async ({
             loadConfig(config),
         ])
         const results = await Promise.all(
-            pluginArgs.splice(0).map(async args => {
+            pluginParams.splice(0).map(async params => {
                 const result = await pluginFn(
-                    args.code,
+                    params.code,
                     pluginConfig,
-                    args.state,
+                    params.state,
                     logger,
                 )
                 return (Array.isArray(result) ? result : [result])
                     .filter(Boolean)
-                    .map(r => normalizePluginParams(r, args))
+                    .map(r => normalizePluginParams(r, params))
             }),
         )
-        pluginArgs.push(...pluginArgs.concat(...results))
+        pluginParams.push(...pluginParams.concat(...results))
     }
 }

@@ -18,7 +18,7 @@ const isRenamed = (status: string): boolean => status === STATUSES.RENAMED
 
 const removeIconFiles = async (
     githubApi: Octokit,
-    githubArgs: { head: string; owner: string; repo: string },
+    githubParams: { head: string; owner: string; repo: string },
     componentName: string,
     componentPath: string,
     commitMessagePattern: string = COMMIT_MESSAGE_PATTERNS.DELETE,
@@ -29,21 +29,26 @@ const removeIconFiles = async (
         deleteMessage,
     )
     const { data: results } = await githubApi.repos.getContents({
-        ...githubArgs,
+        ...githubParams,
         path: componentPath,
-        ref: githubArgs.head,
+        ref: githubParams.head,
     })
     const promises = Array.isArray(results)
         ? results.map(({ path, sha }) =>
-              githubApi.repos.deleteFile({ ...githubArgs, message, path, sha }),
+              githubApi.repos.deleteFile({
+                  ...githubParams,
+                  message,
+                  path,
+                  sha,
+              }),
           )
-        : [githubApi.repos.deleteFile({ ...githubArgs, ...results, message })]
+        : [githubApi.repos.deleteFile({ ...githubParams, ...results, message })]
     await eagerPromises(promises)
 }
 
 const addOrModifyIconFile = async (
     githubApi: Octokit,
-    githubArgs: { head: string; owner: string; repo: string },
+    githubParams: { head: string; owner: string; repo: string },
     fileName: string,
     filePath: string,
     fileContents: string,
@@ -53,9 +58,9 @@ const addOrModifyIconFile = async (
     let fileSha
     try {
         const { data } = await githubApi.repos.getContents({
-            ...githubArgs,
+            ...githubParams,
             path: filePath,
-            ref: githubArgs.head,
+            ref: githubParams.head,
         })
         if (Array.isArray(data)) return
         fileSha = data.sha
@@ -72,8 +77,8 @@ const addOrModifyIconFile = async (
               `add ${fileName}`,
           )
     await githubApi.repos.createOrUpdateFile({
-        ...githubArgs,
-        branch: githubArgs.head,
+        ...githubParams,
+        branch: githubParams.head,
         content: toBase64(fileContents),
         message,
         path: filePath,
@@ -82,8 +87,8 @@ const addOrModifyIconFile = async (
 }
 
 const writeComponent = async ({
-    github: { api: githubApi, ...githubArgs },
-    ...args
+    github: { api: githubApi, ...githubParams },
+    ...params
 }: {
     assetFile: string
     code: string
@@ -108,43 +113,43 @@ const writeComponent = async ({
     logger?: Logger
     outputPath?: string
 }): Promise<void> => {
-    if (!args.componentName) {
-        return args.logger?.warn(
-            `No '${STATE.COMPONENT_NAME}' provided for '${args.assetFile}'.`,
+    if (!params.componentName) {
+        return params.logger?.warn(
+            `No '${STATE.COMPONENT_NAME}' provided for '${params.assetFile}'.`,
         )
     }
-    if (!args.outputPath) {
-        return args.logger?.warn(`No '${OPTIONS.OUTPUT_PATH}' provided.`)
+    if (!params.outputPath) {
+        return params.logger?.warn(`No '${OPTIONS.OUTPUT_PATH}' provided.`)
     }
-    if (!args.fileExt) {
-        args.logger?.warn(`No '${OPTIONS.FILE_EXT}' provided.`)
+    if (!params.fileExt) {
+        params.logger?.warn(`No '${OPTIONS.FILE_EXT}' provided.`)
     }
     // gather files
-    const componentFiles = Object.entries(args.componentFiles)
+    const componentFiles = Object.entries(params.componentFiles)
     const singleFile = componentFiles.length === 0
     const pathToFolder = path.join(
-        args.folderPath,
-        args.outputPath,
-        singleFile ? '' : args.componentName,
+        params.folderPath,
+        params.outputPath,
+        singleFile ? '' : params.componentName,
     )
     const pathToFile = path.join(
         pathToFolder,
-        singleFile ? args.componentName : 'index',
+        singleFile ? params.componentName : 'index',
     )
-    const componentFilePath = args.fileExt
-        ? `${pathToFile}.${args.fileExt}`
+    const componentFilePath = params.fileExt
+        ? `${pathToFile}.${params.fileExt}`
         : pathToFile
-    componentFiles.push([componentFilePath, args.code])
+    componentFiles.push([componentFilePath, params.code])
     // commit file changes
     const pendingPromises = []
-    if (isRemoved(args.diffType)) {
+    if (isRemoved(params.diffType)) {
         pendingPromises.push(
             removeIconFiles(
                 githubApi,
-                githubArgs,
-                args.componentName,
+                githubParams,
+                params.componentName,
                 singleFile ? componentFilePath : pathToFolder,
-                args.commitMessagePatterns.delete,
+                params.commitMessagePatterns.delete,
             ),
         )
     } else {
@@ -154,35 +159,35 @@ const writeComponent = async ({
             pendingPromises.push(
                 addOrModifyIconFile(
                     githubApi,
-                    githubArgs,
+                    githubParams,
                     fileName,
                     filePath,
                     fileContents,
-                    args.commitMessagePatterns.create,
-                    args.commitMessagePatterns.update,
+                    params.commitMessagePatterns.create,
+                    params.commitMessagePatterns.update,
                 ),
             )
         }
-        if (isRenamed(args.diffType) && args.componentNameOld) {
+        if (isRenamed(params.diffType) && params.componentNameOld) {
             const oldPathToFolder = path.join(
-                args.folderPath,
-                args.outputPath,
-                singleFile ? '' : args.componentNameOld,
+                params.folderPath,
+                params.outputPath,
+                singleFile ? '' : params.componentNameOld,
             )
             const oldPathToFile = path.join(
                 oldPathToFolder,
-                singleFile ? args.componentNameOld : 'index',
+                singleFile ? params.componentNameOld : 'index',
             )
-            const oldComponentFilePath = args.fileExt
-                ? `${oldPathToFile}.${args.fileExt}`
+            const oldComponentFilePath = params.fileExt
+                ? `${oldPathToFile}.${params.fileExt}`
                 : oldPathToFile
             pendingPromises.push(
                 removeIconFiles(
                     githubApi,
-                    githubArgs,
-                    args.componentNameOld,
+                    githubParams,
+                    params.componentNameOld,
                     singleFile ? oldComponentFilePath : oldPathToFolder,
-                    args.commitMessagePatterns.delete,
+                    params.commitMessagePatterns.delete,
                 ),
             )
         }

@@ -14,29 +14,29 @@ import { pathToName } from '@react-vector-graphics/utils'
 
 import { OPTIONS, STATE } from './constants'
 
-const findAssets = (args: {
+const findAssets = (params: {
     globPattern: string
     nameScheme: NamingScheme
     state: State
 }): PluginParams[] => {
-    return glob.sync(args.globPattern).map(
+    return glob.sync(params.globPattern).map(
         (filePath: string): PluginParams => ({
             code: fs.readFileSync(filePath, { encoding: 'utf-8' }),
             state: Object.assign(
                 {
                     [STATE.COMPONENT_NAME]: pathToName(
                         filePath,
-                        args.nameScheme,
+                        params.nameScheme,
                     ),
                     [STATE.FILE_PATH]: filePath,
                 },
-                args.state,
+                params.state,
             ),
         }),
     )
 }
 
-const writeComponent = (args: {
+const writeComponent = (params: {
     assetFile?: string
     code: string
     componentName?: string
@@ -45,31 +45,31 @@ const writeComponent = (args: {
     logger?: Logger
     outputPath?: string
 }): void => {
-    if (!args.componentName) {
-        return args.logger?.warn(
-            `No '${STATE.COMPONENT_NAME}' provided for '${args.assetFile}'.`,
+    if (!params.componentName) {
+        return params.logger?.warn(
+            `No '${STATE.COMPONENT_NAME}' provided for '${params.assetFile}'.`,
         )
     }
-    if (!args.outputPath) {
-        return args.logger?.warn(`No '${OPTIONS.OUTPUT_PATH}' provided.`)
+    if (!params.outputPath) {
+        return params.logger?.warn(`No '${OPTIONS.OUTPUT_PATH}' provided.`)
     }
-    if (!args.fileExt) {
-        args.logger?.warn(`No '${OPTIONS.FILE_EXT}' provided.`)
+    if (!params.fileExt) {
+        params.logger?.warn(`No '${OPTIONS.FILE_EXT}' provided.`)
     }
 
-    const componentFiles = Object.entries(args.componentFiles)
+    const componentFiles = Object.entries(params.componentFiles)
     const pathToFolder = path.join(
-        args.outputPath,
-        componentFiles.length ? args.componentName : '',
+        params.outputPath,
+        componentFiles.length ? params.componentName : '',
     )
     const pathToFile = path.join(
         pathToFolder,
-        componentFiles.length ? 'index' : args.componentName,
+        componentFiles.length ? 'index' : params.componentName,
     )
-    const componentFilePath = args.fileExt
-        ? `${pathToFile}.${args.fileExt}`
+    const componentFilePath = params.fileExt
+        ? `${pathToFile}.${params.fileExt}`
         : pathToFile
-    fs.outputFileSync(componentFilePath, args.code)
+    fs.outputFileSync(componentFilePath, params.code)
     for (const [fileName, fileContents] of componentFiles) {
         const filePath = path.join(pathToFolder, fileName)
         fs.outputFileSync(filePath, fileContents)

@@ -10,37 +10,37 @@ import { STATE } from './constants'
 import { fromBase64 } from './utils'
 
 const findAssets = async ({
-    github: { api: githubApi, ...githubArgs },
-    ...args
+    github: { api: githubApi, ...githubParams },
+    ...params
 }: {
     folderPath: string
     github: {
         api: Octokit
         base: string
+        head: string
         owner: string
         repo: string
-        head: string
     }
     globPattern: string
     nameScheme: NamingScheme
     state: State
 }): Promise<PluginParams[]> => {
     const compareCommitsResult = await githubApi.repos.compareCommits(
-        githubArgs,
+        githubParams,
     )
     const svgFiles = compareCommitsResult.data.files.filter(file => {
-        const isInFolder = file.filename.startsWith(args.folderPath)
+        const isInFolder = file.filename.startsWith(params.folderPath)
         if (!isInFolder) return false
-        const relPath = path.relative(args.folderPath, file.filename)
-        return minimatch(relPath, args.globPattern)
+        const relPath = path.relative(params.folderPath, file.filename)
+        return minimatch(relPath, params.globPattern)
     })
     const pluginParams = svgFiles.map(
         async (file): Promise<PluginParams> => {
-            const filePath = path.relative(args.folderPath, file.filename)
+            const filePath = path.relative(params.folderPath, file.filename)
             const getContentResult = await githubApi.repos.getContents({
-                ...githubArgs,
+                ...githubParams,
                 path: file.filename,
-                ref: githubArgs.head,
+                ref: githubParams.head,
             })
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
@@ -51,21 +51,21 @@ const findAssets = async ({
                     {
                         [STATE.COMPONENT_NAME]: pathToName(
                             filePath,
-                            args.nameScheme,
+                            params.nameScheme,
                         ),
                         [STATE.COMPONENT_NAME_OLD]:
                             previousFilename &&
                             pathToName(
                                 path.relative(
-                                    args.folderPath,
+                                    params.folderPath,
                                     previousFilename,
                                 ),
-                                args.nameScheme,
+                                params.nameScheme,
                             ),
                         [STATE.DIFF_TYPE]: file.status,
                         [STATE.FILE_PATH]: filePath,
                     },
-                    args.state,
+                    params.state,
                 ),
             }
         },
