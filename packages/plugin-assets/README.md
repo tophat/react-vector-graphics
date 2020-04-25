@@ -13,7 +13,7 @@ The plugin works in two stages discovery and storage.
     ],
     "options": {
         "assets/globPattern": "./assets/*.svg",
-        "assets/fileExt": ".js",
+        "assets/fileExt": "js",
         "assets/nameScheme": "PascalCase",
         "assets/outputPath": "./components"
     }
@@ -84,13 +84,13 @@ Mutable context that can be used to pass information between subsequent run stag
 
 String representing the name of the react component.
 
-*NOTE*: This is shared with `@svgr/plugin-jsx`
+_NOTE_: This is shared with `@svgr/plugin-jsx`
 
 ### `filePath`
 
 String representing the path to the svg file that was discovered
 
-*NOTE*: This is shared with `@svgr/plugin-jsx`
+_NOTE_: This is shared with `@svgr/plugin-jsx`
 
 ### `assets/componentFiles`
 

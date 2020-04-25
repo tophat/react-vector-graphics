@@ -10,6 +10,7 @@ import { STATE } from './constants'
 import { fromBase64, normaliseGlob } from './utils'
 
 const findAssets = async ({
+    folderPath = '',
     github: { api: githubApi, ...githubParams },
     ...params
 }: {
@@ -29,14 +30,14 @@ const findAssets = async ({
         githubParams,
     )
     const svgFiles = compareCommitsResult.data.files.filter(file => {
-        const isInFolder = file.filename.startsWith(params.folderPath)
+        const isInFolder = file.filename.startsWith(folderPath)
         if (!isInFolder) return false
-        const relPath = path.relative(params.folderPath, file.filename)
+        const relPath = path.relative(folderPath, file.filename)
         return minimatch(relPath, normaliseGlob(params.globPattern))
     })
     const pluginParams = svgFiles.map(
         async (file): Promise<PluginParams> => {
-            const filePath = path.relative(params.folderPath, file.filename)
+            const filePath = path.relative(folderPath, file.filename)
             const { data } = await githubApi.repos.getContents({
                 ...githubParams,
                 path: file.filename,
@@ -59,10 +60,7 @@ const findAssets = async ({
                         [STATE.COMPONENT_NAME_OLD]:
                             previousFilename &&
                             pathToName(
-                                path.relative(
-                                    params.folderPath,
-                                    previousFilename,
-                                ),
+                                path.relative(folderPath, previousFilename),
                                 params.nameScheme,
                             ),
                         [STATE.DIFF_TYPE]: file.status,
