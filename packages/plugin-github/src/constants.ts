@@ -22,7 +22,6 @@ export const STATE = {
     COMPONENT_NAME_OLD: ns`componentNameOld`,
     DIFF_TYPE: ns`diffType`,
     FILE_PATH: 'filePath', // @svgr/plugin-jsx
-    SHA: ns`sha`,
 }
 
 export const STATUSES = {

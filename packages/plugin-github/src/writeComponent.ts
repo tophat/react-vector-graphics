@@ -42,21 +42,37 @@ const removeIconFiles = async (
     await eagerPromises(promises)
 }
 
-async function addIconFile(
+async function addOrModifyIconFile(
     githubApi: Octokit,
     githubArgs: { head: string; owner: string; repo: string },
     fileName: string,
     filePath: string,
     fileContents: string,
-    fileSha?: string,
-    commitMessagePattern: string = COMMIT_MESSAGE_PATTERNS.CREATE,
-) {
-    const createMessage = `add ${fileName}`
-    const message = commitMessagePattern.replace(
-        COMMIT_MESSAGE_PLACEHOLDER,
-        createMessage,
-    )
-    return githubApi.repos.createOrUpdateFile({
+    commitMessagePatternCreate: string = COMMIT_MESSAGE_PATTERNS.CREATE,
+    commitMessagePatternUpdate: string = COMMIT_MESSAGE_PATTERNS.UPDATE,
+): Promise<void> {
+    let fileSha
+    try {
+        const { data } = await githubApi.repos.getContents({
+            ...githubArgs,
+            path: filePath,
+            ref: githubArgs.head,
+        })
+        if (Array.isArray(data)) return
+        fileSha = data.sha
+    } catch (e) {
+        // do nothing
+    }
+    const message = fileSha
+        ? commitMessagePatternUpdate.replace(
+              COMMIT_MESSAGE_PLACEHOLDER,
+              `modify ${fileName}`,
+          )
+        : commitMessagePatternCreate.replace(
+              COMMIT_MESSAGE_PLACEHOLDER,
+              `add ${fileName}`,
+          )
+    await githubApi.repos.createOrUpdateFile({
         ...githubArgs,
         branch: githubArgs.head,
         content: toBase64(fileContents),
@@ -65,21 +81,6 @@ async function addIconFile(
         sha: fileSha,
     })
 }
-
-// async function modifySVGFile(context, icon, branch) {
-//     const svgFileContent = await icon.svg.content
-//     const optimisedSVG = await optimiseSVG(svgFileContent)
-//     if (svgFileContent === optimisedSVG) return
-//     await context.github.repos.updateFile(
-//         context.repo({
-//             branch,
-//             content: btoa(optimisedSVG),
-//             message: `refactor: optimise ${icon.name} svg`,
-//             path: icon.svg.path,
-//             sha: icon.svg.sha,
-//         }),
-//     )
-// }
 
 export const writeComponent = async ({
     github: { api: githubApi, ...githubArgs },
@@ -97,7 +98,6 @@ export const writeComponent = async ({
     diffType: string
     fileExt?: string
     filePath: string
-    fileSha: string
     folderPath: string
     github: {
         api: Octokit
@@ -152,13 +152,14 @@ export const writeComponent = async ({
         for (const [fileName, fileContents] of componentFiles) {
             const filePath = path.join(pathToFolder, fileName)
             pendingPromises.push(
-                addIconFile(
+                addOrModifyIconFile(
                     githubApi,
                     githubArgs,
                     fileName,
                     filePath,
-                    args.fileSha,
                     fileContents,
+                    args.commitMessagePatterns.create,
+                    args.commitMessagePatterns.update,
                 ),
             )
         }
@@ -185,7 +186,6 @@ export const writeComponent = async ({
                 ),
             )
         }
-        // pendingPromises.push(modifySVGFile(context, icon, ref))
     }
     await eagerPromises(pendingPromises)
 }

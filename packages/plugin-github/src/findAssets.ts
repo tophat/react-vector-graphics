@@ -64,7 +64,6 @@ export const findAssets = async ({
                             ),
                         [STATE.DIFF_TYPE]: file.status,
                         [STATE.FILE_PATH]: filePath,
-                        [STATE.SHA]: file.sha,
                     },
                     args.state,
                 ),
