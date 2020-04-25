@@ -14,9 +14,6 @@ import {
 } from './constants'
 import { eagerPromises, replaceAll, toBase64 } from './utils'
 
-const isRemoved = (status: string): boolean => status === STATUSES.REMOVED
-const isRenamed = (status: string): boolean => status === STATUSES.RENAMED
-
 const removeIconFiles = async (
     githubApi: Octokit,
     githubParams: { head: string; owner: string; repo: string },
@@ -143,7 +140,7 @@ const writeComponent = async ({
     const componentFilePath = path.join(pathToFolder, componentFileName)
     // commit file changes
     const pendingPromises = []
-    if (isRemoved(params.diffType)) {
+    if (params.diffType === STATUSES.REMOVED) {
         pendingPromises.push(
             removeIconFiles(
                 githubApi,
@@ -170,7 +167,7 @@ const writeComponent = async ({
                 ),
             )
         }
-        if (isRenamed(params.diffType) && params.componentNameOld) {
+        if (params.diffType === STATUSES.RENAMED && params.componentNameOld) {
             const oldPathToFolder = path.join(
                 params.folderPath,
                 params.outputPath,

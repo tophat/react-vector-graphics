@@ -36,7 +36,6 @@ describe('writeComponent', () => {
             assetFile: mockState[STATE.FILE_PATH] as string,
             componentFiles: {},
             componentName: mockState[STATE.COMPONENT_NAME] as string,
-            componentNameOld: mockState[STATE.COMPONENT_NAME_OLD] as string,
             diffType: mockState[STATE.DIFF_TYPE] as string,
         })
         expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledTimes(1)
@@ -65,7 +64,6 @@ describe('writeComponent', () => {
             assetFile: mockState[STATE.FILE_PATH] as string,
             componentFiles: mockState[STATE.COMPONENT_FILES] as AnyObject,
             componentName: mockState[STATE.COMPONENT_NAME] as string,
-            componentNameOld: mockState[STATE.COMPONENT_NAME_OLD] as string,
             diffType: mockState[STATE.DIFF_TYPE] as string,
         })
         expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
@@ -101,7 +99,6 @@ describe('writeComponent', () => {
             assetFile: mockState[STATE.FILE_PATH] as string,
             componentFiles: {},
             componentName: mockState[STATE.COMPONENT_NAME] as string,
-            componentNameOld: mockState[STATE.COMPONENT_NAME_OLD] as string,
             diffType: STATUSES.MODIFIED,
         })
         expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledTimes(1)
@@ -126,7 +123,6 @@ describe('writeComponent', () => {
             assetFile: mockState[STATE.FILE_PATH] as string,
             componentFiles: mockState[STATE.COMPONENT_FILES] as AnyObject,
             componentName: mockState[STATE.COMPONENT_NAME] as string,
-            componentNameOld: mockState[STATE.COMPONENT_NAME_OLD] as string,
             diffType: STATUSES.MODIFIED,
         })
         const expectedParams = {
@@ -156,21 +152,16 @@ describe('writeComponent', () => {
     it('deletes single component file', async () => {
         const { getContents } = mockGithubApi.repos
         const mockGetContents: typeof getContents = async params => {
-            expect(params).toEqual({
+            const { path, ...rest } = params
+            expect(rest).toEqual({
                 base: 'master',
                 head: 'test-branch',
                 owner: 'mockOwner',
-                path: 'packages/mock-package/components/mockIcon.js',
                 ref: 'test-branch',
                 repo: 'mockRepo',
             })
             const { data } = await getContents(params)
-            return {
-                data: {
-                    ...data,
-                    path: 'packages/mock-package/components/mockIcon.js',
-                },
-            }
+            return { data: { ...data, path } }
         }
         const spyApiGetContents = jest
             .spyOn(mockGithubApi.repos, 'getContents')
@@ -180,7 +171,6 @@ describe('writeComponent', () => {
             assetFile: mockState[STATE.FILE_PATH] as string,
             componentFiles: {},
             componentName: mockState[STATE.COMPONENT_NAME] as string,
-            componentNameOld: mockState[STATE.COMPONENT_NAME_OLD] as string,
             diffType: STATUSES.REMOVED,
         })
         expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledTimes(1)
@@ -212,16 +202,8 @@ describe('writeComponent', () => {
             const { data } = await getContents(params)
             return {
                 data: [
-                    {
-                        ...data,
-                        path:
-                            'packages/mock-package/components/mockIcon/index.js',
-                    },
-                    {
-                        ...data,
-                        path:
-                            'packages/mock-package/components/mockIcon/README.md',
-                    },
+                    { ...data, path: `${params.path}/index.js` },
+                    { ...data, path: `${params.path}/README.md` },
                 ],
             }
         }
@@ -233,7 +215,6 @@ describe('writeComponent', () => {
             assetFile: mockState[STATE.FILE_PATH] as string,
             componentFiles: mockState[STATE.COMPONENT_FILES] as AnyObject,
             componentName: mockState[STATE.COMPONENT_NAME] as string,
-            componentNameOld: mockState[STATE.COMPONENT_NAME_OLD] as string,
             diffType: STATUSES.REMOVED,
         })
         expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledTimes(2)
@@ -258,18 +239,112 @@ describe('writeComponent', () => {
         spyApiGetContents.mockRestore()
     })
 
-    // it('warns and continues when fileExt is not provided', async () => {
-    //     expect(spyLoggerWarn).toHaveBeenCalled()
-    //     expect(spyLoggerWarn.mock.calls[0][0]).toMatchSnapshot()
-    // })
+    it('deletes and updates renamed component files', async () => {
+        const { getContents } = mockGithubApi.repos
+        const mockGetContents: typeof getContents = async params => {
+            const { path, ...rest } = params
+            expect(rest).toEqual({
+                base: 'master',
+                head: 'test-branch',
+                owner: 'mockOwner',
+                ref: 'test-branch',
+                repo: 'mockRepo',
+            })
+            const { data } = await getContents(params)
+            return { data: { ...data, path } }
+        }
+        const spyApiGetContents = jest
+            .spyOn(mockGithubApi.repos, 'getContents')
+            .mockImplementation(mockGetContents)
+        await writeComponent({
+            ...sharedParams,
+            assetFile: mockState[STATE.FILE_PATH] as string,
+            componentFiles: {},
+            componentName: mockState[STATE.COMPONENT_NAME] as string,
+            componentNameOld: 'mockIconOld',
+            diffType: STATUSES.RENAMED,
+        })
+        const expectedParams = {
+            base: 'master',
+            head: 'test-branch',
+            owner: 'mockOwner',
+            repo: 'mockRepo',
+        }
+        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledTimes(1)
+        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
+            ...expectedParams,
+            branch: 'test-branch',
+            content:
+                'CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gbW9ja0ljb24oKSB7CiAgICByZXR1cm4gPHN2Zz5tb2NrIHVwZGF0ZWQ8L3N2Zz4KfQo=',
+            message: 'fix: modify mockIcon mockIcon.js',
+            path: 'packages/mock-package/components/mockIcon.js',
+            sha: '07a31f3034976f10d2d12f67c78ae2d51015a917',
+        })
+        expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledTimes(1)
+        expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledWith({
+            ...expectedParams,
+            base: 'master',
+            message:
+                'refactor: remove mockIconOld\nBREAKING CHANGE: remove mockIconOld',
+            path: 'packages/mock-package/components/mockIconOld.js',
+            sha: '07a31f3034976f10d2d12f67c78ae2d51015a917',
+        })
+        expect(spyLoggerWarn).not.toHaveBeenCalled()
+        spyApiGetContents.mockRestore()
+    })
 
-    // it('warns and exits when componentName is not provided', async () => {
-    //     expect(spyLoggerWarn).toHaveBeenCalled()
-    //     expect(spyLoggerWarn.mock.calls[0][0]).toMatchSnapshot()
-    // })
+    it('warns and continues when fileExt is not provided', async () => {
+        await writeComponent({
+            ...sharedParams,
+            assetFile: mockState[STATE.FILE_PATH] as string,
+            componentFiles: {},
+            componentName: mockState[STATE.COMPONENT_NAME] as string,
+            diffType: mockState[STATE.DIFF_TYPE] as string,
+            fileExt: undefined,
+        })
+        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledTimes(1)
+        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
+            base: 'master',
+            branch: 'test-branch',
+            content:
+                'CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gbW9ja0ljb24oKSB7CiAgICByZXR1cm4gPHN2Zz5tb2NrIHVwZGF0ZWQ8L3N2Zz4KfQo=',
+            head: 'test-branch',
+            message: 'fix: modify mockIcon mockIcon',
+            owner: 'mockOwner',
+            path: 'packages/mock-package/components/mockIcon',
+            repo: 'mockRepo',
+            sha: '07a31f3034976f10d2d12f67c78ae2d51015a917',
+        })
+        expect(spyLoggerWarn).toHaveBeenCalledWith(
+            "No 'github/fileExt' provided.",
+        )
+    })
 
-    // it('warns and exits when outputPath is not provided', async () => {
-    //     expect(spyLoggerWarn).toHaveBeenCalled()
-    //     expect(spyLoggerWarn.mock.calls[0][0]).toMatchSnapshot()
-    // })
+    it('warns and exits when componentName is not provided', async () => {
+        await writeComponent({
+            ...sharedParams,
+            assetFile: mockState[STATE.FILE_PATH] as string,
+            componentFiles: {},
+            diffType: mockState[STATE.DIFF_TYPE] as string,
+        })
+        expect(mockGithubApi.repos.createOrUpdateFile).not.toHaveBeenCalled()
+        expect(spyLoggerWarn).toHaveBeenCalledWith(
+            "No 'componentName' provided for 'assets/mock.icon.svg'.",
+        )
+    })
+
+    it('warns and exits when outputPath is not provided', async () => {
+        await writeComponent({
+            ...sharedParams,
+            assetFile: mockState[STATE.FILE_PATH] as string,
+            componentFiles: {},
+            componentName: mockState[STATE.COMPONENT_NAME] as string,
+            diffType: mockState[STATE.DIFF_TYPE] as string,
+            outputPath: undefined,
+        })
+        expect(mockGithubApi.repos.createOrUpdateFile).not.toHaveBeenCalled()
+        expect(spyLoggerWarn).toHaveBeenCalledWith(
+            "No 'github/outputPath' provided.",
+        )
+    })
 })
