@@ -148,7 +148,8 @@ export const writeComponent = async ({
                 args.commitMessagePatterns.delete,
             ),
         )
-    } else if (isAdded(args.diffType) || isRenamed(args.diffType)) {
+    } else {
+        // added, modified or renamed
         for (const [fileName, fileContents] of componentFiles) {
             const filePath = path.join(pathToFolder, fileName)
             pendingPromises.push(
