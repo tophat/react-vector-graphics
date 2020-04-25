@@ -25,5 +25,12 @@
   },
   "bugs": {
     "url": "https://github.com/tophat/react-vector-graphics/issues"
+  },
+  "dependencies": {
+    "@react-vector-graphics/utils": "*"
+  },
+  "peerDependencies": {
+    "@react-vector-graphics/types": "*",
+    "minimatch": "^3.0.4"
   }
 }
