@@ -28,6 +28,7 @@ See individual package readmes for more detailed documentation.
 | [`@react-vector-graphics/core`](./packages/core/README.md)                   | [![npm version](https://img.shields.io/npm/v/@react-vector-graphics/core.svg)](https://www.npmjs.com/package/@react-vector-graphics/core)                   |
 | [`@react-vector-graphics/cli`](./packages/cli/README.md)                     | [![npm version](https://img.shields.io/npm/v/@react-vector-graphics/cli.svg)](https://www.npmjs.com/package/@react-vector-graphics/cli)                     |
 | [`@react-vector-graphics/plugin-assets`](./packages/plugin-assets/README.md) | [![npm version](https://img.shields.io/npm/v/@react-vector-graphics/plugin-assets.svg)](https://www.npmjs.com/package/@react-vector-graphics/plugin-assets) |
+| [`@react-vector-graphics/plugin-github`](./packages/plugin-github/README.md) | [![npm version](https://img.shields.io/npm/v/@react-vector-graphics/plugin-github.svg)](https://www.npmjs.com/package/@react-vector-graphics/plugin-github) |
 
 ## Contributing
 
