@@ -1,8 +1,8 @@
 import { Plugin } from '@react-vector-graphics/types'
 
 import { OPTIONS, STATE } from './constants'
-import { findAssets } from './findAssets'
-import { writeComponent } from './writeComponent'
+import findAssets from './findAssets'
+import writeComponent from './writeComponent'
 
 export const run: Plugin = async (code, config, state, logger) => {
     const github = {

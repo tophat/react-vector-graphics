@@ -5,10 +5,10 @@ import { NamingScheme } from '@react-vector-graphics/types'
 const capitalize = (w: string): string =>
     `${w[0].toUpperCase()}${w.slice(1).toLowerCase()}`
 
-export default function pathToName(
+const pathToName = (
     filePath: string,
     namingScheme: NamingScheme,
-): string | undefined {
+): string | undefined => {
     const words = path
         .basename(filePath, filePath.split('.').pop())
         .match(/[a-zA-Z0-9]+/g)
@@ -30,3 +30,5 @@ export default function pathToName(
             return words?.map(capitalize).join('')
     }
 }
+
+export default pathToName

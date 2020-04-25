@@ -41,7 +41,7 @@ const removeIconFiles = async (
     await eagerPromises(promises)
 }
 
-async function addOrModifyIconFile(
+const addOrModifyIconFile = async (
     githubApi: Octokit,
     githubArgs: { head: string; owner: string; repo: string },
     fileName: string,
@@ -49,7 +49,7 @@ async function addOrModifyIconFile(
     fileContents: string,
     commitMessagePatternCreate: string = COMMIT_MESSAGE_PATTERNS.CREATE,
     commitMessagePatternUpdate: string = COMMIT_MESSAGE_PATTERNS.UPDATE,
-): Promise<void> {
+): Promise<void> => {
     let fileSha
     try {
         const { data } = await githubApi.repos.getContents({
@@ -81,7 +81,7 @@ async function addOrModifyIconFile(
     })
 }
 
-export const writeComponent = async ({
+const writeComponent = async ({
     github: { api: githubApi, ...githubArgs },
     ...args
 }: {
@@ -189,3 +189,5 @@ export const writeComponent = async ({
     }
     await eagerPromises(pendingPromises)
 }
+
+export default writeComponent

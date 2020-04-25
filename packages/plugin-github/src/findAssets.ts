@@ -9,7 +9,7 @@ import { pathToName } from '@react-vector-graphics/utils'
 import { STATE } from './constants'
 import { fromBase64 } from './utils'
 
-export const findAssets = async ({
+const findAssets = async ({
     github: { api: githubApi, ...githubArgs },
     ...args
 }: {
@@ -72,3 +72,5 @@ export const findAssets = async ({
     )
     return Promise.all(pluginParams)
 }
+
+export default findAssets
