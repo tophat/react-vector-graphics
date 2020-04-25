@@ -37,17 +37,17 @@ const findAssets = (args: {
 }
 
 const writeComponent = (args: {
+    assetFile?: string
     code: string
     componentName?: string
     componentFiles: { [fileName: string]: string }
     fileExt?: string
-    filePath?: string
     logger?: Logger
     outputPath?: string
 }): void => {
     if (!args.componentName) {
         return args.logger?.warn(
-            `No '${STATE.COMPONENT_NAME}' provided for '${args.filePath}'.`,
+            `No '${STATE.COMPONENT_NAME}' provided for '${args.assetFile}'.`,
         )
     }
     if (!args.outputPath) {
@@ -79,11 +79,11 @@ const writeComponent = (args: {
 export const run: Plugin = async (code, config, state, logger) => {
     if (code) {
         writeComponent({
+            assetFile: state[STATE.FILE_PATH],
             code,
             componentFiles: state[STATE.COMPONENT_FILES] ?? {},
             componentName: state[STATE.COMPONENT_NAME],
             fileExt: config.options[OPTIONS.FILE_EXT],
-            filePath: state[STATE.FILE_PATH],
             logger,
             outputPath: config.options[OPTIONS.OUTPUT_PATH],
         })

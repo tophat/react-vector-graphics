@@ -19,6 +19,7 @@ export const run: Plugin = async (code, config, state, logger) => {
     if (code) {
         await writeComponent({
             ...sharedArgs,
+            assetFile: state[STATE.FILE_PATH],
             code,
             commitMessagePatterns: {
                 create: config.options[OPTIONS.COMMIT_CREATE_PATTERN],
@@ -30,7 +31,6 @@ export const run: Plugin = async (code, config, state, logger) => {
             componentNameOld: state[STATE.COMPONENT_NAME_OLD],
             diffType: state[STATE.DIFF_TYPE],
             fileExt: config.options[OPTIONS.FILE_EXT],
-            filePath: state[STATE.FILE_PATH],
             logger,
             outputPath: config.options[OPTIONS.OUTPUT_PATH],
         })

@@ -13,7 +13,6 @@ import {
 } from './constants'
 import { eagerPromises, toBase64 } from './utils'
 
-const isAdded = (status: string): boolean => status === STATUSES.ADDED
 const isRemoved = (status: string): boolean => status === STATUSES.REMOVED
 const isRenamed = (status: string): boolean => status === STATUSES.RENAMED
 
@@ -86,6 +85,7 @@ export const writeComponent = async ({
     github: { api: githubApi, ...githubArgs },
     ...args
 }: {
+    assetFile: string
     code: string
     commitMessagePatterns: {
         create: string
@@ -97,7 +97,6 @@ export const writeComponent = async ({
     componentFiles: { [fileName: string]: string }
     diffType: string
     fileExt?: string
-    filePath: string
     folderPath: string
     github: {
         api: Octokit
@@ -111,7 +110,7 @@ export const writeComponent = async ({
 }): Promise<void> => {
     if (!args.componentName) {
         return args.logger?.warn(
-            `No '${STATE.COMPONENT_NAME}' provided for '${args.filePath}'.`,
+            `No '${STATE.COMPONENT_NAME}' provided for '${args.assetFile}'.`,
         )
     }
     if (!args.outputPath) {
