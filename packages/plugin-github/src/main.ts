@@ -31,7 +31,6 @@ export const run: Plugin = async (code, config, state, logger) => {
             diffType: state[STATE.DIFF_TYPE],
             fileExt: config.options[OPTIONS.FILE_EXT],
             filePath: state[STATE.FILE_PATH],
-            fileSha: state[STATE.SHA],
             logger,
             outputPath: config.options[OPTIONS.OUTPUT_PATH],
         })
