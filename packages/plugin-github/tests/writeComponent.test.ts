@@ -1,7 +1,7 @@
 import { Octokit } from '@octokit/rest'
 
+import { OPTIONS, STATE, STATUSES } from '../src/constants'
 import writeComponent from '../src/writeComponent'
-import { OPTIONS, STATE } from '../src'
 
 import { mockComponent, mockGithubApi, mockOptions, mockState } from './mocks'
 
@@ -22,14 +22,15 @@ describe('writeComponent', () => {
     }
 
     const spyLoggerWarn = jest.spyOn(console, 'warn')
-
-    afterEach(() => {
-        jest.resetAllMocks()
-        mockGithubApi.repos.createOrUpdateFile.mockReset()
-    })
+    jest.spyOn(mockGithubApi.repos, 'createOrUpdateFile')
+    jest.spyOn(mockGithubApi.repos, 'deleteFile')
+    afterEach(jest.clearAllMocks)
     afterAll(jest.restoreAllMocks)
 
     it('creates single component file when given code', async () => {
+        const spyApiGetContents = jest
+            .spyOn(mockGithubApi.repos, 'getContents')
+            .mockRejectedValue('File does not exist')
         await writeComponent({
             ...sharedParams,
             assetFile: mockState[STATE.FILE_PATH] as string,
@@ -52,9 +53,13 @@ describe('writeComponent', () => {
             sha: undefined,
         })
         expect(spyLoggerWarn).not.toHaveBeenCalled()
+        spyApiGetContents.mockRestore()
     })
 
     it('writes files to component folder when given extra files', async () => {
+        const spyApiGetContents = jest
+            .spyOn(mockGithubApi.repos, 'getContents')
+            .mockRejectedValue('File does not exist')
         await writeComponent({
             ...sharedParams,
             assetFile: mockState[STATE.FILE_PATH] as string,
@@ -87,5 +92,184 @@ describe('writeComponent', () => {
             sha: undefined,
         })
         expect(spyLoggerWarn).not.toHaveBeenCalled()
+        spyApiGetContents.mockRestore()
     })
+
+    it('refreshes single component file when given code', async () => {
+        await writeComponent({
+            ...sharedParams,
+            assetFile: mockState[STATE.FILE_PATH] as string,
+            componentFiles: {},
+            componentName: mockState[STATE.COMPONENT_NAME] as string,
+            componentNameOld: mockState[STATE.COMPONENT_NAME_OLD] as string,
+            diffType: STATUSES.MODIFIED,
+        })
+        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledTimes(1)
+        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
+            base: 'master',
+            branch: 'test-branch',
+            content:
+                'CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gbW9ja0ljb24oKSB7CiAgICByZXR1cm4gPHN2Zz5tb2NrIHVwZGF0ZWQ8L3N2Zz4KfQo=',
+            head: 'test-branch',
+            message: 'fix: modify mockIcon mockIcon.js',
+            owner: 'mockOwner',
+            path: 'packages/mock-package/components/mockIcon.js',
+            repo: 'mockRepo',
+            sha: '07a31f3034976f10d2d12f67c78ae2d51015a917',
+        })
+        expect(spyLoggerWarn).not.toHaveBeenCalled()
+    })
+
+    it('refreshes component files when given extra files', async () => {
+        await writeComponent({
+            ...sharedParams,
+            assetFile: mockState[STATE.FILE_PATH] as string,
+            componentFiles: mockState[STATE.COMPONENT_FILES] as AnyObject,
+            componentName: mockState[STATE.COMPONENT_NAME] as string,
+            componentNameOld: mockState[STATE.COMPONENT_NAME_OLD] as string,
+            diffType: STATUSES.MODIFIED,
+        })
+        const expectedParams = {
+            base: 'master',
+            branch: 'test-branch',
+            head: 'test-branch',
+            owner: 'mockOwner',
+            repo: 'mockRepo',
+            sha: '07a31f3034976f10d2d12f67c78ae2d51015a917',
+        }
+        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
+            ...expectedParams,
+            content: 'IyMgbW9ja0ljb24KCm1vY2sgdXNhZ2Ugbm90ZXM=',
+            message: 'fix: modify mockIcon README.md',
+            path: 'packages/mock-package/components/mockIcon/README.md',
+        })
+        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
+            ...expectedParams,
+            content:
+                'CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gbW9ja0ljb24oKSB7CiAgICByZXR1cm4gPHN2Zz5tb2NrIHVwZGF0ZWQ8L3N2Zz4KfQo=',
+            message: 'fix: modify mockIcon index.js',
+            path: 'packages/mock-package/components/mockIcon/index.js',
+        })
+        expect(spyLoggerWarn).not.toHaveBeenCalled()
+    })
+
+    it('deletes single component file', async () => {
+        const { getContents } = mockGithubApi.repos
+        const mockGetContents: typeof getContents = async params => {
+            expect(params).toEqual({
+                base: 'master',
+                head: 'test-branch',
+                owner: 'mockOwner',
+                path: 'packages/mock-package/components/mockIcon.js',
+                ref: 'test-branch',
+                repo: 'mockRepo',
+            })
+            const { data } = await getContents(params)
+            return {
+                data: {
+                    ...data,
+                    path: 'packages/mock-package/components/mockIcon.js',
+                },
+            }
+        }
+        const spyApiGetContents = jest
+            .spyOn(mockGithubApi.repos, 'getContents')
+            .mockImplementation(mockGetContents)
+        await writeComponent({
+            ...sharedParams,
+            assetFile: mockState[STATE.FILE_PATH] as string,
+            componentFiles: {},
+            componentName: mockState[STATE.COMPONENT_NAME] as string,
+            componentNameOld: mockState[STATE.COMPONENT_NAME_OLD] as string,
+            diffType: STATUSES.REMOVED,
+        })
+        expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledTimes(1)
+        expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledWith({
+            base: 'master',
+            head: 'test-branch',
+            message:
+                'refactor: remove mockIcon\nBREAKING CHANGE: remove mockIcon',
+            owner: 'mockOwner',
+            path: 'packages/mock-package/components/mockIcon.js',
+            repo: 'mockRepo',
+            sha: '07a31f3034976f10d2d12f67c78ae2d51015a917',
+        })
+        expect(spyLoggerWarn).not.toHaveBeenCalled()
+        spyApiGetContents.mockRestore()
+    })
+
+    it('deletes all component file', async () => {
+        const { getContents } = mockGithubApi.repos
+        const mockGetContents: typeof getContents = async params => {
+            expect(params).toEqual({
+                base: 'master',
+                head: 'test-branch',
+                owner: 'mockOwner',
+                path: 'packages/mock-package/components/mockIcon',
+                ref: 'test-branch',
+                repo: 'mockRepo',
+            })
+            const { data } = await getContents(params)
+            return {
+                data: [
+                    {
+                        ...data,
+                        path:
+                            'packages/mock-package/components/mockIcon/index.js',
+                    },
+                    {
+                        ...data,
+                        path:
+                            'packages/mock-package/components/mockIcon/README.md',
+                    },
+                ],
+            }
+        }
+        const spyApiGetContents = jest
+            .spyOn(mockGithubApi.repos, 'getContents')
+            .mockImplementation(mockGetContents)
+        await writeComponent({
+            ...sharedParams,
+            assetFile: mockState[STATE.FILE_PATH] as string,
+            componentFiles: mockState[STATE.COMPONENT_FILES] as AnyObject,
+            componentName: mockState[STATE.COMPONENT_NAME] as string,
+            componentNameOld: mockState[STATE.COMPONENT_NAME_OLD] as string,
+            diffType: STATUSES.REMOVED,
+        })
+        expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledTimes(2)
+        const expectedParams = {
+            base: 'master',
+            head: 'test-branch',
+            message:
+                'refactor: remove mockIcon\nBREAKING CHANGE: remove mockIcon',
+            owner: 'mockOwner',
+            repo: 'mockRepo',
+            sha: '07a31f3034976f10d2d12f67c78ae2d51015a917',
+        }
+        expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledWith({
+            ...expectedParams,
+            path: 'packages/mock-package/components/mockIcon/index.js',
+        })
+        expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledWith({
+            ...expectedParams,
+            path: 'packages/mock-package/components/mockIcon/README.md',
+        })
+        expect(spyLoggerWarn).not.toHaveBeenCalled()
+        spyApiGetContents.mockRestore()
+    })
+
+    // it('warns and continues when fileExt is not provided', async () => {
+    //     expect(spyLoggerWarn).toHaveBeenCalled()
+    //     expect(spyLoggerWarn.mock.calls[0][0]).toMatchSnapshot()
+    // })
+
+    // it('warns and exits when componentName is not provided', async () => {
+    //     expect(spyLoggerWarn).toHaveBeenCalled()
+    //     expect(spyLoggerWarn.mock.calls[0][0]).toMatchSnapshot()
+    // })
+
+    // it('warns and exits when outputPath is not provided', async () => {
+    //     expect(spyLoggerWarn).toHaveBeenCalled()
+    //     expect(spyLoggerWarn.mock.calls[0][0]).toMatchSnapshot()
+    // })
 })

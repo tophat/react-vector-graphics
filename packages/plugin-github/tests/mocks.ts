@@ -30,9 +30,9 @@ const checkGithubParams = (params: GithubParams): void => {
 
 export const mockGithubApi = {
     repos: {
-        compareCommits: jest.fn().mockImplementation((params: GithubParams) => {
+        compareCommits: async (params: GithubParams): Promise<AnyObject> => {
             checkGithubParams(params)
-            return Promise.resolve({
+            return {
                 data: {
                     files: [
                         {
@@ -84,23 +84,38 @@ export const mockGithubApi = {
                         },
                     ],
                 },
-            })
-        }),
-        createOrUpdateFile: jest
-            .fn()
-            .mockImplementation((params: GithubParams & AnyObject) => {
-                checkGithubParams(params)
-                for (const p of ['branch', 'content', 'message', 'path']) {
-                    if (!params[p]) throw new Error(`No github ${p}`)
-                }
-            }),
-        getContents: jest.fn().mockImplementation((params: GithubParams) => {
+            }
+        },
+        createOrUpdateFile: async (
+            params: GithubParams & AnyObject,
+        ): Promise<void> => {
             checkGithubParams(params)
-            return Promise.resolve({
-                data: toBase64(mockSVG),
-                encoding: 'base64',
-            })
-        }),
+            for (const p of ['branch', 'content', 'message', 'path']) {
+                if (!params[p])
+                    throw new Error(`CreateOrUpdate: No github ${p}`)
+            }
+        },
+        deleteFile: async (params: GithubParams & AnyObject): Promise<void> => {
+            checkGithubParams(params)
+            for (const p of ['message', 'path', 'sha']) {
+                if (!params[p]) throw new Error(`Delete: No github ${p}`)
+            }
+        },
+        getContents: async (
+            params: GithubParams & AnyObject,
+        ): Promise<AnyObject> => {
+            checkGithubParams(params)
+            for (const p of ['path', 'ref']) {
+                if (!params[p]) throw new Error(`Read: No github ${p}`)
+            }
+            return {
+                data: {
+                    content: toBase64(mockSVG),
+                    encoding: 'base64',
+                    sha: '07a31f3034976f10d2d12f67c78ae2d51015a917',
+                },
+            }
+        },
     },
 }
 

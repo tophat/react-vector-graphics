@@ -8,6 +8,12 @@ export const normaliseGlob = (globPattern: string): string => {
     return globPattern
 }
 
+export const replaceAll = (
+    str: string,
+    search: string,
+    replacement: string,
+): string => str.split(search).join(replacement)
+
 export const fromBase64 = (data: string): string =>
     Buffer.from(data, 'base64').toString()
 

@@ -37,16 +37,19 @@ const findAssets = async ({
     const pluginParams = svgFiles.map(
         async (file): Promise<PluginParams> => {
             const filePath = path.relative(params.folderPath, file.filename)
-            const getContentResult = await githubApi.repos.getContents({
+            const { data } = await githubApi.repos.getContents({
                 ...githubParams,
                 path: file.filename,
                 ref: githubParams.head,
             })
+            if (Array.isArray(data) || !data.content) {
+                throw new Error(`Could not get contents for ${file.filename}`)
+            }
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
             const { previous_filename: previousFilename } = file
             return {
-                code: fromBase64(getContentResult.data.toString()),
+                code: fromBase64(data.content.toString()),
                 state: Object.assign(
                     {
                         [STATE.COMPONENT_NAME]: pathToName(

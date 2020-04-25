@@ -1,4 +1,5 @@
 import * as path from 'path'
+import { promises } from 'dns'
 
 import { Octokit } from '@octokit/rest'
 
@@ -11,7 +12,7 @@ import {
     STATE,
     STATUSES,
 } from './constants'
-import { eagerPromises, toBase64 } from './utils'
+import { eagerPromises, replaceAll, toBase64 } from './utils'
 
 const isRemoved = (status: string): boolean => status === STATUSES.REMOVED
 const isRenamed = (status: string): boolean => status === STATUSES.RENAMED
@@ -24,7 +25,8 @@ const removeIconFiles = async (
     commitMessagePattern: string = COMMIT_MESSAGE_PATTERNS.DELETE,
 ): Promise<void> => {
     const deleteMessage = `remove ${componentName}`
-    const message = commitMessagePattern.replace(
+    const message = replaceAll(
+        commitMessagePattern,
         COMMIT_MESSAGE_PLACEHOLDER,
         deleteMessage,
     )
@@ -33,17 +35,16 @@ const removeIconFiles = async (
         path: componentPath,
         ref: githubParams.head,
     })
-    const promises = Array.isArray(results)
-        ? results.map(({ path, sha }) =>
-              githubApi.repos.deleteFile({
-                  ...githubParams,
-                  message,
-                  path,
-                  sha,
-              }),
-          )
-        : [githubApi.repos.deleteFile({ ...githubParams, ...results, message })]
-    await eagerPromises(promises)
+    await eagerPromises(
+        (Array.isArray(results) ? results : [results]).map(({ path, sha }) =>
+            githubApi.repos.deleteFile({
+                ...githubParams,
+                message,
+                path,
+                sha,
+            }),
+        ),
+    )
 }
 
 const addOrModifyIconFile = async (
@@ -66,14 +67,16 @@ const addOrModifyIconFile = async (
         if (Array.isArray(data)) return
         fileSha = data.sha
     } catch (e) {
-        // do nothing
+        // assume file does not exist and do nothing
     }
     const message = fileSha
-        ? commitMessagePatternUpdate.replace(
+        ? replaceAll(
+              commitMessagePatternUpdate,
               COMMIT_MESSAGE_PLACEHOLDER,
               `modify ${componentName} ${fileName}`,
           )
-        : commitMessagePatternCreate.replace(
+        : replaceAll(
+              commitMessagePatternCreate,
               COMMIT_MESSAGE_PLACEHOLDER,
               `add ${componentName} ${fileName}`,
           )
