@@ -1,9 +1,9 @@
 {
-  "name": "@react-vector-graphics/core",
-  "version": "0.3.1",
-  "description": "Core library of react-vector-graphics",
+  "name": "@react-vector-graphics/plugin-github",
+  "version": "0.0.1",
+  "description": "Discover and publish assets to github",
   "author": "Top Hat <opensource@tophat.com>",
-  "homepage": "https://github.com/tophat/react-vector-graphics#readme",
+  "homepage": "https://github.com/tophat/react-vector-graphics",
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "directories": {
@@ -27,9 +27,10 @@
     "url": "https://github.com/tophat/react-vector-graphics/issues"
   },
   "dependencies": {
-    "@svgr/core": "^5.2.0"
+    "@react-vector-graphics/utils": "*"
   },
   "peerDependencies": {
-    "@react-vector-graphics/types": "*"
+    "@react-vector-graphics/types": "*",
+    "minimatch": "^3.0.4"
   }
 }

@@ -1,6 +1,6 @@
-import { pathToName } from '../src/utils'
+import pathToName from '../src/pathToName'
 
-describe('plugin-assets/utils', () => {
+describe('pathToName', () => {
     it.each`
         nameScheme
         ${`CONSTANT_CASE`}

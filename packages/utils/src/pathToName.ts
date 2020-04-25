@@ -5,6 +5,14 @@ import { NamingScheme } from '@react-vector-graphics/types'
 const capitalize = (w: string): string =>
     `${w[0].toUpperCase()}${w.slice(1).toLowerCase()}`
 
+export const NAMING_SCHEME: { [key: string]: NamingScheme } = {
+    CAMEL: 'camelCase',
+    CONSTANT: 'CONSTANT_CASE',
+    PASCAL: 'PascalCase',
+    SNAKE: 'snake_case',
+    SPINAL: 'spinal-case',
+}
+
 export const pathToName = (
     filePath: string,
     namingScheme: NamingScheme,
@@ -13,20 +21,22 @@ export const pathToName = (
         .basename(filePath, filePath.split('.').pop())
         .match(/[a-zA-Z0-9]+/g)
     switch (namingScheme) {
-        case 'CONSTANT_CASE':
+        case NAMING_SCHEME.CONSTANT:
             return words?.join('_').toUpperCase()
-        case 'snake_case':
+        case NAMING_SCHEME.SNAKE:
             return words?.join('_').toLowerCase()
-        case 'spinal-case':
+        case NAMING_SCHEME.SPINAL:
             return words?.join('-').toLowerCase()
-        case 'camelCase':
+        case NAMING_SCHEME.CAMEL:
             return words
                 ?.map((w, i): string => {
                     return i > 0 ? capitalize(w) : w.toLowerCase()
                 })
                 .join('')
-        case 'PascalCase':
+        case NAMING_SCHEME.PASCAL:
         default:
             return words?.map(capitalize).join('')
     }
 }
+
+export default pathToName

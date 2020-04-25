@@ -20,6 +20,7 @@
     "test:watch": "jest --watch --notify"
   },
   "devDependencies": {
+    "@octokit/rest": "^17.3.0",
     "@svgr/core": "^5.2.0",
     "@svgr/plugin-svgo": "^5.3.0",
     "@tophat/commitizen-adapter": "^0.0.11",
@@ -43,6 +44,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.17.0",
+    "fs-extra": "^9.0.0",
     "glob": "^7.1.6",
     "husky": "^3.0.9",
     "jest": "^24.9.0",

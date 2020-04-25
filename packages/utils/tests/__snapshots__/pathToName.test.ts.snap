@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pathToName converts file path to correct naming scheme CONSTANT_CASE 1`] = `"FILE3_WHITE_24X24_ICON"`;
+
+exports[`pathToName converts file path to correct naming scheme PascalCase 1`] = `"File3White24x24Icon"`;
+
+exports[`pathToName converts file path to correct naming scheme camelCase 1`] = `"file3White24x24Icon"`;
+
+exports[`pathToName converts file path to correct naming scheme snake_case 1`] = `"file3_white_24x24_icon"`;
+
+exports[`pathToName converts file path to correct naming scheme spinal-case 1`] = `"file3-white-24x24-icon"`;
