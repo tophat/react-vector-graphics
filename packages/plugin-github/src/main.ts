@@ -17,7 +17,7 @@ import { OPTIONS, STATE } from './constants'
 import { fromBase64 } from './utils'
 
 const findAssets = async ({
-    github: { api: githubApi, sha: commitSha, ...githubParams },
+    github: { api: githubApi, sha: commitSha, ...githubArgs },
     ...args
 }: {
     folderPath: string
@@ -33,7 +33,7 @@ const findAssets = async ({
     state: State
 }): Promise<PluginParams[]> => {
     const compareCommitsResult = await githubApi.repos.compareCommits({
-        ...githubParams,
+        ...githubArgs,
         head: commitSha,
     })
     const svgFiles = compareCommitsResult.data.files.filter(file => {
@@ -46,7 +46,7 @@ const findAssets = async ({
         async (file): Promise<PluginParams> => {
             const filePath = path.relative(args.folderPath, file.filename)
             const getContentResult = await githubApi.repos.getContents({
-                ...githubParams,
+                ...githubArgs,
                 path: file.filename,
                 ref: commitSha,
             })
