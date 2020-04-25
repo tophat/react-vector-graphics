@@ -86,6 +86,14 @@ export const mockGithubApi = {
                 },
             })
         }),
+        createOrUpdateFile: jest
+            .fn()
+            .mockImplementation((params: GithubParams & AnyObject) => {
+                checkGithubParams(params)
+                for (const p of ['branch', 'content', 'message', 'path']) {
+                    if (!params[p]) throw new Error(`No github ${p}`)
+                }
+            }),
         getContents: jest.fn().mockImplementation((params: GithubParams) => {
             checkGithubParams(params)
             return Promise.resolve({
@@ -99,7 +107,7 @@ export const mockGithubApi = {
 export const mockOptions = {
     [OPTIONS.API]: {},
     [OPTIONS.BASE]: 'master',
-    [OPTIONS.FILE_EXT]: '.js',
+    [OPTIONS.FILE_EXT]: 'js',
     [OPTIONS.FOLDER_PATH]: 'packages/mock-package',
     [OPTIONS.GLOB_PATTERN]: './assets/*.svg',
     [OPTIONS.HEAD]: 'test-branch',

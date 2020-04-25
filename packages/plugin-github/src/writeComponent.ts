@@ -49,6 +49,7 @@ const removeIconFiles = async (
 const addOrModifyIconFile = async (
     githubApi: Octokit,
     githubParams: { head: string; owner: string; repo: string },
+    componentName: string,
     fileName: string,
     filePath: string,
     fileContents: string,
@@ -70,11 +71,11 @@ const addOrModifyIconFile = async (
     const message = fileSha
         ? commitMessagePatternUpdate.replace(
               COMMIT_MESSAGE_PLACEHOLDER,
-              `modify ${fileName}`,
+              `modify ${componentName} ${fileName}`,
           )
         : commitMessagePatternCreate.replace(
               COMMIT_MESSAGE_PLACEHOLDER,
-              `add ${fileName}`,
+              `add ${componentName} ${fileName}`,
           )
     await githubApi.repos.createOrUpdateFile({
         ...githubParams,
@@ -92,10 +93,10 @@ const writeComponent = async ({
 }: {
     assetFile: string
     code: string
-    commitMessagePatterns: {
-        create: string
-        delete: string
-        update: string
+    commitMessagePatterns?: {
+        create?: string
+        delete?: string
+        update?: string
     }
     componentName?: string
     componentNameOld?: string
@@ -132,14 +133,11 @@ const writeComponent = async ({
         params.outputPath,
         singleFile ? '' : params.componentName,
     )
-    const pathToFile = path.join(
-        pathToFolder,
-        singleFile ? params.componentName : 'index',
-    )
-    const componentFilePath = params.fileExt
-        ? `${pathToFile}.${params.fileExt}`
-        : pathToFile
-    componentFiles.push([componentFilePath, params.code])
+    const componentFileName =
+        (singleFile ? params.componentName : 'index') +
+        (params.fileExt ? `.${params.fileExt}` : '')
+    componentFiles.push([componentFileName, params.code])
+    const componentFilePath = path.join(pathToFolder, componentFileName)
     // commit file changes
     const pendingPromises = []
     if (isRemoved(params.diffType)) {
@@ -149,7 +147,7 @@ const writeComponent = async ({
                 githubParams,
                 params.componentName,
                 singleFile ? componentFilePath : pathToFolder,
-                params.commitMessagePatterns.delete,
+                params.commitMessagePatterns?.delete,
             ),
         )
     } else {
@@ -160,11 +158,12 @@ const writeComponent = async ({
                 addOrModifyIconFile(
                     githubApi,
                     githubParams,
+                    params.componentName,
                     fileName,
                     filePath,
                     fileContents,
-                    params.commitMessagePatterns.create,
-                    params.commitMessagePatterns.update,
+                    params.commitMessagePatterns?.create,
+                    params.commitMessagePatterns?.update,
                 ),
             )
         }
@@ -187,7 +186,7 @@ const writeComponent = async ({
                     githubParams,
                     params.componentNameOld,
                     singleFile ? oldComponentFilePath : oldPathToFolder,
-                    params.commitMessagePatterns.delete,
+                    params.commitMessagePatterns?.delete,
                 ),
             )
         }
