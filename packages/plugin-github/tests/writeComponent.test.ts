@@ -173,7 +173,7 @@ describe('writeComponent', () => {
             base: 'master',
             head: 'test-branch',
             message:
-                'refactor: remove mockIcon\nBREAKING CHANGE: remove mockIcon',
+                'refactor: remove mockIcon\n\nBREAKING CHANGE: remove mockIcon',
             owner: 'mockOwner',
             path: 'packages/mock-package/components/mockIcon.js',
             repo: 'mockRepo',
@@ -212,7 +212,7 @@ describe('writeComponent', () => {
             base: 'master',
             head: 'test-branch',
             message:
-                'refactor: remove mockIcon\nBREAKING CHANGE: remove mockIcon',
+                'refactor: remove mockIcon\n\nBREAKING CHANGE: remove mockIcon',
             owner: 'mockOwner',
             repo: 'mockRepo',
             sha: '07a31f3034976f10d2d12f67c78ae2d51015a917',
@@ -269,7 +269,7 @@ describe('writeComponent', () => {
         expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledWith({
             ...expectedParams,
             message:
-                'refactor: remove mockIconOld\nBREAKING CHANGE: remove mockIconOld',
+                'refactor: remove mockIconOld\n\nBREAKING CHANGE: remove mockIconOld',
             path: 'packages/mock-package/components/mockIconOld.js',
             sha: '07a31f3034976f10d2d12f67c78ae2d51015a917',
         })
