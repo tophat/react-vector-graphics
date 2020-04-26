@@ -11,7 +11,7 @@ import { fromBase64, normaliseGlob } from './utils'
 
 const findAssets = async ({
     folderPath = '',
-    github: { api: githubApi, ...githubParams },
+    github: { api: githubApi, base = 'master', ...githubParams },
     ...params
 }: {
     folderPath: string
@@ -26,9 +26,10 @@ const findAssets = async ({
     nameScheme: NamingScheme
     state: State
 }): Promise<PluginParams[]> => {
-    const compareCommitsResult = await githubApi.repos.compareCommits(
-        githubParams,
-    )
+    const compareCommitsResult = await githubApi.repos.compareCommits({
+        ...githubParams,
+        base,
+    })
     const svgFiles = compareCommitsResult.data.files.filter(file => {
         const isInFolder = file.filename.startsWith(folderPath)
         if (!isInFolder) return false
@@ -40,6 +41,7 @@ const findAssets = async ({
             const filePath = path.relative(folderPath, file.filename)
             const { data } = await githubApi.repos.getContents({
                 ...githubParams,
+                base,
                 path: file.filename,
                 ref: githubParams.head,
             })
