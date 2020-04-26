@@ -4,7 +4,7 @@
 
 The plugin works in two stages discovery and storage.
 
-```json
+```jsonc
 {
     "plugins": [
         "@react-vector-graphics/plugin-github",
@@ -12,12 +12,12 @@ The plugin works in two stages discovery and storage.
         "@react-vector-graphics/plugin-github"
     ],
     "options": {
-        "github/globPattern": "assets/*.svg",
-        "github/fileExt": "js",
+        "assets/globPattern": "assets/*.svg",
+        "assets/fileExt": "js",
+        "assets/nameScheme": "PascalCase",
+        "assets/outputPath": "components",
         "github/folderPath": "src",
-        "github/head": "current-branch-or-commit",
-        "github/nameScheme": "PascalCase",
-        "github/outputPath": "components"
+        "github/head": "current-branch-or-commit"
     }
 }
 ```
@@ -172,7 +172,7 @@ Example having this in the state
 {
     "componentName": "FooIcon",
     "filePath": "assets/foo.icon.svg",
-    "github/componentFiles": {
+    "assets/componentFiles": {
         "README.md": "# FooIcon"
     }
 }
