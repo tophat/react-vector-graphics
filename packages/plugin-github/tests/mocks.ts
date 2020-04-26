@@ -22,8 +22,6 @@ type GithubParams = {
 }
 
 const checkGithubParams = (params: GithubParams): void => {
-    if (!params.base) throw new Error('No github base')
-    if (!params.head) throw new Error('No github head')
     if (!params.owner) throw new Error('No github owner')
     if (!params.repo) throw new Error('No github repo')
 }
@@ -97,7 +95,7 @@ export const mockGithubApi = {
         },
         deleteFile: async (params: GithubParams & AnyObject): Promise<void> => {
             checkGithubParams(params)
-            for (const p of ['message', 'path', 'sha']) {
+            for (const p of ['branch', 'message', 'path', 'sha']) {
                 if (!params[p]) throw new Error(`Delete: No github ${p}`)
             }
         },

@@ -1,5 +1,4 @@
 import * as path from 'path'
-import { promises } from 'dns'
 
 import { Octokit } from '@octokit/rest'
 
@@ -12,7 +11,7 @@ import {
     STATE,
     STATUSES,
 } from './constants'
-import { eagerPromises, replaceAll, toBase64 } from './utils'
+import { eagerPromises, fromBase64, replaceAll, toBase64 } from './utils'
 
 const removeIconFiles = async (
     githubApi: Octokit,
@@ -28,16 +27,19 @@ const removeIconFiles = async (
         deleteMessage,
     )
     const { data: results } = await githubApi.repos.getContents({
-        ...githubParams,
+        owner: githubParams.owner,
         path: componentPath,
         ref: githubParams.head,
+        repo: githubParams.repo,
     })
     await eagerPromises(
         (Array.isArray(results) ? results : [results]).map(({ path, sha }) =>
             githubApi.repos.deleteFile({
-                ...githubParams,
+                branch: githubParams.head,
                 message,
+                owner: githubParams.owner,
                 path,
+                repo: githubParams.repo,
                 sha,
             }),
         ),
@@ -53,36 +55,46 @@ const addOrModifyIconFile = async (
     fileContents: string,
     commitMessagePatternCreate: string = COMMIT_MESSAGE_PATTERNS.CREATE,
     commitMessagePatternUpdate: string = COMMIT_MESSAGE_PATTERNS.UPDATE,
+    logger: Logger = console,
 ): Promise<void> => {
     let fileSha
+    let fileContentsOld
     try {
         const { data } = await githubApi.repos.getContents({
-            ...githubParams,
+            owner: githubParams.owner,
             path: filePath,
             ref: githubParams.head,
+            repo: githubParams.repo,
         })
-        if (Array.isArray(data)) return
+        if (Array.isArray(data)) {
+            return logger.info('Path is folder, skipping', filePath)
+        }
         fileSha = data.sha
+        fileContentsOld = fromBase64(data.content as string)
     } catch (e) {
-        // assume file does not exist and do nothing
+        logger.error(`${e}: ${filePath}`)
+    }
+    if (fileContentsOld === fileContents) {
+        return logger.info('No changes, skipping file', filePath)
     }
     const message = fileSha
         ? replaceAll(
               commitMessagePatternUpdate,
               COMMIT_MESSAGE_PLACEHOLDER,
-              `modify ${componentName} ${fileName}`,
+              `modify ${componentName} ${path.basename(fileName)}`,
           )
         : replaceAll(
               commitMessagePatternCreate,
               COMMIT_MESSAGE_PLACEHOLDER,
-              `add ${componentName} ${fileName}`,
+              `add ${componentName} ${path.basename(fileName)}`,
           )
     await githubApi.repos.createOrUpdateFile({
-        ...githubParams,
         branch: githubParams.head,
         content: toBase64(fileContents),
         message,
+        owner: githubParams.owner,
         path: filePath,
+        repo: githubParams.repo,
         sha: fileSha,
     })
 }
@@ -153,7 +165,7 @@ const writeComponent = async ({
     } else {
         // added, modified or renamed
         for (const [fileName, fileContents] of componentFiles) {
-            const filePath = path.join(pathToFolder, fileName)
+            const filePath = path.normalize(path.join(pathToFolder, fileName))
             pendingPromises.push(
                 addOrModifyIconFile(
                     githubApi,
@@ -164,6 +176,7 @@ const writeComponent = async ({
                     fileContents,
                     params.commitMessagePatterns?.create,
                     params.commitMessagePatterns?.update,
+                    params.logger,
                 ),
             )
         }

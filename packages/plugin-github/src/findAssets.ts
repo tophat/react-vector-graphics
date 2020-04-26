@@ -6,12 +6,12 @@ import { Octokit } from '@octokit/rest'
 import { NamingScheme, PluginParams, State } from '@react-vector-graphics/types'
 import { pathToName } from '@react-vector-graphics/utils'
 
-import { STATE } from './constants'
-import { fromBase64, normaliseGlob } from './utils'
+import { EMPTY_SVG, STATE, STATUSES } from './constants'
+import { fromBase64, normaliseGlob, toBase64 } from './utils'
 
 const findAssets = async ({
     folderPath = '',
-    github: { api: githubApi, ...githubParams },
+    github: { api: githubApi, base = 'master', ...githubParams },
     ...params
 }: {
     folderPath: string
@@ -26,9 +26,10 @@ const findAssets = async ({
     nameScheme: NamingScheme
     state: State
 }): Promise<PluginParams[]> => {
-    const compareCommitsResult = await githubApi.repos.compareCommits(
-        githubParams,
-    )
+    const compareCommitsResult = await githubApi.repos.compareCommits({
+        ...githubParams,
+        base,
+    })
     const svgFiles = compareCommitsResult.data.files.filter(file => {
         const isInFolder = file.filename.startsWith(folderPath)
         if (!isInFolder) return false
@@ -38,11 +39,15 @@ const findAssets = async ({
     const pluginParams = svgFiles.map(
         async (file): Promise<PluginParams> => {
             const filePath = path.relative(folderPath, file.filename)
-            const { data } = await githubApi.repos.getContents({
-                ...githubParams,
-                path: file.filename,
-                ref: githubParams.head,
-            })
+            const { data } =
+                file.status === STATUSES.REMOVED
+                    ? { data: { content: toBase64(EMPTY_SVG) } }
+                    : await githubApi.repos.getContents({
+                          ...githubParams,
+                          base,
+                          path: file.filename,
+                          ref: githubParams.head,
+                      })
             if (Array.isArray(data) || !data.content) {
                 throw new Error(`Could not get contents for ${file.filename}`)
             }
