@@ -39,4 +39,4 @@ export const COMMIT_MESSAGE_PATTERNS = {
     UPDATE: `fix: ${COMMIT_MESSAGE_PLACEHOLDER}`,
 }
 
-export const EMPTY_SVG = '<svg></svg>'
+export const EMPTY_SVG = '<svg/>'

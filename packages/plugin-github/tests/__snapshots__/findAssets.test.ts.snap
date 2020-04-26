@@ -21,7 +21,7 @@ Array [
     },
   },
   Object {
-    "code": "<svg></svg>",
+    "code": "<svg/>",
     "state": Object {
       "componentName": "mockIcon",
       "filePath": "assets/mock.icon.svg",
