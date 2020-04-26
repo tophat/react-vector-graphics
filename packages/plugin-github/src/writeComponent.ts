@@ -69,7 +69,7 @@ const addOrModifyIconFile = async (
         logger.error(`${e}: ${filePath}`)
     }
     if (fileContentsOld === fileContents) {
-        return logger.info('No changes, skipping file', fileName)
+        return logger.info('No changes, skipping file', filePath)
     }
     const baseName = path.basename(fileName)
     const message = fileSha
