@@ -6,8 +6,8 @@ import { Octokit } from '@octokit/rest'
 import { NamingScheme, PluginParams, State } from '@react-vector-graphics/types'
 import { pathToName } from '@react-vector-graphics/utils'
 
-import { STATE } from './constants'
-import { fromBase64, normaliseGlob } from './utils'
+import { EMPTY_SVG, STATE, STATUSES } from './constants'
+import { fromBase64, normaliseGlob, toBase64 } from './utils'
 
 const findAssets = async ({
     folderPath = '',
@@ -39,12 +39,15 @@ const findAssets = async ({
     const pluginParams = svgFiles.map(
         async (file): Promise<PluginParams> => {
             const filePath = path.relative(folderPath, file.filename)
-            const { data } = await githubApi.repos.getContents({
-                ...githubParams,
-                base,
-                path: file.filename,
-                ref: githubParams.head,
-            })
+            const { data } =
+                file.status === STATUSES.REMOVED
+                    ? { data: { content: toBase64(EMPTY_SVG) } }
+                    : await githubApi.repos.getContents({
+                          ...githubParams,
+                          base,
+                          path: file.filename,
+                          ref: githubParams.head,
+                      })
             if (Array.isArray(data) || !data.content) {
                 throw new Error(`Could not get contents for ${file.filename}`)
             }
