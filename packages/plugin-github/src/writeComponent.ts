@@ -11,7 +11,7 @@ import {
     STATE,
     STATUSES,
 } from './constants'
-import { eagerPromises, replaceAll, toBase64 } from './utils'
+import { eagerPromises, fromBase64, replaceAll, toBase64 } from './utils'
 
 const removeIconFiles = async (
     githubApi: Octokit,
@@ -52,8 +52,10 @@ const addOrModifyIconFile = async (
     fileContents: string,
     commitMessagePatternCreate: string = COMMIT_MESSAGE_PATTERNS.CREATE,
     commitMessagePatternUpdate: string = COMMIT_MESSAGE_PATTERNS.UPDATE,
+    logger: Logger = console,
 ): Promise<void> => {
     let fileSha
+    let fileContentsOld
     try {
         const { data } = await githubApi.repos.getContents({
             ...githubParams,
@@ -62,8 +64,12 @@ const addOrModifyIconFile = async (
         })
         if (Array.isArray(data)) return
         fileSha = data.sha
+        fileContentsOld = fromBase64(data.content as string)
     } catch (e) {
-        // assume file does not exist and do nothing
+        logger.error(`${e}: ${filePath}`)
+    }
+    if (fileContentsOld === fileContents) {
+        return logger.info('No changes, skipping file', fileName)
     }
     const baseName = path.basename(fileName)
     const message = fileSha
@@ -153,7 +159,7 @@ const writeComponent = async ({
     } else {
         // added, modified or renamed
         for (const [fileName, fileContents] of componentFiles) {
-            const filePath = path.join(pathToFolder, fileName)
+            const filePath = path.normalize(path.join(pathToFolder, fileName))
             pendingPromises.push(
                 addOrModifyIconFile(
                     githubApi,
@@ -164,6 +170,7 @@ const writeComponent = async ({
                     fileContents,
                     params.commitMessagePatterns?.create,
                     params.commitMessagePatterns?.update,
+                    params.logger,
                 ),
             )
         }
