@@ -27,16 +27,19 @@ const removeIconFiles = async (
         deleteMessage,
     )
     const { data: results } = await githubApi.repos.getContents({
-        ...githubParams,
+        owner: githubParams.owner,
         path: componentPath,
         ref: githubParams.head,
+        repo: githubParams.repo,
     })
     await eagerPromises(
         (Array.isArray(results) ? results : [results]).map(({ path, sha }) =>
             githubApi.repos.deleteFile({
-                ...githubParams,
+                branch: githubParams.head,
                 message,
+                owner: githubParams.owner,
                 path,
+                repo: githubParams.repo,
                 sha,
             }),
         ),
@@ -58,9 +61,10 @@ const addOrModifyIconFile = async (
     let fileContentsOld
     try {
         const { data } = await githubApi.repos.getContents({
-            ...githubParams,
+            owner: githubParams.owner,
             path: filePath,
             ref: githubParams.head,
+            repo: githubParams.repo,
         })
         if (Array.isArray(data)) {
             return logger.info('Path is folder, skipping', filePath)
@@ -85,11 +89,12 @@ const addOrModifyIconFile = async (
               `add ${componentName} ${path.basename(fileName)}`,
           )
     await githubApi.repos.createOrUpdateFile({
-        ...githubParams,
         branch: githubParams.head,
         content: toBase64(fileContents),
         message,
+        owner: githubParams.owner,
         path: filePath,
+        repo: githubParams.repo,
         sha: fileSha,
     })
 }

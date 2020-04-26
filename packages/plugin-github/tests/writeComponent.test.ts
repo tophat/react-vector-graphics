@@ -43,11 +43,9 @@ describe('writeComponent', () => {
         })
         expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledTimes(1)
         expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
-            base: 'master',
             branch: 'test-branch',
             content:
                 'CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gbW9ja0ljb24oKSB7CiAgICByZXR1cm4gPHN2Zz5tb2NrIHVwZGF0ZWQ8L3N2Zz4KfQo=',
-            head: 'test-branch',
             message: 'feat: add mockIcon mockIcon.js',
             owner: 'mockOwner',
             path: 'packages/mock-package/components/mockIcon.js',
@@ -67,10 +65,8 @@ describe('writeComponent', () => {
             diffType: mockState[STATE.DIFF_TYPE] as string,
         })
         expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
-            base: 'master',
             branch: 'test-branch',
             content: 'IyMgbW9ja0ljb24KCm1vY2sgdXNhZ2Ugbm90ZXM=',
-            head: 'test-branch',
             message: 'feat: add mockIcon README.md',
             owner: 'mockOwner',
             path: 'packages/mock-package/components/mockIcon/README.md',
@@ -78,11 +74,9 @@ describe('writeComponent', () => {
             sha: undefined,
         })
         expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
-            base: 'master',
             branch: 'test-branch',
             content:
                 'CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gbW9ja0ljb24oKSB7CiAgICByZXR1cm4gPHN2Zz5tb2NrIHVwZGF0ZWQ8L3N2Zz4KfQo=',
-            head: 'test-branch',
             message: 'feat: add mockIcon index.js',
             owner: 'mockOwner',
             path: 'packages/mock-package/components/mockIcon/index.js',
@@ -102,11 +96,9 @@ describe('writeComponent', () => {
         })
         expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledTimes(1)
         expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
-            base: 'master',
             branch: 'test-branch',
             content:
                 'CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gbW9ja0ljb24oKSB7CiAgICByZXR1cm4gPHN2Zz5tb2NrIHVwZGF0ZWQ8L3N2Zz4KfQo=',
-            head: 'test-branch',
             message: 'fix: modify mockIcon mockIcon.js',
             owner: 'mockOwner',
             path: 'packages/mock-package/components/mockIcon.js',
@@ -125,9 +117,7 @@ describe('writeComponent', () => {
             diffType: STATUSES.MODIFIED,
         })
         const expectedParams = {
-            base: 'master',
             branch: 'test-branch',
-            head: 'test-branch',
             owner: 'mockOwner',
             repo: 'mockRepo',
             sha: '07a31f3034976f10d2d12f67c78ae2d51015a917',
@@ -152,8 +142,6 @@ describe('writeComponent', () => {
         spyApiGetContents.mockImplementation(async params => {
             const { path, ...rest } = params
             expect(rest).toEqual({
-                base: 'master',
-                head: 'test-branch',
                 owner: 'mockOwner',
                 ref: 'test-branch',
                 repo: 'mockRepo',
@@ -170,8 +158,7 @@ describe('writeComponent', () => {
         })
         expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledTimes(1)
         expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledWith({
-            base: 'master',
-            head: 'test-branch',
+            branch: 'test-branch',
             message:
                 'refactor: remove mockIcon\n\nBREAKING CHANGE: remove mockIcon',
             owner: 'mockOwner',
@@ -185,8 +172,6 @@ describe('writeComponent', () => {
     it('deletes all component file', async () => {
         spyApiGetContents.mockImplementation(async params => {
             expect(params).toEqual({
-                base: 'master',
-                head: 'test-branch',
                 owner: 'mockOwner',
                 path: 'packages/mock-package/components/mockIcon',
                 ref: 'test-branch',
@@ -209,8 +194,7 @@ describe('writeComponent', () => {
         })
         expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledTimes(2)
         const expectedParams = {
-            base: 'master',
-            head: 'test-branch',
+            branch: 'test-branch',
             message:
                 'refactor: remove mockIcon\n\nBREAKING CHANGE: remove mockIcon',
             owner: 'mockOwner',
@@ -232,8 +216,6 @@ describe('writeComponent', () => {
         spyApiGetContents.mockImplementation(async params => {
             const { path, ...rest } = params
             expect(rest).toEqual({
-                base: 'master',
-                head: 'test-branch',
                 owner: 'mockOwner',
                 ref: 'test-branch',
                 repo: 'mockRepo',
@@ -250,15 +232,13 @@ describe('writeComponent', () => {
             diffType: STATUSES.RENAMED,
         })
         const expectedParams = {
-            base: 'master',
-            head: 'test-branch',
+            branch: 'test-branch',
             owner: 'mockOwner',
             repo: 'mockRepo',
         }
         expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledTimes(1)
         expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
             ...expectedParams,
-            branch: 'test-branch',
             content:
                 'CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gbW9ja0ljb24oKSB7CiAgICByZXR1cm4gPHN2Zz5tb2NrIHVwZGF0ZWQ8L3N2Zz4KfQo=',
             message: 'fix: modify mockIcon mockIcon.js',
@@ -287,11 +267,9 @@ describe('writeComponent', () => {
         })
         expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledTimes(1)
         expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
-            base: 'master',
             branch: 'test-branch',
             content:
                 'CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gbW9ja0ljb24oKSB7CiAgICByZXR1cm4gPHN2Zz5tb2NrIHVwZGF0ZWQ8L3N2Zz4KfQo=',
-            head: 'test-branch',
             message: 'fix: modify mockIcon mockIcon',
             owner: 'mockOwner',
             path: 'packages/mock-package/components/mockIcon',
