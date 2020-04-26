@@ -62,7 +62,9 @@ const addOrModifyIconFile = async (
             path: filePath,
             ref: githubParams.head,
         })
-        if (Array.isArray(data)) return
+        if (Array.isArray(data)) {
+            return logger.info('Path is folder, skipping', filePath)
+        }
         fileSha = data.sha
         fileContentsOld = fromBase64(data.content as string)
     } catch (e) {
@@ -71,17 +73,16 @@ const addOrModifyIconFile = async (
     if (fileContentsOld === fileContents) {
         return logger.info('No changes, skipping file', filePath)
     }
-    const baseName = path.basename(fileName)
     const message = fileSha
         ? replaceAll(
               commitMessagePatternUpdate,
               COMMIT_MESSAGE_PLACEHOLDER,
-              `modify ${componentName} ${baseName}`,
+              `modify ${componentName} ${path.basename(fileName)}`,
           )
         : replaceAll(
               commitMessagePatternCreate,
               COMMIT_MESSAGE_PLACEHOLDER,
-              `add ${componentName} ${baseName}`,
+              `add ${componentName} ${path.basename(fileName)}`,
           )
     await githubApi.repos.createOrUpdateFile({
         ...githubParams,
