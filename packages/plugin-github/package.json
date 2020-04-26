@@ -1,6 +1,6 @@
 {
   "name": "@react-vector-graphics/plugin-github",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Discover and publish assets to github",
   "author": "Top Hat <opensource@tophat.com>",
   "homepage": "https://github.com/tophat/react-vector-graphics",
