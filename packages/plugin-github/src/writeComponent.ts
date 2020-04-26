@@ -1,5 +1,4 @@
 import * as path from 'path'
-import { promises } from 'dns'
 
 import { Octokit } from '@octokit/rest'
 
@@ -66,16 +65,17 @@ const addOrModifyIconFile = async (
     } catch (e) {
         // assume file does not exist and do nothing
     }
+    const baseName = path.basename(fileName)
     const message = fileSha
         ? replaceAll(
               commitMessagePatternUpdate,
               COMMIT_MESSAGE_PLACEHOLDER,
-              `modify ${componentName} ${fileName}`,
+              `modify ${componentName} ${baseName}`,
           )
         : replaceAll(
               commitMessagePatternCreate,
               COMMIT_MESSAGE_PLACEHOLDER,
-              `add ${componentName} ${fileName}`,
+              `add ${componentName} ${baseName}`,
           )
     await githubApi.repos.createOrUpdateFile({
         ...githubParams,
