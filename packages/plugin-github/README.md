@@ -54,19 +54,19 @@ Saving each icon in the output folder as well as any `componentFiles` that have 
 
 Fixed options that do not change through run lifecycle. Any option without a default is **Required**.
 
-### `github/api`
+### `assets/api`
 
 Octokit powered github rest api, see [octokit `rest.js`](https://www.npmjs.com/package/@octokit/rest)
 
 This will need push access to the repository to commit the file changes.
 
-### `github/base`
+### `assets/base`
 
 Base to compare changes in `head` against.
 
 **Default**: `master`
 
-### `github/commitCreate`
+### `assets/commitCreate`
 
 Pattern used when commit a newly added svg react component.
 
@@ -74,7 +74,7 @@ Pattern used when commit a newly added svg react component.
 
 The `${message}` portion is replaced with `'add ComponentName fileName.fileExt'` before committing.
 
-### `github/commitDelete`
+### `assets/commitDelete`
 
 Pattern used when deleting a remove svg component.
 
@@ -82,7 +82,7 @@ Pattern used when deleting a remove svg component.
 
 The `${message}` portion is replaced with `'removed ComponentName'` before committing.
 
-### `github/commitUpdate`
+### `assets/commitUpdate`
 
 Pattern used when updating an svg react component.
 
@@ -90,27 +90,27 @@ Pattern used when updating an svg react component.
 
 The `${message}` portion is replaced with `'modify ComponentName fileName.fileExt'` before committing.
 
-### `github/fileExt`
+### `assets/fileExt`
 
 The file extension that is used to write the react component file
 
 **Default**: `''`
 
-### `github/folderPath`
+### `assets/folderPath`
 
 The base folder for all actions in the repository.
 
 **Default**: `''`
 
-### `github/globPattern`
+### `assets/globPattern`
 
 Glob string pattern, see [`minimatch`](https://www.npmjs.com/package/minimatch)
 
-### `github/head`
+### `assets/head`
 
 The current commit or branch ref that has the svg changes.
 
-### `github/nameScheme`
+### `assets/nameScheme`
 
 String reprenting the naming scheme used to tranform the icon filename to a component name
 
@@ -124,15 +124,15 @@ String reprenting the naming scheme used to tranform the icon filename to a comp
 
 **Default**: `PascalCase`
 
-### `github/outputPath`
+### `assets/outputPath`
 
 String pointing to final location all react components are stored in.
 
-### `github/owner`
+### `assets/owner`
 
 The repository owner e.g. `tophat`.
 
-### `github/repo`
+### `assets/repo`
 
 The repository name e.g. `react-vector-graphics`.
 
@@ -152,7 +152,7 @@ String representing the path to the svg file that was discovered
 
 _NOTE_: This is shared with `@svgr/plugin-jsx`
 
-### `github/componentFiles`
+### `assets/componentFiles`
 
 Map of file names to content that are associated with the generated components.
 
@@ -177,13 +177,13 @@ src/components/FooIcon/index.js # svg component code
 src/components/FooIcon/README.md
 ```
 
-### `github/componentNameOld`
+### `assets/componentNameOld`
 
 This is only set when an svg file has been marked as moved/renamed by github.
 
 This will result in the a new component being added at `componentName` and the `componentNameOld` being deleted.
 
-### `github/diffType`
+### `assets/diffType`
 
 This status indicates the type of change for the svg file discovered.
 

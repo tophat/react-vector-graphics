@@ -316,7 +316,7 @@ describe('writeComponent', () => {
             sha: '07a31f3034976f10d2d12f67c78ae2d51015a917',
         })
         expect(spyLoggerWarn).toHaveBeenCalledWith(
-            "No 'github/fileExt' provided.",
+            `No '${OPTIONS.FILE_EXT}' provided.`,
         )
     })
 
@@ -344,7 +344,7 @@ describe('writeComponent', () => {
         })
         expect(mockGithubApi.repos.createOrUpdateFile).not.toHaveBeenCalled()
         expect(spyLoggerWarn).toHaveBeenCalledWith(
-            "No 'github/outputPath' provided.",
+            `No '${OPTIONS.OUTPUT_PATH}' provided.`,
         )
     })
 })

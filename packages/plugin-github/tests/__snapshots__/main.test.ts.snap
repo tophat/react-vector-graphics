@@ -5,9 +5,9 @@ Array [
   Object {
     "code": "<svg>mock</svg>",
     "state": Object {
+      "assets/componentFiles": Object {},
       "componentName": "mockIcon",
       "filePath": "assets/mock.icon.svg",
-      "github/componentFiles": Object {},
       "github/diffType": "added",
     },
   },
@@ -23,13 +23,13 @@ export default function mockIcon() {
 }
 ",
   "state": Object {
-    "componentName": "mockIcon",
-    "filePath": "assets/mock.icon.svg",
-    "github/componentFiles": Object {
+    "assets/componentFiles": Object {
       "README.md": "## mockIcon
 
 mock usage notes",
     },
+    "componentName": "mockIcon",
+    "filePath": "assets/mock.icon.svg",
     "github/diffType": "added",
   },
 }
