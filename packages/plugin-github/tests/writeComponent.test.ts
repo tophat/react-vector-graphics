@@ -21,16 +21,19 @@ describe('writeComponent', () => {
         outputPath: mockOptions[OPTIONS.OUTPUT_PATH] as string,
     }
 
+    const { getContents } = mockGithubApi.repos
     const spyLoggerWarn = jest.spyOn(console, 'warn')
+    const spyApiGetContents = jest.spyOn(mockGithubApi.repos, 'getContents')
     jest.spyOn(mockGithubApi.repos, 'createOrUpdateFile')
     jest.spyOn(mockGithubApi.repos, 'deleteFile')
-    afterEach(jest.clearAllMocks)
+    afterEach(() => {
+        jest.clearAllMocks()
+        spyApiGetContents.mockImplementation(getContents)
+    })
     afterAll(jest.restoreAllMocks)
 
     it('creates single component file when given code', async () => {
-        const spyApiGetContents = jest
-            .spyOn(mockGithubApi.repos, 'getContents')
-            .mockRejectedValue('File does not exist')
+        spyApiGetContents.mockRejectedValue('File does not exist')
         await writeComponent({
             ...sharedParams,
             assetFile: mockState[STATE.FILE_PATH] as string,
@@ -52,13 +55,10 @@ describe('writeComponent', () => {
             sha: undefined,
         })
         expect(spyLoggerWarn).not.toHaveBeenCalled()
-        spyApiGetContents.mockRestore()
     })
 
     it('writes files to component folder when given extra files', async () => {
-        const spyApiGetContents = jest
-            .spyOn(mockGithubApi.repos, 'getContents')
-            .mockRejectedValue('File does not exist')
+        spyApiGetContents.mockRejectedValue('File does not exist')
         await writeComponent({
             ...sharedParams,
             assetFile: mockState[STATE.FILE_PATH] as string,
@@ -90,7 +90,6 @@ describe('writeComponent', () => {
             sha: undefined,
         })
         expect(spyLoggerWarn).not.toHaveBeenCalled()
-        spyApiGetContents.mockRestore()
     })
 
     it('refreshes single component file when given code', async () => {
@@ -150,8 +149,7 @@ describe('writeComponent', () => {
     })
 
     it('deletes single component file', async () => {
-        const { getContents } = mockGithubApi.repos
-        const mockGetContents: typeof getContents = async params => {
+        spyApiGetContents.mockImplementation(async params => {
             const { path, ...rest } = params
             expect(rest).toEqual({
                 base: 'master',
@@ -162,10 +160,7 @@ describe('writeComponent', () => {
             })
             const { data } = await getContents(params)
             return { data: { ...data, path } }
-        }
-        const spyApiGetContents = jest
-            .spyOn(mockGithubApi.repos, 'getContents')
-            .mockImplementation(mockGetContents)
+        })
         await writeComponent({
             ...sharedParams,
             assetFile: mockState[STATE.FILE_PATH] as string,
@@ -185,12 +180,10 @@ describe('writeComponent', () => {
             sha: '07a31f3034976f10d2d12f67c78ae2d51015a917',
         })
         expect(spyLoggerWarn).not.toHaveBeenCalled()
-        spyApiGetContents.mockRestore()
     })
 
     it('deletes all component file', async () => {
-        const { getContents } = mockGithubApi.repos
-        const mockGetContents: typeof getContents = async params => {
+        spyApiGetContents.mockImplementation(async params => {
             expect(params).toEqual({
                 base: 'master',
                 head: 'test-branch',
@@ -206,10 +199,7 @@ describe('writeComponent', () => {
                     { ...data, path: `${params.path}/README.md` },
                 ],
             }
-        }
-        const spyApiGetContents = jest
-            .spyOn(mockGithubApi.repos, 'getContents')
-            .mockImplementation(mockGetContents)
+        })
         await writeComponent({
             ...sharedParams,
             assetFile: mockState[STATE.FILE_PATH] as string,
@@ -236,12 +226,10 @@ describe('writeComponent', () => {
             path: 'packages/mock-package/components/mockIcon/README.md',
         })
         expect(spyLoggerWarn).not.toHaveBeenCalled()
-        spyApiGetContents.mockRestore()
     })
 
     it('deletes and updates renamed component files', async () => {
-        const { getContents } = mockGithubApi.repos
-        const mockGetContents: typeof getContents = async params => {
+        spyApiGetContents.mockImplementation(async params => {
             const { path, ...rest } = params
             expect(rest).toEqual({
                 base: 'master',
@@ -252,10 +240,7 @@ describe('writeComponent', () => {
             })
             const { data } = await getContents(params)
             return { data: { ...data, path } }
-        }
-        const spyApiGetContents = jest
-            .spyOn(mockGithubApi.repos, 'getContents')
-            .mockImplementation(mockGetContents)
+        })
         await writeComponent({
             ...sharedParams,
             assetFile: mockState[STATE.FILE_PATH] as string,
@@ -283,14 +268,12 @@ describe('writeComponent', () => {
         expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledTimes(1)
         expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledWith({
             ...expectedParams,
-            base: 'master',
             message:
                 'refactor: remove mockIconOld\nBREAKING CHANGE: remove mockIconOld',
             path: 'packages/mock-package/components/mockIconOld.js',
             sha: '07a31f3034976f10d2d12f67c78ae2d51015a917',
         })
         expect(spyLoggerWarn).not.toHaveBeenCalled()
-        spyApiGetContents.mockRestore()
     })
 
     it('warns and continues when fileExt is not provided', async () => {
