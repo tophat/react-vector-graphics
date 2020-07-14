@@ -56,7 +56,7 @@
     "prettier": "^1.19.1",
     "ts-jest": "^24.2.0",
     "typescript": "^3.7.4",
-    "yarn-deduplicate": "1.1.1"
+    "yarn-deduplicate": "2.1.0"
   },
   "jest": {
     "preset": "ts-jest",
