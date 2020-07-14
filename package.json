@@ -20,7 +20,7 @@
     "test:watch": "jest --watch --notify"
   },
   "devDependencies": {
-    "@octokit/rest": "^17.3.0",
+    "@octokit/rest": "^18.0.0",
     "@svgr/core": "^5.2.0",
     "@svgr/plugin-svgo": "^5.3.0",
     "@tophat/commitizen-adapter": "^0.0.11",
