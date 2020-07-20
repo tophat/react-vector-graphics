@@ -84,7 +84,7 @@ export const mockGithubApi = {
                 },
             }
         },
-        createOrUpdateFile: async (
+        createOrUpdateFileContents: async (
             params: GithubParams & AnyObject,
         ): Promise<void> => {
             checkGithubParams(params)
@@ -99,7 +99,7 @@ export const mockGithubApi = {
                 if (!params[p]) throw new Error(`Delete: No github ${p}`)
             }
         },
-        getContents: async (
+        getContent: async (
             params: GithubParams & AnyObject,
         ): Promise<AnyObject> => {
             checkGithubParams(params)

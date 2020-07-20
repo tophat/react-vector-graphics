@@ -42,7 +42,7 @@ const findAssets = async ({
             const { data } =
                 file.status === STATUSES.REMOVED
                     ? { data: { content: toBase64(EMPTY_SVG) } }
-                    : await githubApi.repos.getContents({
+                    : await githubApi.repos.getContent({
                           ...githubParams,
                           base,
                           path: file.filename,
