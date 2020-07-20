@@ -21,14 +21,14 @@ describe('writeComponent', () => {
         outputPath: mockOptions[OPTIONS.OUTPUT_PATH] as string,
     }
 
-    const { getContents } = mockGithubApi.repos
+    const { getContent } = mockGithubApi.repos
     const spyLoggerWarn = jest.spyOn(console, 'warn')
-    const spyApiGetContents = jest.spyOn(mockGithubApi.repos, 'getContents')
-    jest.spyOn(mockGithubApi.repos, 'createOrUpdateFile')
+    const spyApiGetContents = jest.spyOn(mockGithubApi.repos, 'getContent')
+    jest.spyOn(mockGithubApi.repos, 'createOrUpdateFileContents')
     jest.spyOn(mockGithubApi.repos, 'deleteFile')
     afterEach(() => {
         jest.clearAllMocks()
-        spyApiGetContents.mockImplementation(getContents)
+        spyApiGetContents.mockImplementation(getContent)
     })
     afterAll(jest.restoreAllMocks)
 
@@ -41,8 +41,12 @@ describe('writeComponent', () => {
             componentName: mockState[STATE.COMPONENT_NAME] as string,
             diffType: mockState[STATE.DIFF_TYPE] as string,
         })
-        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledTimes(1)
-        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
+        expect(
+            mockGithubApi.repos.createOrUpdateFileContents,
+        ).toHaveBeenCalledTimes(1)
+        expect(
+            mockGithubApi.repos.createOrUpdateFileContents,
+        ).toHaveBeenCalledWith({
             branch: 'test-branch',
             content:
                 'CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gbW9ja0ljb24oKSB7CiAgICByZXR1cm4gPHN2Zz5tb2NrIHVwZGF0ZWQ8L3N2Zz4KfQo=',
@@ -64,7 +68,9 @@ describe('writeComponent', () => {
             componentName: mockState[STATE.COMPONENT_NAME] as string,
             diffType: mockState[STATE.DIFF_TYPE] as string,
         })
-        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
+        expect(
+            mockGithubApi.repos.createOrUpdateFileContents,
+        ).toHaveBeenCalledWith({
             branch: 'test-branch',
             content: 'IyMgbW9ja0ljb24KCm1vY2sgdXNhZ2Ugbm90ZXM=',
             message: 'feat: add mockIcon README.md',
@@ -73,7 +79,9 @@ describe('writeComponent', () => {
             repo: 'mockRepo',
             sha: undefined,
         })
-        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
+        expect(
+            mockGithubApi.repos.createOrUpdateFileContents,
+        ).toHaveBeenCalledWith({
             branch: 'test-branch',
             content:
                 'CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gbW9ja0ljb24oKSB7CiAgICByZXR1cm4gPHN2Zz5tb2NrIHVwZGF0ZWQ8L3N2Zz4KfQo=',
@@ -94,8 +102,12 @@ describe('writeComponent', () => {
             componentName: mockState[STATE.COMPONENT_NAME] as string,
             diffType: STATUSES.MODIFIED,
         })
-        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledTimes(1)
-        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
+        expect(
+            mockGithubApi.repos.createOrUpdateFileContents,
+        ).toHaveBeenCalledTimes(1)
+        expect(
+            mockGithubApi.repos.createOrUpdateFileContents,
+        ).toHaveBeenCalledWith({
             branch: 'test-branch',
             content:
                 'CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gbW9ja0ljb24oKSB7CiAgICByZXR1cm4gPHN2Zz5tb2NrIHVwZGF0ZWQ8L3N2Zz4KfQo=',
@@ -122,13 +134,17 @@ describe('writeComponent', () => {
             repo: 'mockRepo',
             sha: '07a31f3034976f10d2d12f67c78ae2d51015a917',
         }
-        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
+        expect(
+            mockGithubApi.repos.createOrUpdateFileContents,
+        ).toHaveBeenCalledWith({
             ...expectedParams,
             content: 'IyMgbW9ja0ljb24KCm1vY2sgdXNhZ2Ugbm90ZXM=',
             message: 'fix: modify mockIcon README.md',
             path: 'packages/mock-package/components/mockIcon/README.md',
         })
-        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
+        expect(
+            mockGithubApi.repos.createOrUpdateFileContents,
+        ).toHaveBeenCalledWith({
             ...expectedParams,
             content:
                 'CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gbW9ja0ljb24oKSB7CiAgICByZXR1cm4gPHN2Zz5tb2NrIHVwZGF0ZWQ8L3N2Zz4KfQo=',
@@ -146,7 +162,7 @@ describe('writeComponent', () => {
                 ref: 'test-branch',
                 repo: 'mockRepo',
             })
-            const { data } = await getContents(params)
+            const { data } = await getContent(params)
             return { data: { ...data, path } }
         })
         await writeComponent({
@@ -177,7 +193,7 @@ describe('writeComponent', () => {
                 ref: 'test-branch',
                 repo: 'mockRepo',
             })
-            const { data } = await getContents(params)
+            const { data } = await getContent(params)
             return {
                 data: [
                     { ...data, path: `${params.path}/index.js` },
@@ -220,7 +236,7 @@ describe('writeComponent', () => {
                 ref: 'test-branch',
                 repo: 'mockRepo',
             })
-            const { data } = await getContents(params)
+            const { data } = await getContent(params)
             return { data: { ...data, path } }
         })
         await writeComponent({
@@ -236,8 +252,12 @@ describe('writeComponent', () => {
             owner: 'mockOwner',
             repo: 'mockRepo',
         }
-        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledTimes(1)
-        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
+        expect(
+            mockGithubApi.repos.createOrUpdateFileContents,
+        ).toHaveBeenCalledTimes(1)
+        expect(
+            mockGithubApi.repos.createOrUpdateFileContents,
+        ).toHaveBeenCalledWith({
             ...expectedParams,
             content:
                 'CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gbW9ja0ljb24oKSB7CiAgICByZXR1cm4gPHN2Zz5tb2NrIHVwZGF0ZWQ8L3N2Zz4KfQo=',
@@ -265,8 +285,12 @@ describe('writeComponent', () => {
             diffType: mockState[STATE.DIFF_TYPE] as string,
             fileExt: undefined,
         })
-        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledTimes(1)
-        expect(mockGithubApi.repos.createOrUpdateFile).toHaveBeenCalledWith({
+        expect(
+            mockGithubApi.repos.createOrUpdateFileContents,
+        ).toHaveBeenCalledTimes(1)
+        expect(
+            mockGithubApi.repos.createOrUpdateFileContents,
+        ).toHaveBeenCalledWith({
             branch: 'test-branch',
             content:
                 'CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gbW9ja0ljb24oKSB7CiAgICByZXR1cm4gPHN2Zz5tb2NrIHVwZGF0ZWQ8L3N2Zz4KfQo=',
@@ -288,7 +312,9 @@ describe('writeComponent', () => {
             componentFiles: {},
             diffType: mockState[STATE.DIFF_TYPE] as string,
         })
-        expect(mockGithubApi.repos.createOrUpdateFile).not.toHaveBeenCalled()
+        expect(
+            mockGithubApi.repos.createOrUpdateFileContents,
+        ).not.toHaveBeenCalled()
         expect(spyLoggerWarn).toHaveBeenCalledWith(
             "No 'componentName' provided for 'assets/mock.icon.svg'.",
         )
@@ -303,7 +329,9 @@ describe('writeComponent', () => {
             diffType: mockState[STATE.DIFF_TYPE] as string,
             outputPath: undefined,
         })
-        expect(mockGithubApi.repos.createOrUpdateFile).not.toHaveBeenCalled()
+        expect(
+            mockGithubApi.repos.createOrUpdateFileContents,
+        ).not.toHaveBeenCalled()
         expect(spyLoggerWarn).toHaveBeenCalledWith(
             `No '${OPTIONS.OUTPUT_PATH}' provided.`,
         )

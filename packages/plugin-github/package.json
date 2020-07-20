@@ -30,6 +30,7 @@
     "@react-vector-graphics/utils": "^0.1.0"
   },
   "peerDependencies": {
+    "@octokit/rest": "^18.0.1",
     "@react-vector-graphics/types": "*",
     "minimatch": "^3.0.4"
   }

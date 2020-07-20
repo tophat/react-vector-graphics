@@ -26,22 +26,25 @@ const removeIconFiles = async (
         COMMIT_MESSAGE_PLACEHOLDER,
         deleteMessage,
     )
-    const { data: results } = await githubApi.repos.getContents({
+    const { data: results } = await githubApi.repos.getContent({
         owner: githubParams.owner,
         path: componentPath,
         ref: githubParams.head,
         repo: githubParams.repo,
     })
     await eagerPromises(
-        (Array.isArray(results) ? results : [results]).map(({ path, sha }) =>
-            githubApi.repos.deleteFile({
-                branch: githubParams.head,
-                message,
-                owner: githubParams.owner,
-                path,
-                repo: githubParams.repo,
-                sha,
-            }),
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore: stupid typecheck thinks map not allowed
+        (Array.isArray(results) ? results : [results]).map(
+            ({ path, sha }: { path: string; sha: string }) =>
+                githubApi.repos.deleteFile({
+                    branch: githubParams.head,
+                    message,
+                    owner: githubParams.owner,
+                    path,
+                    repo: githubParams.repo,
+                    sha,
+                }),
         ),
     )
 }
@@ -60,7 +63,7 @@ const addOrModifyIconFile = async (
     let fileSha
     let fileContentsOld
     try {
-        const { data } = await githubApi.repos.getContents({
+        const { data } = await githubApi.repos.getContent({
             owner: githubParams.owner,
             path: filePath,
             ref: githubParams.head,
@@ -88,7 +91,7 @@ const addOrModifyIconFile = async (
               COMMIT_MESSAGE_PLACEHOLDER,
               `add ${componentName} ${path.basename(fileName)}`,
           )
-    await githubApi.repos.createOrUpdateFile({
+    await githubApi.repos.createOrUpdateFileContents({
         branch: githubParams.head,
         content: toBase64(fileContents),
         message,
