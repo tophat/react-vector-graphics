@@ -30,7 +30,7 @@ const findAssets = async ({
         ...githubParams,
         base,
     })
-    const svgFiles = compareCommitsResult.data.files.filter(file => {
+    const svgFiles = compareCommitsResult.data.files.filter((file) => {
         const isInFolder = file.filename.startsWith(folderPath)
         if (!isInFolder) return false
         const relPath = path.relative(folderPath, file.filename)
