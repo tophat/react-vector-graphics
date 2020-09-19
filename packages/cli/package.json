@@ -1,6 +1,6 @@
 {
   "name": "@react-vector-graphics/cli",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Command Line Interface for react-vector-graphics",
   "author": "Top Hat <opensource@tophat.com>",
   "homepage": "https://github.com/tophat/react-vector-graphics#readme",
@@ -29,8 +29,8 @@
     "url": "https://github.com/tophat/react-vector-graphics/issues"
   },
   "dependencies": {
-    "@react-vector-graphics/core": "^0.4.1",
-    "@react-vector-graphics/plugin-assets": "^0.4.0",
+    "@react-vector-graphics/core": "^0.4.2",
+    "@react-vector-graphics/plugin-assets": "^0.4.1",
     "fs-extra": "^9.0.0",
     "yargs": "^16.0.3"
   },
