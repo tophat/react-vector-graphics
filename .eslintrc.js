@@ -1,9 +1,15 @@
 module.exports = {
     extends: [
-        '@tophat',
         'plugin:@typescript-eslint/recommended',
         'prettier/@typescript-eslint',
+        '@tophat',
     ],
+    ignorePatterns: ['lib/'],
+    parser: '@typescript-eslint/parser',
+    rules: {
+        'sort-imports': 2,
+        'sort-keys': 2,
+    },
     settings: {
         'import/resolver': {
             node: {
@@ -11,12 +17,5 @@ module.exports = {
             },
         },
         'import/internal-regex': '^@react-vector-graphics/',
-    },
-    parser: '@typescript-eslint/parser',
-    plugins: ['@typescript-eslint'],
-    rules: {
-        'sort-imports': 2,
-        'sort-keys': 2,
-    },
-    ignorePatterns: ['lib/'],
+    }
 }
