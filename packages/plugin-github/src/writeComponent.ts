@@ -1,6 +1,7 @@
 import * as path from 'path'
 
 import { Octokit } from '@octokit/rest'
+import { ReposGetContentResponseData } from '@octokit/types'
 
 import { Logger } from '@react-vector-graphics/types'
 
@@ -12,6 +13,8 @@ import {
     STATUSES,
 } from './constants'
 import { eagerPromises, fromBase64, replaceAll, toBase64 } from './utils'
+
+const ensureArray = <T>(o: T | T[]): T[] => (Array.isArray(o) ? o : [o])
 
 const removeIconFiles = async (
     githubApi: Octokit,
@@ -33,9 +36,7 @@ const removeIconFiles = async (
         repo: githubParams.repo,
     })
     await eagerPromises(
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore: stupid typecheck thinks map not allowed
-        (Array.isArray(results) ? results : [results]).map(
+        ensureArray<ReposGetContentResponseData>(results).map(
             ({ path, sha }: { path: string; sha: string }) =>
                 githubApi.repos.deleteFile({
                     branch: githubParams.head,

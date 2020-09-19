@@ -2,7 +2,8 @@ module.exports = {
     extends: [
         'plugin:@typescript-eslint/recommended',
         'prettier/@typescript-eslint',
-        '@tophat',
+        '@tophat/eslint-config/base',
+        '@tophat/eslint-config/jest',
     ],
     ignorePatterns: ['lib/'],
     parser: '@typescript-eslint/parser',
@@ -11,11 +12,11 @@ module.exports = {
         'sort-keys': 2,
     },
     settings: {
+        'import/internal-regex': '^@react-vector-graphics/',
         'import/resolver': {
             node: {
                 extensions: ['.js', '.jsx', '.ts', '.tsx'],
             },
         },
-        'import/internal-regex': '^@react-vector-graphics/',
-    }
+    },
 }

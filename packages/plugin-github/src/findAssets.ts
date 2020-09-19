@@ -2,12 +2,15 @@ import * as path from 'path'
 
 import minimatch from 'minimatch'
 import { Octokit } from '@octokit/rest'
+import { ReposCompareCommitsResponseData } from '@octokit/types'
 
 import { NamingScheme, PluginParams, State } from '@react-vector-graphics/types'
 import { pathToName } from '@react-vector-graphics/utils'
 
 import { EMPTY_SVG, STATE, STATUSES } from './constants'
 import { fromBase64, normaliseGlob, toBase64 } from './utils'
+
+type Unpacked<T> = T extends (infer U)[] ? U : T
 
 const findAssets = async ({
     folderPath = '',
@@ -30,7 +33,10 @@ const findAssets = async ({
         ...githubParams,
         base,
     })
-    const svgFiles = compareCommitsResult.data.files.filter((file) => {
+    const svgFiles: (Unpacked<ReposCompareCommitsResponseData['files']> & {
+        // eslint-disable-next-line camelcase
+        previous_filename?: string
+    })[] = compareCommitsResult.data.files.filter(file => {
         const isInFolder = file.filename.startsWith(folderPath)
         if (!isInFolder) return false
         const relPath = path.relative(folderPath, file.filename)
@@ -51,9 +57,6 @@ const findAssets = async ({
             if (Array.isArray(data) || !data.content) {
                 throw new Error(`Could not get contents for ${file.filename}`)
             }
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            const { previous_filename: previousFilename } = file
             return {
                 code: fromBase64(data.content.toString()),
                 state: Object.assign(
@@ -63,9 +66,12 @@ const findAssets = async ({
                             params.nameScheme,
                         ),
                         [STATE.COMPONENT_NAME_OLD]:
-                            previousFilename &&
+                            file.previous_filename &&
                             pathToName(
-                                path.relative(folderPath, previousFilename),
+                                path.relative(
+                                    folderPath,
+                                    file.previous_filename,
+                                ),
                                 params.nameScheme,
                             ),
                         [STATE.DIFF_TYPE]: file.status,
