@@ -8,6 +8,8 @@ module.exports = {
     ignorePatterns: ['lib/'],
     parser: '@typescript-eslint/parser',
     rules: {
+        '@typescript-eslint/no-unused-vars': 2,
+        'no-unused-var': 0,
         'sort-imports': 2,
         'sort-keys': 2,
     },
