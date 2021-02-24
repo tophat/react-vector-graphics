@@ -1,5 +1,10 @@
 import { Logger } from '@react-vector-graphics/types'
 
+// https://github.com/octokit/rest.js/issues/1971
+type WithContent<T> = T & { content: Buffer | string }
+export const withContent = <T>(data: T): WithContent<T> =>
+    data as WithContent<T>
+
 // https://github.com/isaacs/minimatch/issues/30
 export const normaliseGlob = (globPattern: string): string => {
     if (globPattern.startsWith('./')) {

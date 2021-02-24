@@ -1,7 +1,6 @@
 import * as path from 'path'
 
 import { Octokit } from '@octokit/rest'
-import { ReposGetContentResponseData } from '@octokit/types'
 
 import { Logger } from '@react-vector-graphics/types'
 
@@ -12,7 +11,13 @@ import {
     STATE,
     STATUSES,
 } from './constants'
-import { eagerPromises, fromBase64, replaceAll, toBase64 } from './utils'
+import {
+    eagerPromises,
+    fromBase64,
+    replaceAll,
+    toBase64,
+    withContent,
+} from './utils'
 
 const ensureArray = <T>(o: T | T[]): T[] => (Array.isArray(o) ? o : [o])
 
@@ -36,7 +41,7 @@ const removeIconFiles = async (
         repo: githubParams.repo,
     })
     await eagerPromises(
-        ensureArray<ReposGetContentResponseData>(results).map(
+        ensureArray(results).map(
             ({ path, sha }: { path: string; sha: string }) =>
                 githubApi.repos.deleteFile({
                     branch: githubParams.head,
@@ -74,7 +79,7 @@ const addOrModifyIconFile = async (
             return logger.info('Path is folder, skipping', filePath)
         }
         fileSha = data.sha
-        fileContentsOld = fromBase64(data.content as string)
+        fileContentsOld = fromBase64(withContent(data).content.toString())
     } catch (e) {
         logger.error(`${e}: ${filePath}`)
     }
