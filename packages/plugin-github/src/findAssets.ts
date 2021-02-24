@@ -2,15 +2,12 @@ import * as path from 'path'
 
 import minimatch from 'minimatch'
 import { Octokit } from '@octokit/rest'
-import { ReposCompareCommitsResponseData } from '@octokit/types'
 
 import { NamingScheme, PluginParams, State } from '@react-vector-graphics/types'
 import { pathToName } from '@react-vector-graphics/utils'
 
 import { EMPTY_SVG, STATE, STATUSES } from './constants'
-import { fromBase64, normaliseGlob, toBase64 } from './utils'
-
-type Unpacked<T> = T extends (infer U)[] ? U : T
+import { fromBase64, normaliseGlob, toBase64, withContent } from './utils'
 
 const findAssets = async ({
     folderPath = '',
@@ -33,10 +30,7 @@ const findAssets = async ({
         ...githubParams,
         base,
     })
-    const svgFiles: (Unpacked<ReposCompareCommitsResponseData['files']> & {
-        // eslint-disable-next-line camelcase
-        previous_filename?: string
-    })[] = compareCommitsResult.data.files.filter(file => {
+    const svgFiles = compareCommitsResult.data.files.filter(file => {
         const isInFolder = file.filename.startsWith(folderPath)
         if (!isInFolder) return false
         const relPath = path.relative(folderPath, file.filename)
@@ -54,11 +48,12 @@ const findAssets = async ({
                           path: file.filename,
                           ref: githubParams.head,
                       })
-            if (Array.isArray(data) || !data.content) {
+            const { content } = withContent(Array.isArray(data) ? {} : data)
+            if (!content) {
                 throw new Error(`Could not get contents for ${file.filename}`)
             }
             return {
-                code: fromBase64(data.content.toString()),
+                code: fromBase64(content.toString()),
                 state: Object.assign(
                     {
                         [STATE.COMPONENT_NAME]: pathToName(
