@@ -1,0 +1,23 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "13:00"
+    timezone: Canada/Eastern
+  open-pull-requests-limit: 2
+  ignore:
+  - dependency-name: eslint-config-prettier
+    versions:
+    - 8.1.0
+    - 8.2.0
+  - dependency-name: eslint-plugin-jest
+    versions:
+    - 24.3.2
+  - dependency-name: "@octokit/rest"
+    versions:
+    - 18.0.15
+    - 18.1.0
+    - 18.1.1
+    - 18.2.0
