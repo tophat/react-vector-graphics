@@ -1640,15 +1640,10 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.0.0.tgz#9c13c2574c92d4503b005feca8f2e16cc1611506"
   integrity sha512-KYyTT/T6ALPkIRd2Ge080X/BsXvy9O0hcWTtMWkPvwAwF99+vn6Dv4GzrFT/Nn1LePr+FFDbRXXlqmsy9lw2zA==
 
-"@tophat/commit-utils-core@*":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@tophat/commit-utils-core/-/commit-utils-core-0.1.0.tgz#ee3a13a3c9a25a22e8f3e98e482f5219d9597711"
-  integrity sha512-+XNgDrETz85QPWa/h7SfNwIIKME5gcQyGeqkWDS+aqMRWFUzKNttrz3WgLup7fZTRpCmuBzxAJfj0d/lCL3JWA==
-
-"@tophat/commit-utils-core@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@tophat/commit-utils-core/-/commit-utils-core-0.0.9.tgz#63834f018d61a80d68b49fb626fd3d9e8d186987"
-  integrity sha512-IhyyreVK3RxsVUfZ3Y77EkU7rYhedlL+z1wTkVBv29Q6+HyQhEstrCVUL2pOgDdhwfnlO0BHJNmDaQc7nmhlng==
+"@tophat/commit-utils-core@*", "@tophat/commit-utils-core@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@tophat/commit-utils-core/-/commit-utils-core-0.6.0.tgz#c833fecd18a0d8f1899502002e7d94826a9c2c9d"
+  integrity sha512-AaLFCra9zvouy4fBAo9/oFgq1SVfIzMLMwe9WlFUYfq0XRDANhyV0rC2Z+MeUOVg/29tzXp/S+91jfcgaNPk5g==
 
 "@tophat/commitizen-adapter@^0.5.4":
   version "0.5.4"
@@ -1660,12 +1655,12 @@
     longest "^2.0.1"
     word-wrap "^1.0.3"
 
-"@tophat/commitlint-config@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@tophat/commitlint-config/-/commitlint-config-0.1.2.tgz#d26e1f2b16c23cb076c6039d1cf737d5b72d5e75"
-  integrity sha512-jtyv/HAz4ciZWHZatIzXE3FPRbCFExPbo9n4DRgwCqa086QxK+CPyHQIeHki+T3Z8zyJeFr19Rohd8DhYM9GYQ==
+"@tophat/commitlint-config@^0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@tophat/commitlint-config/-/commitlint-config-0.3.6.tgz#f8eb7597bd1829d3a57c2a79c27e13f333251f11"
+  integrity sha512-EUZaNLvtXbiOrkYFb9ha0pqKkqcIBqnBxe1q/utUgZ1xeqMtRPYNo8+m4LWxr2Iwrcf9gGTsvM0PIfeVAIAd7A==
   dependencies:
-    "@tophat/commit-utils-core" "^0.0.9"
+    "@tophat/commit-utils-core" "^0.6.0"
 
 "@tophat/eslint-config@^0.7.0":
   version "0.7.0"
