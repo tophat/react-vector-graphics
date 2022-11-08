@@ -423,6 +423,13 @@
   resolved "https://registry.yarnpkg.com/@commitlint/types/-/types-11.0.0.tgz#719cf05fcc1abb6533610a2e0f5dd1e61eac14fe"
   integrity sha512-VoNqai1vR5anRF5Tuh/+SWDFk7xi7oMwHrHrbm1BprYXjB2RJsWLhUrStMssDxEl5lW/z3EUdg8RvH/IUBccSQ==
 
+"@commitlint/types@^17.0.0":
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/@commitlint/types/-/types-17.0.0.tgz#3b4604c1a0f06c340ce976e6c6903d4f56e3e690"
+  integrity sha512-hBAw6U+SkAT5h47zDMeOu3HSiD0SODw4Aq7rRNh1ceUmL7GyLKYhPbUvlRWqZ65XjBLPHZhFyQlRaPNz8qvUyQ==
+  dependencies:
+    chalk "^4.1.0"
+
 "@eslint/eslintrc@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.3.0.tgz#d736d6963d7003b6514e6324bec9c602ac340318"
@@ -1640,15 +1647,10 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.0.0.tgz#9c13c2574c92d4503b005feca8f2e16cc1611506"
   integrity sha512-KYyTT/T6ALPkIRd2Ge080X/BsXvy9O0hcWTtMWkPvwAwF99+vn6Dv4GzrFT/Nn1LePr+FFDbRXXlqmsy9lw2zA==
 
-"@tophat/commit-utils-core@*":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@tophat/commit-utils-core/-/commit-utils-core-0.1.0.tgz#ee3a13a3c9a25a22e8f3e98e482f5219d9597711"
-  integrity sha512-+XNgDrETz85QPWa/h7SfNwIIKME5gcQyGeqkWDS+aqMRWFUzKNttrz3WgLup7fZTRpCmuBzxAJfj0d/lCL3JWA==
-
-"@tophat/commit-utils-core@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@tophat/commit-utils-core/-/commit-utils-core-0.0.9.tgz#63834f018d61a80d68b49fb626fd3d9e8d186987"
-  integrity sha512-IhyyreVK3RxsVUfZ3Y77EkU7rYhedlL+z1wTkVBv29Q6+HyQhEstrCVUL2pOgDdhwfnlO0BHJNmDaQc7nmhlng==
+"@tophat/commit-utils-core@*", "@tophat/commit-utils-core@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@tophat/commit-utils-core/-/commit-utils-core-1.0.0.tgz#db809cd4f51446c546571eab39aad38f89a2b5dc"
+  integrity sha512-EcLsJ4Grfsf2eE6xD7IVZkBsFzJjnXDf1M7SUM/3e2QdkR1IjRFeJUQgbELP8fQUj9KGIv9kXprnAldLO3XQHQ==
 
 "@tophat/commitizen-adapter@^0.5.4":
   version "0.5.4"
@@ -1660,12 +1662,13 @@
     longest "^2.0.1"
     word-wrap "^1.0.3"
 
-"@tophat/commitlint-config@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@tophat/commitlint-config/-/commitlint-config-0.1.2.tgz#d26e1f2b16c23cb076c6039d1cf737d5b72d5e75"
-  integrity sha512-jtyv/HAz4ciZWHZatIzXE3FPRbCFExPbo9n4DRgwCqa086QxK+CPyHQIeHki+T3Z8zyJeFr19Rohd8DhYM9GYQ==
+"@tophat/commitlint-config@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@tophat/commitlint-config/-/commitlint-config-1.0.2.tgz#55a47bf3bcc4d432bb27fb3c3ea7f7f5321b2586"
+  integrity sha512-5rTdgUBcneeA79sFAwo2NHqV93dEMftOfwZjiggX9GtnuRmkciF+WwyjMs9T7lVRI9kKYSbjD5OLjaIYqRik8g==
   dependencies:
-    "@tophat/commit-utils-core" "^0.0.9"
+    "@commitlint/types" "^17.0.0"
+    "@tophat/commit-utils-core" "^1.0.0"
 
 "@tophat/eslint-config@^0.7.0":
   version "0.7.0"
