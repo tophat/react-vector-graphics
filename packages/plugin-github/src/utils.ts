@@ -1,4 +1,4 @@
-import { Logger } from '@react-vector-graphics/types'
+import { type Logger } from '@react-vector-graphics/types'
 
 // https://github.com/octokit/rest.js/issues/1971
 type WithContent<T> = T & { content: Buffer | string }
@@ -30,4 +30,4 @@ export const eagerPromises = (
     promises: Promise<any>[],
     logger: Logger = console,
 ): // eslint-disable-next-line @typescript-eslint/no-explicit-any
-Promise<any> => Promise.all(promises.map(p => p.catch(logger.error)))
+Promise<any> => Promise.all(promises.map((p) => p.catch(logger.error)))

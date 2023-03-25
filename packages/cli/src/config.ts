@@ -1,12 +1,11 @@
 import { cosmiconfig } from 'cosmiconfig'
 
-import { Configuration } from '@react-vector-graphics/types'
+import type { Config } from '@react-vector-graphics/types'
 
 const cache = process.env.NODE_ENV !== 'test'
 const explorer = cosmiconfig('rvg', { cache })
 
-export const init = (): Configuration => ({
-    options: {},
+export const init = (): Config => ({
     plugins: [],
 })
 export const find = explorer.search

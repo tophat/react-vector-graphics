@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`cli requests for missing option: config 1`] = `"Process exited with code: 1"`;

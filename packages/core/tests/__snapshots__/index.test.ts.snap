@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`core fails on invalid plugin: {} 1`] = `"Invalid plugin '[object Object]'"`;
-
-exports[`core fails on invalid plugin: 420 1`] = `"Invalid plugin '420'"`;
-
-exports[`core fails on invalid plugin: some-invalid-plugin 1`] = `"Cannot find module 'some-invalid-plugin' from 'packages/core/src/plugins.ts'"`;

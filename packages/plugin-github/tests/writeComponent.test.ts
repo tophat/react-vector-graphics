@@ -1,9 +1,9 @@
-import { Octokit } from '@octokit/rest'
-
 import { OPTIONS, STATE, STATUSES } from '../src/constants'
 import writeComponent from '../src/writeComponent'
 
 import { mockComponent, mockGithubApi, mockOptions, mockState } from './mocks'
+
+import type { Octokit } from '@octokit/rest'
 
 describe('writeComponent', () => {
     const sharedParams = {
@@ -11,7 +11,7 @@ describe('writeComponent', () => {
         fileExt: mockOptions[OPTIONS.FILE_EXT] as string,
         folderPath: mockOptions[OPTIONS.FOLDER_PATH] as string,
         github: {
-            api: (mockGithubApi as unknown) as Octokit,
+            api: mockGithubApi as unknown as Octokit,
             base: mockOptions[OPTIONS.BASE] as string,
             head: mockOptions[OPTIONS.HEAD] as string,
             owner: mockOptions[OPTIONS.OWNER] as string,
@@ -36,10 +36,16 @@ describe('writeComponent', () => {
         spyApiGetContents.mockRejectedValue('File does not exist')
         await writeComponent({
             ...sharedParams,
-            assetFile: mockState[STATE.FILE_PATH] as string,
+            assetFile: mockState[
+                STATE.FILE_PATH as keyof typeof mockState
+            ] as string,
             componentFiles: {},
-            componentName: mockState[STATE.COMPONENT_NAME] as string,
-            diffType: mockState[STATE.DIFF_TYPE] as string,
+            componentName: mockState[
+                STATE.COMPONENT_NAME as keyof typeof mockState
+            ] as string,
+            diffType: mockState[
+                STATE.DIFF_TYPE as keyof typeof mockState
+            ] as string,
         })
         expect(
             mockGithubApi.repos.createOrUpdateFileContents,
@@ -63,10 +69,18 @@ describe('writeComponent', () => {
         spyApiGetContents.mockRejectedValue('File does not exist')
         await writeComponent({
             ...sharedParams,
-            assetFile: mockState[STATE.FILE_PATH] as string,
-            componentFiles: mockState[STATE.COMPONENT_FILES] as AnyObject,
-            componentName: mockState[STATE.COMPONENT_NAME] as string,
-            diffType: mockState[STATE.DIFF_TYPE] as string,
+            assetFile: mockState[
+                STATE.FILE_PATH as keyof typeof mockState
+            ] as string,
+            componentFiles: mockState[
+                STATE.COMPONENT_FILES as keyof typeof mockState
+            ] as any,
+            componentName: mockState[
+                STATE.COMPONENT_NAME as keyof typeof mockState
+            ] as string,
+            diffType: mockState[
+                STATE.DIFF_TYPE as keyof typeof mockState
+            ] as string,
         })
         expect(
             mockGithubApi.repos.createOrUpdateFileContents,
@@ -97,9 +111,13 @@ describe('writeComponent', () => {
     it('refreshes single component file when given code', async () => {
         await writeComponent({
             ...sharedParams,
-            assetFile: mockState[STATE.FILE_PATH] as string,
+            assetFile: mockState[
+                STATE.FILE_PATH as keyof typeof mockState
+            ] as string,
             componentFiles: {},
-            componentName: mockState[STATE.COMPONENT_NAME] as string,
+            componentName: mockState[
+                STATE.COMPONENT_NAME as keyof typeof mockState
+            ] as string,
             diffType: STATUSES.MODIFIED,
         })
         expect(
@@ -123,9 +141,15 @@ describe('writeComponent', () => {
     it('refreshes component files when given extra files', async () => {
         await writeComponent({
             ...sharedParams,
-            assetFile: mockState[STATE.FILE_PATH] as string,
-            componentFiles: mockState[STATE.COMPONENT_FILES] as AnyObject,
-            componentName: mockState[STATE.COMPONENT_NAME] as string,
+            assetFile: mockState[
+                STATE.FILE_PATH as keyof typeof mockState
+            ] as string,
+            componentFiles: mockState[
+                STATE.COMPONENT_FILES as keyof typeof mockState
+            ] as any,
+            componentName: mockState[
+                STATE.COMPONENT_NAME as keyof typeof mockState
+            ] as string,
             diffType: STATUSES.MODIFIED,
         })
         const expectedParams = {
@@ -155,21 +179,25 @@ describe('writeComponent', () => {
     })
 
     it('deletes single component file', async () => {
-        spyApiGetContents.mockImplementation(async params => {
+        spyApiGetContents.mockImplementation(async (params) => {
             const { path, ...rest } = params
             expect(rest).toEqual({
                 owner: 'mockOwner',
                 ref: 'test-branch',
                 repo: 'mockRepo',
             })
-            const { data } = await getContent(params)
+            const { data }: any = await getContent(params)
             return { data: { ...data, path } }
         })
         await writeComponent({
             ...sharedParams,
-            assetFile: mockState[STATE.FILE_PATH] as string,
+            assetFile: mockState[
+                STATE.FILE_PATH as keyof typeof mockState
+            ] as string,
             componentFiles: {},
-            componentName: mockState[STATE.COMPONENT_NAME] as string,
+            componentName: mockState[
+                STATE.COMPONENT_NAME as keyof typeof mockState
+            ] as string,
             diffType: STATUSES.REMOVED,
         })
         expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledTimes(1)
@@ -186,14 +214,14 @@ describe('writeComponent', () => {
     })
 
     it('deletes all component file', async () => {
-        spyApiGetContents.mockImplementation(async params => {
+        spyApiGetContents.mockImplementation(async (params) => {
             expect(params).toEqual({
                 owner: 'mockOwner',
                 path: 'packages/mock-package/components/mockIcon',
                 ref: 'test-branch',
                 repo: 'mockRepo',
             })
-            const { data } = await getContent(params)
+            const { data }: any = await getContent(params)
             return {
                 data: [
                     { ...data, path: `${params.path}/index.js` },
@@ -203,9 +231,15 @@ describe('writeComponent', () => {
         })
         await writeComponent({
             ...sharedParams,
-            assetFile: mockState[STATE.FILE_PATH] as string,
-            componentFiles: mockState[STATE.COMPONENT_FILES] as AnyObject,
-            componentName: mockState[STATE.COMPONENT_NAME] as string,
+            assetFile: mockState[
+                STATE.FILE_PATH as keyof typeof mockState
+            ] as string,
+            componentFiles: mockState[
+                STATE.COMPONENT_FILES as keyof typeof mockState
+            ] as any,
+            componentName: mockState[
+                STATE.COMPONENT_NAME as keyof typeof mockState
+            ] as string,
             diffType: STATUSES.REMOVED,
         })
         expect(mockGithubApi.repos.deleteFile).toHaveBeenCalledTimes(2)
@@ -229,21 +263,25 @@ describe('writeComponent', () => {
     })
 
     it('deletes and updates renamed component files', async () => {
-        spyApiGetContents.mockImplementation(async params => {
-            const { path, ...rest } = params
+        spyApiGetContents.mockImplementation(async (params) => {
+            const { path, ...rest }: any = params
             expect(rest).toEqual({
                 owner: 'mockOwner',
                 ref: 'test-branch',
                 repo: 'mockRepo',
             })
-            const { data } = await getContent(params)
+            const { data }: any = await getContent(params)
             return { data: { ...data, path } }
         })
         await writeComponent({
             ...sharedParams,
-            assetFile: mockState[STATE.FILE_PATH] as string,
+            assetFile: mockState[
+                STATE.FILE_PATH as keyof typeof mockState
+            ] as string,
             componentFiles: {},
-            componentName: mockState[STATE.COMPONENT_NAME] as string,
+            componentName: mockState[
+                STATE.COMPONENT_NAME as keyof typeof mockState
+            ] as string,
             componentNameOld: 'mockIconOld',
             diffType: STATUSES.RENAMED,
         })
@@ -279,10 +317,16 @@ describe('writeComponent', () => {
     it('warns and continues when fileExt is not provided', async () => {
         await writeComponent({
             ...sharedParams,
-            assetFile: mockState[STATE.FILE_PATH] as string,
+            assetFile: mockState[
+                STATE.FILE_PATH as keyof typeof mockState
+            ] as string,
             componentFiles: {},
-            componentName: mockState[STATE.COMPONENT_NAME] as string,
-            diffType: mockState[STATE.DIFF_TYPE] as string,
+            componentName: mockState[
+                STATE.COMPONENT_NAME as keyof typeof mockState
+            ] as string,
+            diffType: mockState[
+                STATE.DIFF_TYPE as keyof typeof mockState
+            ] as string,
             fileExt: undefined,
         })
         expect(
@@ -308,9 +352,13 @@ describe('writeComponent', () => {
     it('warns and exits when componentName is not provided', async () => {
         await writeComponent({
             ...sharedParams,
-            assetFile: mockState[STATE.FILE_PATH] as string,
+            assetFile: mockState[
+                STATE.FILE_PATH as keyof typeof mockState
+            ] as string,
             componentFiles: {},
-            diffType: mockState[STATE.DIFF_TYPE] as string,
+            diffType: mockState[
+                STATE.DIFF_TYPE as keyof typeof mockState
+            ] as string,
         })
         expect(
             mockGithubApi.repos.createOrUpdateFileContents,
@@ -323,10 +371,16 @@ describe('writeComponent', () => {
     it('warns and exits when outputPath is not provided', async () => {
         await writeComponent({
             ...sharedParams,
-            assetFile: mockState[STATE.FILE_PATH] as string,
+            assetFile: mockState[
+                STATE.FILE_PATH as keyof typeof mockState
+            ] as string,
             componentFiles: {},
-            componentName: mockState[STATE.COMPONENT_NAME] as string,
-            diffType: mockState[STATE.DIFF_TYPE] as string,
+            componentName: mockState[
+                STATE.COMPONENT_NAME as keyof typeof mockState
+            ] as string,
+            diffType: mockState[
+                STATE.DIFF_TYPE as keyof typeof mockState
+            ] as string,
             outputPath: undefined,
         })
         expect(

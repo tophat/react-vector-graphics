@@ -1,11 +1,13 @@
 import { NAMING_SCHEME } from '@react-vector-graphics/utils'
 
 import { OPTIONS, STATE, STATUSES } from '../src'
-import { toBase64 } from '../lib/utils'
+import { toBase64 } from '../src/utils'
+
+import type { State } from '@svgr/core'
 
 export const mockSVG = '<svg>mock</svg>'
 
-export const mockState = {
+export const mockState: Partial<State> = {
     [STATE.COMPONENT_FILES]: {
         'README.md': '## mockIcon\n\nmock usage notes',
     },
@@ -15,6 +17,7 @@ export const mockState = {
 }
 
 type GithubParams = {
+    path: string
     base: string
     head: string
     owner: string
@@ -28,7 +31,7 @@ const checkGithubParams = (params: GithubParams): void => {
 
 export const mockGithubApi = {
     repos: {
-        compareCommits: async (params: GithubParams): Promise<AnyObject> => {
+        compareCommits: async (params: GithubParams): Promise<unknown> => {
             checkGithubParams(params)
             return {
                 data: {
@@ -74,7 +77,6 @@ export const mockGithubApi = {
                             deletions: 0,
                             filename:
                                 'packages/mock-package/assets/mock-icon-1.svg',
-                            // eslint-disable-next-line @typescript-eslint/camelcase
                             previous_filename:
                                 'packages/mock-package/assets/mock-icon.svg',
                             sha: '24bc215ebfc294383928435b00192f34b6558514',
@@ -85,26 +87,26 @@ export const mockGithubApi = {
             }
         },
         createOrUpdateFileContents: async (
-            params: GithubParams & AnyObject,
+            params: GithubParams,
         ): Promise<void> => {
             checkGithubParams(params)
             for (const p of ['branch', 'content', 'message', 'path']) {
-                if (!params[p])
+                if (!params[p as keyof typeof params])
                     throw new Error(`CreateOrUpdate: No github ${p}`)
             }
         },
-        deleteFile: async (params: GithubParams & AnyObject): Promise<void> => {
+        deleteFile: async (params: GithubParams): Promise<void> => {
             checkGithubParams(params)
             for (const p of ['branch', 'message', 'path', 'sha']) {
-                if (!params[p]) throw new Error(`Delete: No github ${p}`)
+                if (!params[p as keyof typeof params])
+                    throw new Error(`Delete: No github ${p}`)
             }
         },
-        getContent: async (
-            params: GithubParams & AnyObject,
-        ): Promise<AnyObject> => {
+        getContent: async (params: GithubParams): Promise<unknown> => {
             checkGithubParams(params)
             for (const p of ['path', 'ref']) {
-                if (!params[p]) throw new Error(`Read: No github ${p}`)
+                if (!params[p as keyof typeof params])
+                    throw new Error(`Read: No github ${p}`)
             }
             return {
                 data: {

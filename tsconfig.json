@@ -1,10 +1,11 @@
 {
-  "compilerOptions": {
-    "baseUrl": "./",
-    "esModuleInterop": true,
-    "strict": true,
-    "target": "es6",
-    "module": "commonjs",
-  },
-  "exclude": ["node_modules"]
+    "compilerOptions": {
+        "rootDir": ".",
+        "outDir": ".",
+        "strict": true,
+        "noImplicitAny": true,
+        "resolveJsonModule": true,
+        "composite": true
+    },
+    "files": ["package.json"]
 }

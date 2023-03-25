@@ -1,14 +1,12 @@
-const ns = (s: TemplateStringsArray): string => `assets/${s}`
-
 export const OPTIONS = {
-    FILE_EXT: ns`fileExt`,
-    GLOB_PATTERN: ns`globPattern`,
-    NAME_SCHEME: ns`nameScheme`,
-    OUTPUT_PATH: ns`outputPath`,
-}
+    FILE_EXT: 'assets/fileExt',
+    GLOB_PATTERN: 'assets/globPattern',
+    NAME_SCHEME: 'assets/nameScheme',
+    OUTPUT_PATH: 'assets/outputPath',
+} as const
 
 export const STATE = {
-    COMPONENT_FILES: ns`componentFiles`,
+    COMPONENT_FILES: 'assets/componentFiles',
     COMPONENT_NAME: 'componentName', // @svgr/plugin-jsx
     FILE_PATH: 'filePath', // @svgr/plugin-jsx
-}
+} as const

@@ -1,13 +1,18 @@
 ## Description
-<!-- Add a link to which issue this PR addresses -->
 <!-- Add a bulleted list of items changed or added -->
 
-### Checklist
 
+### Checklist
 - [ ] This PR has updated documentation
 - [ ] This PR has sufficient testing
 
 ## DevQA
+
+### DevQA Prep
+<!-- Delete items that do not apply. -->
+- Please `yarn install`, this PR uses a new package
+
+### DevQA Steps
 <!-- Fill in steps to DevQA this PR here -->
 
 ### Comments

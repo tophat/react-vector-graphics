@@ -1,6 +1,6 @@
 import * as path from 'path'
 
-import { NamingScheme } from '@react-vector-graphics/types'
+import { type NamingScheme } from '@react-vector-graphics/types'
 
 const capitalize = (w: string): string =>
     `${w[0].toUpperCase()}${w.slice(1).toLowerCase()}`

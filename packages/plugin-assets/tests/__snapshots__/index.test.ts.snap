@@ -1,17 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`plugin-assets finds all files matching pattern 1`] = `
-Array [
-  Object {
+[
+  {
     "code": "<svg></svg>",
-    "state": Object {
+    "state": {
       "componentName": "File124x24Icon",
       "filePath": "example/assets/file-1.24x24.icon.svg",
     },
   },
-  Object {
+  {
     "code": "<svg></svg>",
-    "state": Object {
+    "state": {
       "componentName": "File2Icon",
       "filePath": "example/assets/file2.icon.svg",
     },
@@ -20,24 +20,24 @@ Array [
 `;
 
 exports[`plugin-assets uses supplied naming scheme 1`] = `
-Array [
-  Object {
+[
+  {
     "code": "<svg></svg>",
-    "state": Object {
+    "state": {
       "componentName": "file_1_24x24_icon",
       "filePath": "example/assets/file-1.24x24.icon.svg",
     },
   },
-  Object {
+  {
     "code": "<svg></svg>",
-    "state": Object {
+    "state": {
       "componentName": "file2_icon",
       "filePath": "example/assets/file2.icon.svg",
     },
   },
-  Object {
+  {
     "code": "<svg></svg>",
-    "state": Object {
+    "state": {
       "componentName": "file3",
       "filePath": "example/assets/file3.svg",
     },

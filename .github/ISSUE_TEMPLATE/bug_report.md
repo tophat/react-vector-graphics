@@ -20,8 +20,10 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Version [e.g. 1.0]
+ - OS: [e.g. Ubuntu]
+ - The package you're experiencing issues with (e.g. @react-vector-graphics/core)
+ - Shell: [e.g. bash/sh/zsh/fish]
+ - Node version: [e.g. v8.10.0], from `node --version`
 
 
 **Additional context**
