@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`main finds assets if no code passed 1`] = `
-Array [
-  Object {
+[
+  {
     "code": "<svg>mock</svg>",
-    "state": Object {
-      "assets/componentFiles": Object {},
+    "state": {
+      "assets/componentFiles": {},
       "componentName": "mockIcon",
       "filePath": "assets/mock.icon.svg",
       "github/diffType": "added",
@@ -15,15 +15,15 @@ Array [
 `;
 
 exports[`main writes component files when code passed 1`] = `
-Object {
+{
   "code": "
 import React from 'react'
 export default function mockIcon() {
     return <svg>mock updated</svg>
 }
 ",
-  "state": Object {
-    "assets/componentFiles": Object {
+  "state": {
+    "assets/componentFiles": {
       "README.md": "## mockIcon
 
 mock usage notes",

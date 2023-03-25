@@ -1,11 +1,10 @@
-import { Octokit } from '@octokit/rest'
-
-import { NamingScheme } from '@react-vector-graphics/types'
-
-import findAssets from '../src/findAssets'
 import { OPTIONS } from '../src'
+import findAssets from '../src/findAssets'
 
 import { mockGithubApi, mockOptions } from './mocks'
+
+import type { Octokit } from '@octokit/rest'
+import type { NamingScheme } from '@react-vector-graphics/types'
 
 describe('findAssets', () => {
     it('returns all assets matching pattern', async () => {
@@ -13,7 +12,7 @@ describe('findAssets', () => {
             findAssets({
                 folderPath: mockOptions[OPTIONS.FOLDER_PATH] as string,
                 github: {
-                    api: (mockGithubApi as unknown) as Octokit,
+                    api: mockGithubApi as unknown as Octokit,
                     base: mockOptions[OPTIONS.BASE] as string,
                     head: mockOptions[OPTIONS.HEAD] as string,
                     owner: mockOptions[OPTIONS.OWNER] as string,

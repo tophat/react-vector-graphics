@@ -1,8 +1,7 @@
 import * as path from 'path'
 
-import { Octokit } from '@octokit/rest'
-
-import { Logger } from '@react-vector-graphics/types'
+import { type Octokit } from '@octokit/rest'
+import { type Logger } from '@react-vector-graphics/types'
 
 import {
     COMMIT_MESSAGE_PATTERNS,
@@ -76,7 +75,7 @@ const addOrModifyIconFile = async (
             repo: githubParams.repo,
         })
         if (Array.isArray(data)) {
-            return logger.info('Path is folder, skipping', filePath)
+            return void logger.info('Path is folder, skipping', filePath)
         }
         fileSha = data.sha
         fileContentsOld = fromBase64(withContent(data).content.toString())
@@ -84,7 +83,7 @@ const addOrModifyIconFile = async (
         logger.error(`${e}: ${filePath}`)
     }
     if (fileContentsOld === fileContents) {
-        return logger.info('No changes, skipping file', filePath)
+        return void logger.info('No changes, skipping file', filePath)
     }
     const message = fileSha
         ? replaceAll(

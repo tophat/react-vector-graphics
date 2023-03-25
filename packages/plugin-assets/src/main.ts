@@ -1,23 +1,23 @@
 import * as path from 'path'
 
+import { pathToName } from '@react-vector-graphics/utils'
 import * as fs from 'fs-extra'
 import * as glob from 'glob'
 
-import {
+import { OPTIONS, STATE } from './constants'
+
+import type {
     Logger,
     NamingScheme,
     Plugin,
     PluginParams,
     State,
 } from '@react-vector-graphics/types'
-import { pathToName } from '@react-vector-graphics/utils'
-
-import { OPTIONS, STATE } from './constants'
 
 const findAssets = (params: {
     globPattern: string
     nameScheme: NamingScheme
-    state: State
+    state: Omit<State, 'componentName'> & { componentName?: string }
 }): PluginParams[] => {
     return glob.sync(params.globPattern).map(
         (filePath: string): PluginParams => ({
@@ -31,7 +31,7 @@ const findAssets = (params: {
                     [STATE.FILE_PATH]: filePath,
                 },
                 params.state,
-            ),
+            ) as State,
         }),
     )
 }
@@ -41,7 +41,7 @@ const writeComponent = (params: {
     code: string
     componentName?: string
     componentFiles: { [fileName: string]: string }
-    fileExt?: string
+    fileExt?: string | undefined
     logger?: Logger
     outputPath?: string
 }): void => {
@@ -78,20 +78,27 @@ const writeComponent = (params: {
 
 export const run: Plugin = async (code, config, state, logger) => {
     if (code) {
-        writeComponent({
+        const opts = {
             assetFile: state[STATE.FILE_PATH],
             code,
+            // @ts-expect-error componentFiles is added to state
             componentFiles: state[STATE.COMPONENT_FILES] ?? {},
             componentName: state[STATE.COMPONENT_NAME],
-            fileExt: config.options[OPTIONS.FILE_EXT],
+            fileExt: config.options?.[OPTIONS.FILE_EXT],
             logger,
-            outputPath: config.options[OPTIONS.OUTPUT_PATH],
-        })
-        return { code, state }
+            outputPath: config.options?.[OPTIONS.OUTPUT_PATH],
+        }
+        // @ts-expect-error TODO
+        writeComponent(opts)
+        return { code, state: state as State }
     } else {
+        if (!config.options?.[OPTIONS.GLOB_PATTERN]) {
+            throw new Error('Invariant violation. Missing glob pattern.')
+        }
         return findAssets({
+            // @ts-expect-error Args need to be pre-validated
             globPattern: config.options[OPTIONS.GLOB_PATTERN],
-            nameScheme: config.options[OPTIONS.NAME_SCHEME],
+            nameScheme: config.options?.[OPTIONS.NAME_SCHEME] as NamingScheme,
             state,
         })
     }

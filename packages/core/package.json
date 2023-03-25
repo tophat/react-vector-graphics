@@ -5,31 +5,40 @@
   "author": "Top Hat <opensource@tophat.com>",
   "homepage": "https://github.com/tophat/react-vector-graphics#readme",
   "license": "Apache-2.0",
-  "main": "lib/index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "tests"
-  },
+  "main": "src/index.ts",
   "files": [
     "lib"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tophat/react-vector-graphics.git"
+    "url": "https://github.com/tophat/react-vector-graphics.git",
+    "directory": "packages/core"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "prepack": "run workspace:build \"$(pwd)\""
   },
   "bugs": {
     "url": "https://github.com/tophat/react-vector-graphics/issues"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "main": "lib/index.js"
+  },
   "dependencies": {
-    "@svgr/core": "^5.2.0"
+    "@svgr/core": "^6",
+    "@svgr/plugin-jsx": "^6"
+  },
+  "devDependencies": {
+    "@react-vector-graphics/plugin-assets": "workspace:*",
+    "@react-vector-graphics/types": "workspace:*",
+    "@types/fs-extra": "^9",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.11.9",
+    "fs-extra": "^9",
+    "memfs": "^3.1.1"
   },
   "peerDependencies": {
-    "@react-vector-graphics/types": "*"
+    "@react-vector-graphics/types": "workspace:*"
   }
 }

@@ -2,14 +2,14 @@
 
 <span><img align="right" width="200" height="200" src="./assets/logo.svg" alt="Logo"></span>
 
-![Node CI](https://github.com/tophat/react-vector-graphics/workflows/Node%20CI/badge.svg)
-[![codecov](https://codecov.io/gh/tophat/react-vector-graphics/branch/master/graph/badge.svg)](https://codecov.io/gh/tophat/react-vector-graphics)
+[![Continuous Integration](https://github.com/tophat/react-vector-graphics/actions/workflows/pull-request.yml/badge.svg)](https://github.com/tophat/react-vector-graphics/actions/workflows/pull-request.yml)
+[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
+[![Discord](https://img.shields.io/discord/809577721751142410)](https://discord.gg/YhK3GFcZrk)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
-[![Dependabot](https://flat.badgen.net/dependabot/tophat/yvm?icon=dependabot)](https://app.dependabot.com/accounts/tophat/repos/137530684)
-
-[![Slack workspace](https://slackinvite.dev.tophat.com/badge.svg)](https://opensource.tophat.com/slack)<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)<!-- ALL-CONTRIBUTORS-BADGE:END -->
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Overview
 

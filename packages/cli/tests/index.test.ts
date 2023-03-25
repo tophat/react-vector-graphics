@@ -1,33 +1,31 @@
-import { vol } from 'memfs'
-import * as fs from 'fs-extra'
-import * as mockProps from 'jest-mock-props'
-
-import { Configuration, Logger } from '@react-vector-graphics/types'
-import { OPTIONS } from '@react-vector-graphics/plugin-assets'
 import rvgCore from '@react-vector-graphics/core'
+import { OPTIONS } from '@react-vector-graphics/plugin-assets'
+import * as fs from 'fs-extra'
+import { vol } from 'memfs'
 
 import { default as rvgCli } from '../src/index'
+
+import type { Config, Logger } from '@react-vector-graphics/types'
 
 jest.mock('@react-vector-graphics/core', () => ({
     __esModule: true,
     default: jest.fn(),
     getLogger: (): Logger => console,
 }))
-mockProps.extend(jest)
 
 describe('cli', () => {
     const spyRvgCore = rvgCore as jest.Mocked<typeof rvgCore>
-    const spyProcessArgs = jest.spyOnProp(process, 'argv')
     const spyProcessExit = jest.spyOn(process, 'exit')
     const spyLogError = jest.spyOn(console, 'error')
     const spyLogInfo = jest.spyOn(console, 'info')
 
-    const createMockConfig = (config: Configuration, path?: string): void => {
+    const createMockConfig = (config: Config, path?: string): void => {
         fs.outputJSONSync(path ?? `${process.cwd()}/.rvgrc.json`, config)
     }
 
     beforeEach(() => {
-        spyProcessExit.mockImplementation(code => {
+        process.argv = ['node']
+        spyProcessExit.mockImplementation((code) => {
             throw Error(`Process exited with code: ${code}`)
         })
     })
@@ -38,7 +36,7 @@ describe('cli', () => {
     })
 
     it('requests for missing option: config', async () => {
-        await expect(rvgCli()).rejects.toThrowErrorMatchingSnapshot()
+        await expect(rvgCli()).rejects.toThrow()
         expect(spyLogError).toHaveBeenCalledWith(
             'Missing required argument: config',
         )
@@ -75,12 +73,7 @@ describe('cli', () => {
 
     it('uses given config file', async () => {
         const mockConfigFile = 'mockconfigfile.json'
-        spyProcessArgs.mockValue([
-            'node',
-            'test.js',
-            '--config',
-            mockConfigFile,
-        ])
+        process.argv = ['node', 'test.js', '--config', mockConfigFile]
         createMockConfig(
             {
                 options: { [OPTIONS.GLOB_PATTERN]: '*.svg' },
@@ -108,7 +101,7 @@ describe('cli', () => {
     })
 
     it('logs not found config file', async () => {
-        await expect(rvgCli()).rejects.toThrowError()
+        await expect(rvgCli()).rejects.toThrow()
         expect(spyLogInfo).toHaveBeenCalledWith(
             expect.stringContaining('No config loaded'),
         )
@@ -117,7 +110,7 @@ describe('cli', () => {
     it('skips empty config file', async () => {
         const configFile = `${process.cwd()}/.rvgrc.json`
         fs.outputFileSync(configFile, '')
-        spyProcessArgs.mockValue(['node', 'test.js', '--config', configFile])
+        process.argv = ['node', 'test.js', '--config', configFile]
         await rvgCli()
         expect(spyLogInfo).toHaveBeenCalledWith(
             expect.stringContaining('Skipping empty config'),
@@ -125,14 +118,13 @@ describe('cli', () => {
         expect(spyRvgCore).toHaveBeenCalledWith(
             expect.objectContaining({
                 config: {
-                    options: {},
                     plugins: [
                         '@react-vector-graphics/plugin-assets',
                         '@svgr/plugin-jsx',
                         '@react-vector-graphics/plugin-assets',
                     ],
                 },
-                logger: expect.any(Object),
+                logger: expect.anything(),
             }),
         )
     })

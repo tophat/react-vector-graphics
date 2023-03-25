@@ -1,9 +1,11 @@
-import * as findAssets from '../src/findAssets'
-import * as writeComponent from '../src/writeComponent'
 import { OPTIONS, STATE } from '../src/constants'
+import * as findAssets from '../src/findAssets'
 import { run } from '../src/main'
+import * as writeComponent from '../src/writeComponent'
 
 import { mockComponent, mockOptions, mockSVG, mockState } from './mocks'
+
+import type { State } from '@svgr/core'
 
 describe('main', () => {
     beforeAll(() => {
@@ -13,7 +15,7 @@ describe('main', () => {
                 state: {
                     ...mockState,
                     [STATE.COMPONENT_FILES]: {},
-                },
+                } as State,
             },
         ])
         jest.spyOn(writeComponent, 'default').mockResolvedValue()
@@ -40,17 +42,20 @@ describe('main', () => {
         )
         await expect(results).resolves.toMatchSnapshot()
         expect(writeComponent.default).toHaveBeenCalledWith({
-            assetFile: mockState[STATE.FILE_PATH],
+            assetFile: mockState[STATE.FILE_PATH as keyof typeof mockState],
             code: mockComponent,
             commitMessagePatterns: {
                 create: mockOptions[OPTIONS.COMMIT_CREATE_PATTERN],
                 delete: mockOptions[OPTIONS.COMMIT_DELETE_PATTERN],
                 update: mockOptions[OPTIONS.COMMIT_UPDATE_PATTERN],
             },
-            componentFiles: mockState[STATE.COMPONENT_FILES],
-            componentName: mockState[STATE.COMPONENT_NAME],
-            componentNameOld: mockState[STATE.COMPONENT_NAME_OLD],
-            diffType: mockState[STATE.DIFF_TYPE],
+            componentFiles:
+                mockState[STATE.COMPONENT_FILES as keyof typeof mockState],
+            componentName:
+                mockState[STATE.COMPONENT_NAME as keyof typeof mockState],
+            componentNameOld:
+                mockState[STATE.COMPONENT_NAME_OLD as keyof typeof mockState],
+            diffType: mockState[STATE.DIFF_TYPE as keyof typeof mockState],
             fileExt: mockOptions[OPTIONS.FILE_EXT],
             folderPath: mockOptions[OPTIONS.FOLDER_PATH],
             github: {

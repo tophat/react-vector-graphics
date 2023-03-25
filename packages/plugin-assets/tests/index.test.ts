@@ -2,9 +2,9 @@ import * as path from 'path'
 
 import { fs, vol } from 'memfs'
 
-import { Configuration, State } from '@react-vector-graphics/types'
-
 import { OPTIONS, STATE, default as assetsPlugin } from '../src'
+
+import type { Config, State } from '@react-vector-graphics/types'
 
 describe('plugin-assets', () => {
     const mockSVGContent = '<svg></svg>'
@@ -26,28 +26,24 @@ describe('plugin-assets', () => {
     })
 
     it('finds all files matching pattern', async () => {
-        const config: Configuration = {
+        const config: Config = {
             options: {
                 [OPTIONS.GLOB_PATTERN]: 'example/assets/*.icon.svg',
             },
             plugins: [],
         }
-        expect(
-            await assetsPlugin(undefined, config, {}, console),
-        ).toMatchSnapshot()
+        expect(await assetsPlugin('', config, {}, console)).toMatchSnapshot()
     })
 
     it('uses supplied naming scheme', async () => {
-        const config: Configuration = {
+        const config: Config = {
             options: {
                 [OPTIONS.GLOB_PATTERN]: 'example/**/*.svg',
                 [OPTIONS.NAME_SCHEME]: 'snake_case',
             },
             plugins: [],
         }
-        expect(
-            await assetsPlugin(undefined, config, {}, console),
-        ).toMatchSnapshot()
+        expect(await assetsPlugin('', config, {}, console)).toMatchSnapshot()
     })
 
     it('writes single component file when given code', async () => {
@@ -61,7 +57,7 @@ describe('plugin-assets', () => {
             [STATE.FILE_PATH]: mockFilePath,
             [STATE.COMPONENT_NAME]: mockComponentPascalName,
         }
-        const config: Configuration = {
+        const config: Config = {
             options: {
                 [OPTIONS.FILE_EXT]: fileExt,
                 [OPTIONS.OUTPUT_PATH]: outputPath,
@@ -79,7 +75,7 @@ describe('plugin-assets', () => {
         const fileExt = 'js'
         const outputPath = 'example/components'
         const mockFileName = `index.${fileExt}`
-        const mockExtraFileName = `README.md`
+        const mockExtraFileName = 'README.md'
         const mockExtraFileContent = `# ${mockComponentPascalName}`
         const pathToFolder = path.join(outputPath, mockComponentPascalName)
         const pathToIndexFile = path.join(pathToFolder, mockFileName)
@@ -90,8 +86,8 @@ describe('plugin-assets', () => {
             [STATE.COMPONENT_FILES]: {
                 [mockExtraFileName]: mockExtraFileContent,
             },
-        }
-        const config: Configuration = {
+        } as any
+        const config: Config = {
             options: {
                 [OPTIONS.FILE_EXT]: fileExt,
                 [OPTIONS.OUTPUT_PATH]: outputPath,
@@ -116,7 +112,7 @@ describe('plugin-assets', () => {
             [STATE.FILE_PATH]: mockFilePath,
             [STATE.COMPONENT_NAME]: mockComponentPascalName,
         }
-        const config: Configuration = {
+        const config: Config = {
             options: {
                 [OPTIONS.OUTPUT_PATH]: outputPath,
             },
@@ -139,8 +135,8 @@ describe('plugin-assets', () => {
         )
         const state: State = {
             [STATE.FILE_PATH]: mockFilePath,
-        }
-        const config: Configuration = {
+        } as any
+        const config: Config = {
             options: {
                 [OPTIONS.FILE_EXT]: fileExt,
                 [OPTIONS.OUTPUT_PATH]: outputPath,
@@ -161,7 +157,7 @@ describe('plugin-assets', () => {
             [STATE.FILE_PATH]: mockFilePath,
             [STATE.COMPONENT_NAME]: mockComponentPascalName,
         }
-        const config: Configuration = {
+        const config: Config = {
             options: {
                 [OPTIONS.FILE_EXT]: fileExt,
             },

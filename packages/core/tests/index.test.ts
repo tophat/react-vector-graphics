@@ -1,18 +1,18 @@
-import { vol } from 'memfs'
-import * as fs from 'fs-extra'
-
-import { Configuration } from '@react-vector-graphics/types'
 import {
     OPTIONS,
     default as assetsPlugin,
 } from '@react-vector-graphics/plugin-assets'
+import * as fs from 'fs-extra'
+import { vol } from 'memfs'
 
 import rvgCore, { getLogger } from '../src'
+
+import type { Config } from '@react-vector-graphics/types'
 
 describe('core', () => {
     const logger = getLogger()
     const spyLogInfo = jest.spyOn(logger, 'info')
-    const mockConfig = (): Configuration => ({
+    const mockConfig = (): Config => ({
         options: {
             [OPTIONS.FILE_EXT]: 'jsx',
             [OPTIONS.GLOB_PATTERN]: 'example/**/*.svg',
@@ -41,7 +41,8 @@ describe('core', () => {
 
     it('runs successfully using minimal config', async () => {
         const config = mockConfig()
-        const outputDir = config.options[OPTIONS.OUTPUT_PATH]
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const outputDir = config.options![OPTIONS.OUTPUT_PATH] as string
         fs.removeSync(outputDir)
         expect(fs.existsSync(outputDir)).toBe(false)
         await rvgCore({ config })
@@ -55,10 +56,11 @@ describe('core', () => {
         ${{}}
     `('fails on invalid plugin: $invalidPlugin', async ({ invalidPlugin }) => {
         const config = mockConfig()
-        config.plugins.push(invalidPlugin)
-        await expect(
-            rvgCore({ config, logger }),
-        ).rejects.toThrowErrorMatchingSnapshot()
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        config.plugins!.push(invalidPlugin)
+        await expect(rvgCore({ config, logger })).rejects.toThrow(
+            /(Invalid plugin)|(Cannot find module)/,
+        )
         expect(spyLogInfo).toHaveBeenCalled()
     })
 })
