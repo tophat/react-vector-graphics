@@ -41,13 +41,13 @@ yarn install
 Run all tests
 
 ```sh
-yarn test:watch
+yarn test --watch
 ```
 
 Build all packages
 
 ```sh
-yarn build:watch
+yarn build
 ```
 
 ## Contributors
