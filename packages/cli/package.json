@@ -6,8 +6,10 @@
   "homepage": "https://github.com/tophat/react-vector-graphics#readme",
   "license": "Apache-2.0",
   "main": "src/index.ts",
+  "bin": {
+    "rvg": "src/bin.ts"
+  },
   "files": [
-    "bin",
     "lib"
   ],
   "repository": {
@@ -24,7 +26,10 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/",
-    "main": "lib/index.js"
+    "main": "lib/index.js",
+    "bin": {
+      "rvg": "lib/bin.js"
+    }
   },
   "dependencies": {
     "@react-vector-graphics/core": "workspace:^0.4.2",

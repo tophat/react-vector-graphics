@@ -1,4 +1,3 @@
-// eslint-disable-next-line prettier/prettier
 import { type Config as CoreConfig, loadConfig } from '@svgr/core'
 
 import { getLogger } from './logging'
