@@ -37,7 +37,7 @@
     "@types/jest": "^29.5.0",
     "@types/node": "^18.11.9",
     "@types/yargs": "^16.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.43.0",
     "@yarnpkg/sdks": "^3.0.0-rc.40",
     "codecov": "^3.6.1",
