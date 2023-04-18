@@ -1675,7 +1675,7 @@ __metadata:
   dependencies:
     "@react-vector-graphics/plugin-assets": "workspace:*"
     "@react-vector-graphics/types": "workspace:*"
-    "@svgr/core": ^6
+    "@svgr/core": ^6.5.1
     "@svgr/plugin-jsx": ^6
     "@types/fs-extra": ^9
     "@types/jest": ^29.5.0
@@ -1712,7 +1712,7 @@ __metadata:
     "@octokit/rest": ^18.0.1
     "@react-vector-graphics/types": "workspace:*"
     "@react-vector-graphics/utils": "workspace:^0.1.1"
-    "@svgr/core": ^6
+    "@svgr/core": ^6.5.1
     "@types/jest": ^29.5.0
     "@types/minimatch": ^3
     "@types/node": ^18.11.9
@@ -1726,7 +1726,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-vector-graphics/types@workspace:packages/types"
   dependencies:
-    "@svgr/core": ^6
+    "@svgr/core": ^6.5.1
     "@types/jest": ^29.5.0
     "@types/node": ^18.11.9
   languageName: unknown
@@ -1866,7 +1866,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/core@npm:^6":
+"@svgr/core@npm:^6.5.1":
   version: 6.5.1
   resolution: "@svgr/core@npm:6.5.1"
   dependencies:

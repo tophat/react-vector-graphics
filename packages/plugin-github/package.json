@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@react-vector-graphics/types": "workspace:*",
-    "@svgr/core": "^6",
+    "@svgr/core": "^6.5.1",
     "@types/jest": "^29.5.0",
     "@types/minimatch": "^3",
     "@types/node": "^18.11.9"

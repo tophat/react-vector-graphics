@@ -31,6 +31,6 @@
     "@types/node": "^18.11.9"
   },
   "dependencies": {
-    "@svgr/core": "^6"
+    "@svgr/core": "^6.5.1"
   }
 }
