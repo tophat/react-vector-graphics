@@ -1,6 +1,7 @@
 import { OPTIONS, STATE } from './constants'
 import findAssets from './findAssets'
 import writeComponent from './writeComponent'
+
 import type { PluginGitHubOptions } from './types'
 import type { NamingScheme, Plugin, State } from '@react-vector-graphics/types'
 

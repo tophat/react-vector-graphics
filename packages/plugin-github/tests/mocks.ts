@@ -1,6 +1,6 @@
 import { NAMING_SCHEME } from '@react-vector-graphics/utils'
 
-import { OPTIONS, PluginGitHubOptions, STATE, STATUSES } from '../src'
+import { OPTIONS, type PluginGitHubOptions, STATE, STATUSES } from '../src'
 import { toBase64 } from '../src/utils'
 
 import type { State } from '@svgr/core'

@@ -4,8 +4,9 @@ import { pathToName } from '@react-vector-graphics/utils'
 import * as fs from 'fs-extra'
 import * as glob from 'glob'
 
-import { OPTIONS,  STATE } from './constants'
-import type {PluginAssetsOptions} from './types'
+import { OPTIONS, STATE } from './constants'
+
+import type { PluginAssetsOptions } from './types'
 import type {
     Logger,
     NamingScheme,
