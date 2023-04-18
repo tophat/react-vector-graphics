@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@svgr/core": "^6",
-    "@svgr/plugin-jsx": "^6"
+    "@svgr/plugin-jsx": "^6.5.1"
   },
   "devDependencies": {
     "@react-vector-graphics/plugin-assets": "workspace:*",

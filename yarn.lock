@@ -1676,7 +1676,7 @@ __metadata:
     "@react-vector-graphics/plugin-assets": "workspace:*"
     "@react-vector-graphics/types": "workspace:*"
     "@svgr/core": ^6
-    "@svgr/plugin-jsx": ^6
+    "@svgr/plugin-jsx": ^6.5.1
     "@types/fs-extra": ^9
     "@types/jest": ^29.5.0
     "@types/node": ^18.11.9
@@ -1889,7 +1889,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/plugin-jsx@npm:^6, @svgr/plugin-jsx@npm:^6.5.1":
+"@svgr/plugin-jsx@npm:^6.5.1":
   version: 6.5.1
   resolution: "@svgr/plugin-jsx@npm:6.5.1"
   dependencies:
