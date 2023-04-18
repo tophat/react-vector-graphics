@@ -1,7 +1,10 @@
 import type { ConfigPlugin, Config as CoreConfig, State } from '@svgr/core'
 
-export type Config = Omit<CoreConfig, 'plugins'> & {
-    options?: Record<string, unknown>
+export type Config<Options = Record<string, unknown>> = Omit<
+    CoreConfig,
+    'plugins'
+> & {
+    options?: Options
     plugins?: (ConfigPlugin | Plugin)[]
 }
 /** @deprecated Use Config instead. */

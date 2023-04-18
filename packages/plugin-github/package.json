@@ -23,7 +23,8 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/",
-    "main": "lib/index.js"
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts"
   },
   "dependencies": {
     "@octokit/rest": "^18.0.1",

@@ -29,7 +29,8 @@
     "main": "lib/index.js",
     "bin": {
       "rvg": "lib/bin.js"
-    }
+    },
+    "types": "lib/index.d.ts"
   },
   "dependencies": {
     "@react-vector-graphics/core": "workspace:^0.4.2",

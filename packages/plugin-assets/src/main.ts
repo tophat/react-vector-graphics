@@ -6,6 +6,7 @@ import * as glob from 'glob'
 
 import { OPTIONS, STATE } from './constants'
 
+import type { PluginAssetsOptions } from './types'
 import type {
     Logger,
     NamingScheme,
@@ -77,6 +78,8 @@ const writeComponent = (params: {
 }
 
 export const run: Plugin = async (code, config, state, logger) => {
+    const options: Partial<PluginAssetsOptions> = config.options ?? {}
+
     if (code) {
         const opts = {
             assetFile: state[STATE.FILE_PATH],
@@ -84,21 +87,20 @@ export const run: Plugin = async (code, config, state, logger) => {
             // @ts-expect-error componentFiles is added to state
             componentFiles: state[STATE.COMPONENT_FILES] ?? {},
             componentName: state[STATE.COMPONENT_NAME],
-            fileExt: config.options?.[OPTIONS.FILE_EXT],
+            fileExt: options?.[OPTIONS.FILE_EXT],
             logger,
-            outputPath: config.options?.[OPTIONS.OUTPUT_PATH],
+            outputPath: options?.[OPTIONS.OUTPUT_PATH],
         }
-        // @ts-expect-error TODO
         writeComponent(opts)
         return { code, state: state as State }
     } else {
-        if (!config.options?.[OPTIONS.GLOB_PATTERN]) {
+        if (!options?.[OPTIONS.GLOB_PATTERN]) {
             throw new Error('Invariant violation. Missing glob pattern.')
         }
         return findAssets({
             // @ts-expect-error Args need to be pre-validated
-            globPattern: config.options[OPTIONS.GLOB_PATTERN],
-            nameScheme: config.options?.[OPTIONS.NAME_SCHEME] as NamingScheme,
+            globPattern: options?.[OPTIONS.GLOB_PATTERN],
+            nameScheme: options?.[OPTIONS.NAME_SCHEME] as NamingScheme,
             state,
         })
     }
