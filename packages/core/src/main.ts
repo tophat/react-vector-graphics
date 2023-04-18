@@ -19,16 +19,16 @@ const normalizePluginParams = (
     return { ...prevParams, ...codeOrParams }
 }
 
-export const run = async ({
+export async function run<Options = Record<string, unknown>>({
     config,
     logger = getLogger(),
 }: {
-    config: Config
+    config: Config<Options>
     logger?: Logger
-}): Promise<void> => {
+}): Promise<void> {
     logger.info('options:', config.options)
     const pluginParams: PluginParams[] = [{} as PluginParams]
-    for (const plugin of getPlugins(config)) {
+    for (const plugin of getPlugins(config as Config)) {
         logger.info('plugin:', plugin)
         const [pluginFn, pluginConfig] = await Promise.all([
             resolvePlugin(plugin),
