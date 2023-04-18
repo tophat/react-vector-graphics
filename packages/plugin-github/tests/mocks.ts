@@ -1,6 +1,6 @@
 import { NAMING_SCHEME } from '@react-vector-graphics/utils'
 
-import { OPTIONS, STATE, STATUSES } from '../src'
+import { OPTIONS, PluginGitHubOptions, STATE, STATUSES } from '../src'
 import { toBase64 } from '../src/utils'
 
 import type { State } from '@svgr/core'
@@ -8,6 +8,7 @@ import type { State } from '@svgr/core'
 export const mockSVG = '<svg>mock</svg>'
 
 export const mockState: Partial<State> = {
+    // @ts-expect-error todo
     [STATE.COMPONENT_FILES]: {
         'README.md': '## mockIcon\n\nmock usage notes',
     },
@@ -119,8 +120,8 @@ export const mockGithubApi = {
     },
 }
 
-export const mockOptions = {
-    [OPTIONS.API]: {},
+export const mockOptions: PluginGitHubOptions = {
+    [OPTIONS.API]: {} as any,
     [OPTIONS.BASE]: 'master',
     [OPTIONS.FILE_EXT]: 'js',
     [OPTIONS.FOLDER_PATH]: 'packages/mock-package',

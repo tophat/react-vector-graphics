@@ -1,35 +1,33 @@
-const ns = (s: TemplateStringsArray): string => `github/${s}`
-
 export const OPTIONS = {
-    API: ns`api`,
-    BASE: ns`base`,
-    COMMIT_CREATE_PATTERN: ns`commitCreate`,
-    COMMIT_DELETE_PATTERN: ns`commitDelete`,
-    COMMIT_UPDATE_PATTERN: ns`commitUpdate`,
+    API: `github/api`,
+    BASE: `github/base`,
+    COMMIT_CREATE_PATTERN: `github/commitCreate`,
+    COMMIT_DELETE_PATTERN: `github/commitDelete`,
+    COMMIT_UPDATE_PATTERN: `github/commitUpdate`,
+    FOLDER_PATH: `github/folderPath`,
+    HEAD: `github/head`,
+    OWNER: `github/owner`,
+    REPO: `github/repo`,
     FILE_EXT: 'assets/fileExt', // @react-vector-graphics/plugin-assets
-    FOLDER_PATH: ns`folderPath`,
     GLOB_PATTERN: 'assets/globPattern', // @react-vector-graphics/plugin-assets
-    HEAD: ns`head`,
     NAME_SCHEME: 'assets/nameScheme', // @react-vector-graphics/plugin-assets
     OUTPUT_PATH: 'assets/outputPath', // @react-vector-graphics/plugin-assets
-    OWNER: ns`owner`,
-    REPO: ns`repo`,
-}
+} as const
 
 export const STATE = {
     COMPONENT_FILES: 'assets/componentFiles', // @react-vector-graphics/plugin-assets
     COMPONENT_NAME: 'componentName', // @svgr/plugin-jsx
-    COMPONENT_NAME_OLD: ns`componentNameOld`,
-    DIFF_TYPE: ns`diffType`,
+    COMPONENT_NAME_OLD: `github/componentNameOld`,
+    DIFF_TYPE: `github/diffType`,
     FILE_PATH: 'filePath', // @svgr/plugin-jsx
-}
+} as const
 
 export const STATUSES = {
     ADDED: 'added',
     MODIFIED: 'modified',
     REMOVED: 'removed',
     RENAMED: 'renamed',
-}
+} as const
 
 export const COMMIT_MESSAGE_PLACEHOLDER = '${message}'
 

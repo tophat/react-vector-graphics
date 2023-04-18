@@ -1,5 +1,13 @@
 import type { ConfigPlugin, Config as CoreConfig, State } from '@svgr/core'
 
+export type ReactVectorGraphicsOptions = {
+    // API
+    // FOLDER_PATH
+    // HEAD
+    // OWNER
+    // REPO
+}
+
 export type Config = Omit<CoreConfig, 'plugins'> & {
     options?: Record<string, unknown>
     plugins?: (ConfigPlugin | Plugin)[]
