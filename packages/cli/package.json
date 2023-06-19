@@ -37,11 +37,11 @@
     "@react-vector-graphics/plugin-assets": "workspace:^0.4.1",
     "@react-vector-graphics/types": "workspace:*",
     "cosmiconfig": "^7.0.0",
-    "fs-extra": "^9.0.0",
+    "fs-extra": "^9.1.0",
     "yargs": "^16.0.3"
   },
   "devDependencies": {
-    "@types/fs-extra": "^9",
+    "@types/fs-extra": "^9.0.13",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.11.9",
     "@types/yargs": "^16",
