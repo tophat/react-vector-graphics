@@ -36,7 +36,7 @@
     "@react-vector-graphics/core": "workspace:^0.4.2",
     "@react-vector-graphics/plugin-assets": "workspace:^0.4.1",
     "@react-vector-graphics/types": "workspace:*",
-    "cosmiconfig": "^7.0.0",
+    "cosmiconfig": "^7.1.0",
     "fs-extra": "^9.0.0",
     "yargs": "^16.0.3"
   },
