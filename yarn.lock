@@ -1658,7 +1658,7 @@ __metadata:
     "@react-vector-graphics/types": "workspace:*"
     "@types/fs-extra": ^9
     "@types/jest": ^29.5.0
-    "@types/node": ^18.11.9
+    "@types/node": ^18.19.54
     "@types/yargs": ^16
     cosmiconfig: ^7.0.0
     fs-extra: ^9.0.0
@@ -1679,7 +1679,7 @@ __metadata:
     "@svgr/plugin-jsx": ^6
     "@types/fs-extra": ^9
     "@types/jest": ^29.5.0
-    "@types/node": ^18.11.9
+    "@types/node": ^18.19.54
     fs-extra: ^9
     memfs: ^3.1.1
   peerDependencies:
@@ -1696,7 +1696,7 @@ __metadata:
     "@types/fs-extra": ^9
     "@types/glob": ^7
     "@types/jest": ^29.5.0
-    "@types/node": ^18.11.9
+    "@types/node": ^18.19.54
     fs-extra: ^9.0.0
     glob: ^7.0.0
     memfs: ^3.1.1
@@ -1715,7 +1715,7 @@ __metadata:
     "@svgr/core": ^6
     "@types/jest": ^29.5.0
     "@types/minimatch": ^3
-    "@types/node": ^18.11.9
+    "@types/node": ^18.19.54
     minimatch: ^3.0.4
   peerDependencies:
     "@react-vector-graphics/types": "workspace:*"
@@ -1728,7 +1728,7 @@ __metadata:
   dependencies:
     "@svgr/core": ^6
     "@types/jest": ^29.5.0
-    "@types/node": ^18.11.9
+    "@types/node": ^18.19.54
   languageName: unknown
   linkType: soft
 
@@ -1738,7 +1738,7 @@ __metadata:
   dependencies:
     "@react-vector-graphics/types": "workspace:*"
     "@types/jest": ^29.5.0
-    "@types/node": ^18.11.9
+    "@types/node": ^18.19.54
   peerDependencies:
     "@react-vector-graphics/types": "workspace:*"
   languageName: unknown
@@ -2242,7 +2242,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>= 8, @types/node@npm:^18.11.9":
+"@types/node@npm:*, @types/node@npm:>= 8":
   version: 18.15.9
   resolution: "@types/node@npm:18.15.9"
   checksum: 5165f84f2fe25699879129b98c405c05e8d0428414c99fa544e22bdd0ea502aac384d26418298a31983064fa18c98e2fba5791b9c907bd78ccbcb49c23101bee
@@ -2253,6 +2253,15 @@ __metadata:
   version: 13.13.52
   resolution: "@types/node@npm:13.13.52"
   checksum: 8f1afff497ebeba209e2dc340d823284e087a47632afe99a7daa30eaff80893e520f222ad400cd1f2d3b8288e93cf3eaded52a8e64eaefb8aacfe6c35de98f42
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^18.19.54":
+  version: 18.19.56
+  resolution: "@types/node@npm:18.19.56"
+  dependencies:
+    undici-types: ~5.26.4
+  checksum: 2660aa2e50ddb77e4ea4e29e6b917e942ca49ecbd46b6333a7aeffdffafc5d7e48f8a731b6570a61bebdd0ba8dc104a250c432bea00e70aec5a4cb6e6f2df771
   languageName: node
   linkType: hard
 
@@ -9241,7 +9250,7 @@ __metadata:
     "@types/fs-extra": ^9.0.1
     "@types/glob": ^7.1.1
     "@types/jest": ^29.5.0
-    "@types/node": ^18.11.9
+    "@types/node": ^18.19.54
     "@types/yargs": ^16.0.0
     "@typescript-eslint/eslint-plugin": ^5.59.0
     "@typescript-eslint/parser": ^5.59.0
@@ -10402,6 +10411,13 @@ __metadata:
     has-symbols: ^1.0.3
     which-boxed-primitive: ^1.0.2
   checksum: b7a1cf5862b5e4b5deb091672ffa579aa274f648410009c81cca63fed3b62b610c4f3b773f912ce545bb4e31edc3138975b5bc777fc6e4817dca51affb6380e9
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~5.26.4":
+  version: 5.26.5
+  resolution: "undici-types@npm:5.26.5"
+  checksum: 3192ef6f3fd5df652f2dc1cd782b49d6ff14dc98e5dced492aa8a8c65425227da5da6aafe22523c67f035a272c599bb89cfe803c1db6311e44bed3042fc25487
   languageName: node
   linkType: hard
 

@@ -35,7 +35,7 @@
     "@react-vector-graphics/types": "workspace:*",
     "@types/fs-extra": "^9",
     "@types/jest": "^29.5.0",
-    "@types/node": "^18.11.9",
+    "@types/node": "^18.19.54",
     "fs-extra": "^9",
     "memfs": "^3.1.1"
   },
